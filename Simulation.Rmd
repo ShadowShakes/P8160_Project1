@@ -24,14 +24,14 @@ generate = function(n, # number of observations
                     ) {
   
   # Exception stop rules
-  if (ps + pwbc + pwai >= n) {
+  if ((ps + pwbc + pwai) >= n) {
     stop("number of true predictors should be less than number of observations")
   }
   if (abs(corr) > 1) {
     stop("correlation coefficient must be between -1 and 1")
   }
   # We hope that beta_strong = 20 and beta_weak = 0.5
-  if ((c*sqrt(log(p)/n)) <= 0.5 & (c*sqrt(log(p)/n)) >= 20) {
+  if ((c*sqrt(log(p)/n)) <= 0.5 | (c*sqrt(log(p)/n)) >= 20) {
     stop("please select other n and p")
   }
   
@@ -110,17 +110,16 @@ simulation = function(n, p, param_table) {
                        direction = "forward",
                        k = 2,
                        trace = 0)
-    param_forward = fit_forward$coefficients[-1]
+    param_forward = data.frame(t(fit_forward$coefficients[-1]))
     
     # LASSO
     fit_lasso = cv.glmnet(X, Y, 
                           nfolds = 10, 
                           type.measure = "mse") 
-    param_lasso = fit_lasso$glmnet.fit$beta[, fit_lasso$lambda == fit_lasso$lambda.1se]
+    param_lasso = data.frame(t(fit_lasso$glmnet.fit$beta[, fit_lasso$lambda == fit_lasso$lambda.1se]))
     
     param_estimate_i =
-      rbind(param_forward, param_lasso) %>% 
-      data.frame %>% 
+      bind_rows(param_forward, param_lasso) %>% 
       mutate(
         sim_time = i,
         n = n,
@@ -135,6 +134,7 @@ simulation = function(n, p, param_table) {
       )
     param_estimate = rbind(param_estimate, param_estimate_i)
   }
+  param_estimate[["estimate"]][is.na(param_estimate[["estimate"]])] = 0
   return(param_estimate)
 }
 
