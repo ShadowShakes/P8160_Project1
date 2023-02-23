@@ -110,8 +110,8 @@ params_forward
 fit_lasso = cv.glmnet(X, Y, 
                       nfolds = 10, 
                       type.measure = "mse") 
-param.best = fit_lasso$glmnet.fit$beta[, fit_lasso$lambda == fit_lasso$lambda.1se] 
-param.best
+param_lasso = fit_lasso$glmnet.fit$beta[, fit_lasso$lambda == fit_lasso$lambda.1se] 
+param_lasso
 ```
 
 
