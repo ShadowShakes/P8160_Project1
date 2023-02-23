@@ -1,0 +1,86 @@
+---
+title: "Simulation"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(MASS)
+```
+
+```{r}
+# example 2 of the thesis
+generate = function(n = 200, # number of observations
+                    p = 200, # number of predictors
+                    ps = 3, # number of strong signals
+                    pwbc = 30, # number of WBC signals
+                    pwai = 30, # number of WAI signals
+                    corr = 0.7, # correlation coefficient (see example 2)
+                    c = 20 # the c in the definition of strong and weak 
+                    ) {
+  if (ps + pwbc + pwai >= n) {
+    stop("number of true predictors should be less than number of observations")
+  }
+  if (abs(corr) > 1) {
+    stop("correlation coefficient must be between -1 and 1")
+  }
+  # we hope that beta_strong = 20 and beta_weak = 0.5
+  if ((c*sqrt(log(p)/n)) <= 0.5 & (c*sqrt(log(p)/n)) >= 20) {
+    stop("please select other n and p")
+  }
+  corr_matrix = matrix(rep(0, len = p^2), nrow = p)
+  corr_num = pwbc %/% ps
+  # correlations between strong & wbc
+  for (i in 1:(ps-1)) {
+    for (j in (ps+1+(i-1)*corr_num):(ps+i*corr_num)) {
+      corr_matrix[i, j] = corr
+      corr_matrix[j, i] = corr
+      for (k in j:(ps+i*corr_num)) {
+        corr_matrix[j, k] = corr
+        corr_matrix[k, j] = corr
+      }
+    }
+  }
+  for (j in (ps+1+(ps-1)*corr_num):(ps+pwbc)) {
+    corr_matrix[i, j] = corr
+    corr_matrix[j, i] = corr
+    for (k in j:(ps+pwbc)) {
+      corr_matrix[j, k] = corr
+      corr_matrix[k, j] = corr
+    }
+  }
+  # correlations within wai
+  for (j in (ps+pwbc+1):(ps+pwbc+pwai)) {
+    for (k in j:(ps+pwbc+pwai)) {
+      corr_matrix[j, k] = corr
+      corr_matrix[k, j] = corr
+    }
+  }
+  diag(corr_matrix) = 1
+  X = mvrnorm(n, mu = rep(0, p), Sigma = corr_matrix, tol = 1)
+  beta = c(rep(20, ps), rep(0.5, pwbc+pwai), rep(0, p-ps-pwbc-pwai))
+  Y = X %*% beta + rnorm(n)
+  list_names = c("y",
+                 paste("s", 1:ps, sep = "_"),
+                 paste("wbc", 1:pwbc, sep = "_"),
+                 paste("wai", 1:pwai, sep = "_"),
+                 paste("null", 1:(p-ps-pwbc-pwai), sep = "_"))
+  data = as.data.frame(cbind(Y, X))
+  colnames(data)[1] <- "y"
+  for (i in 2:(1+ps)) {
+    colnames(data)[i] <- paste("s", i-1, sep = "_")
+  }
+  for (i in (2+ps):(1+ps+pwbc)) {
+    colnames(data)[i] <- paste("wbc", i-1-ps, sep = "_")
+  }
+  for (i in (2+ps+pwbc):(1+ps+pwbc+pwai)) {
+    colnames(data)[i] <- paste("wai", i-1-ps-pwbc, sep = "_")
+  }
+  for (i in (2+ps+pwbc+pwai):p) {
+    colnames(data)[i] <- paste("null", i-1-ps-pwbc-pwai, sep = "_")
+  }
+  return(data)
+}
+```
+
+
