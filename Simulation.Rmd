@@ -1,12 +1,13 @@
 ---
 title: "Simulation"
-output: pdf_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(MASS)
 library(glmnet)
+library(tidyverse)
 ```
 
 ```{r}
@@ -62,50 +63,71 @@ generate = function(n, # number of observations
   beta = c(rep(20, ps), rep(0.5, pwbc + pwai), rep(0, p - ps - pwbc - pwai))
   Y = X %*% beta + rnorm(n)
   df = as.data.frame(cbind(Y, X))
-  colnames(df)[1] <- "y"
+  colnames(df)[1] = "y"
   for (i in 2:(1 + ps)) {
-    colnames(df)[i] <- paste("strong", i - 1, sep = "_")
+    colnames(df)[i] = paste("strong", i - 1, sep = "_")
   }
   for (i in (2 + ps):(1 + ps + pwbc)) {
-    colnames(df)[i] <- paste("wbc", i - 1 - ps, sep = "_")
+    colnames(df)[i] = paste("wbc", i - 1 - ps, sep = "_")
   }
   for (i in (2 + ps + pwbc):(1 + ps + pwbc + pwai)) {
-    colnames(df)[i] <- paste("wai", i - 1 - ps - pwbc, sep = "_")
+    colnames(df)[i] = paste("wai", i - 1 - ps - pwbc, sep = "_")
   }
   for (i in (2 + ps + pwbc + pwai):(1 + p)) {
-    colnames(df)[i] <- paste("null", i - 1 - ps - pwbc - pwai, sep = "_")
+    colnames(df)[i] = paste("null", i - 1 - ps - pwbc - pwai, sep = "_")
   }
   return(df)
 }
 ```
 
-```{r}
-# Number of observations
-n = 1000
-# Number of predictors
-p = 200
+```{r, warning=FALSE}
+# simulate 100 times for n and p (ignore data here, only for saving purpose)
+simulation = function(n, p, data) {
+  param_estimate = data
+  set.seed(1)
+  for (i in 1:100) {
+    # Data manipulation
+    df = generate(n, p)
+    X = as.matrix(df[1:p + 1])
+    Y = as.matrix(df[1])
+    
+    # Forward Selection
+    fit_forward = step(object = lm(y ~ 1, data = df),
+                       scope = formula(lm(y ~ ., data = df)),
+                       direction = "forward",
+                       k = 2,
+                       trace = 0)
+    param_forward = fit_forward$coefficients[-1]
+    
+    # LASSO
+    fit_lasso = cv.glmnet(X, Y, 
+                          nfolds = 10, 
+                          type.measure = "mse") 
+    param_lasso = fit_lasso$glmnet.fit$beta[, fit_lasso$lambda == fit_lasso$lambda.1se]
+    
+    param_estimate_i =
+      rbind(param_forward, param_lasso) %>% 
+      data.frame %>% 
+      mutate(
+        sim_time = i,
+        n = n,
+        p = p,
+        method = c("forward", "lasso")
+      ) %>% 
+      pivot_longer(
+        cols = -c("sim_time", "n", "p", "method"),
+        names_to = c("type", "num"),
+          names_sep = "_",
+        values_to = "estimate"
+      )
+    param_estimate = rbind(param_estimate, param_estimate_i)
+  }
+  return(param_estimate)
+}
 
-# Data manipulation
-df = generate(n, p)
-X = as.matrix(df[1:p + 1])
-Y = as.matrix(df[1])
-
-# Forward Selection
-fit_forward = step(object = lm(y ~ 1, data = df),
-                   scope = formula(lm(y ~ ., data = df)), 
-                   direction = "forward", 
-                   k = 2, 
-                   trace = 0)
-summary(fit_forward)
-params_forward = fit_forward$coefficients[-1]
-params_forward
-
-# LASSO
-fit_lasso = cv.glmnet(X, Y, 
-                      nfolds = 10, 
-                      type.measure = "mse") 
-param_lasso = fit_lasso$glmnet.fit$beta[, fit_lasso$lambda == fit_lasso$lambda.1se] 
-param_lasso
+param_estimate = data.frame(matrix(ncol = 0, nrow = 0))
+param_estimate = simulation(n = 100, p = 100, data = param_estimate)
+param_estimate = simulation(n = 1000, p = 100, data = param_estimate)
+param_estimate = select(param_estimate, sim_time, n, p, method, everything())
+write_csv(param_estimate, "parameter_estimate.csv")
 ```
-
-

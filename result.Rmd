@@ -1,0 +1,35 @@
+---
+title: "Result"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r}
+param_estimate = read_csv("parameter_estimate.csv")
+
+# sensitivity & specificity
+param_estimate %>% 
+  mutate(
+    notnull = ifelse(type == "null", 0, 1),
+    notnull_est = ifelse(abs(estimate) > 0, 1, 0),
+    identify =
+      case_when(
+        notnull == 1 & notnull_est == 1 ~ "TP",
+        notnull == 1 & notnull_est == 0 ~ "FN",
+        notnull == 0 & notnull_est == 1 ~ "FP",
+        notnull == 0 & notnull_est == 0 ~ "TN"
+      )
+  ) %>% 
+  group_by(sim_time, n, p, method) %>% 
+  summarize(
+    sensitivity = sum(identify == "TP")/(sum(identify == "TP") + sum(identify == "FN")),
+    specificity = sum(identify == "TN")/(sum(identify == "TN") + sum(identify == "FP"))
+  )
+# the results are very strange. why forward selection has no zero coefficient estimates?
+```
+
+
