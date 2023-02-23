@@ -61,26 +61,21 @@ generate = function(n, # number of observations
   X = mvrnorm(n, mu = rep(0, p), Sigma = corr_matrix, tol = 1)
   beta = c(rep(20, ps), rep(0.5, pwbc + pwai), rep(0, p - ps - pwbc - pwai))
   Y = X %*% beta + rnorm(n)
-  list_names = c("y",
-                 paste("s", 1:ps, sep = "_"),
-                 paste("wbc", 1:pwbc, sep = "_"),
-                 paste("wai", 1:pwai, sep = "_"),
-                 paste("null", 1:(p - ps - pwbc - pwai), sep = "_"))
-  data = as.data.frame(cbind(Y, X))
-  colnames(data)[1] <- "y"
+  df = as.data.frame(cbind(Y, X))
+  colnames(df)[1] <- "y"
   for (i in 2:(1 + ps)) {
-    colnames(data)[i] <- paste("s", i - 1, sep = "_")
+    colnames(df)[i] <- paste("strong", i - 1, sep = "_")
   }
   for (i in (2 + ps):(1 + ps + pwbc)) {
-    colnames(data)[i] <- paste("wbc", i - 1 - ps, sep = "_")
+    colnames(df)[i] <- paste("wbc", i - 1 - ps, sep = "_")
   }
   for (i in (2 + ps + pwbc):(1 + ps + pwbc + pwai)) {
-    colnames(data)[i] <- paste("wai", i - 1 - ps - pwbc, sep = "_")
+    colnames(df)[i] <- paste("wai", i - 1 - ps - pwbc, sep = "_")
   }
-  for (i in (2 + ps + pwbc + pwai):p) {
-    colnames(data)[i] <- paste("null", i - 1 - ps - pwbc - pwai, sep = "_")
+  for (i in (2 + ps + pwbc + pwai):(1 + p)) {
+    colnames(df)[i] <- paste("null", i - 1 - ps - pwbc - pwai, sep = "_")
   }
-  return(data)
+  return(df)
 }
 ```
 
@@ -91,10 +86,9 @@ n = 1000
 p = 200
 
 # Data manipulation
-data = generate(n,p)
-df = data.frame(data)
-X = as.matrix(data[1:p + 1])
-Y = as.matrix(data[1])
+df = generate(n, p)
+X = as.matrix(df[1:p + 1])
+Y = as.matrix(df[1])
 
 # Forward Selection
 fit_forward = step(object = lm(y ~ 1, data = df),
