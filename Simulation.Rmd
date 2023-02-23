@@ -1,6 +1,6 @@
 ---
 title: "Simulation"
-output: github_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -139,14 +139,27 @@ simulation = function(n, p, param_table) {
 }
 
 param_estimate = data.frame(matrix(ncol = 0, nrow = 0))
-param_estimate = simulation(n = 100, p = 100, data = param_estimate)
-param_estimate = simulation(n = 1000, p = 100, data = param_estimate)
+param_estimate = simulation(n = 100, p = 100, param_table = param_estimate)
+param_estimate = simulation(n = 500, p = 100, param_table = param_estimate)
 param_estimate = select(param_estimate, sim_time, n, p, method, everything())
 write_csv(param_estimate, "parameter_estimate.csv")
 ```
 
 # Fitting Analysis
-```{r}
 
+\begin{tabular}{c|c|c|c}
+\hline  
+Settings & Case 1 & Case 2  \\
+\hline  
+Number of Predictors & 100 & 500\\
+Strong Signals & 3 & 3\\
+Weak-Correlated Signals & 30 & 30\\
+Weak-Independent Signals & 30 & 30\\
+Null Signals & 67 & 67\\
+\hline
+\end{tabular}
+
+```{r}
+param_estimate = read_csv("parameter_estimate.csv")
 ```
 
