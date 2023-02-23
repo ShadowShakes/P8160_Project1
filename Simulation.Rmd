@@ -11,8 +11,8 @@ library(glmnet)
 
 ```{r}
 # Example 2 of the thesis
-generate = function(n = 200, # number of observations
-                    p = 200, # number of predictors
+generate = function(n, # number of observations
+                    p, # number of predictors
                     ps = 3, # number of strong signals
                     pwbc = 30, # number of WBC signals
                     pwai = 30, # number of WAI signals
@@ -85,23 +85,28 @@ generate = function(n = 200, # number of observations
 ```
 
 ```{r}
-# Retrieve data
-data = generate()
+# Number of observations
+n = 1000
+# Number of predictors
+p = 200
+
+# Data manipulation
+data = generate(n,p)
 df = data.frame(data)
-n = 200
+X = as.matrix(data[1:p + 1])
+Y = as.matrix(data[1])
 
 # Forward Selection
 fit_forward = step(object = lm(y ~ 1, data = df),
                    scope = formula(lm(y ~ ., data = df)), 
                    direction = "forward", 
-                   k = 2*n, 
+                   k = 2, 
                    trace = 0)
 summary(fit_forward)
-
+params_forward = fit_forward$coefficients[-1]
+params_forward
 
 # LASSO
-X = as.matrix(data[2:n + 1])
-Y = as.matrix(data[1])
 fit_lasso = cv.glmnet(X, Y, 
                       nfolds = 10, 
                       type.measure = "mse") 
