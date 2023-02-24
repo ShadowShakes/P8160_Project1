@@ -29,7 +29,8 @@ fit_result =
     group_by(sim_time, n, p, method) %>% 
     summarize(
       sensitivity = sum(identify == "TP")/(sum(identify == "TP") + sum(identify == "FN")),
-      specificity = sum(identify == "TN")/(sum(identify == "TN") + sum(identify == "FP"))
+      specificity = sum(identify == "TN")/(sum(identify == "TN") + sum(identify == "FP")),
+      accuracy = sum(identify == "TP" | identify == "TN")/100
     )
 # the results are very strange. why forward selection has no zero coefficient estimates?
 ```

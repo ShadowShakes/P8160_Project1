@@ -16,10 +16,11 @@ library(tidyverse)
 # Generate data for simulation study
 generate = function(n, # number of observations
                     p, # number of predictors
-                    ps = 3, # number of strong signals
-                    pwbc = 30, # number of WBC signals
-                    pwai = 30, # number of WAI signals
-                    corr = 0.7, # correlation coefficient (see example 2)
+                    ratio, # ratio of ps, pwbc, pwai and null
+                    corr, # correlation coefficient (see example 2)
+                    ps = floor(0.5*p*ratio[1]/sum(ratio)), # number of strong signals
+                    pwbc = floor(0.5*p*ratio[2]/sum(ratio)), # number of WBC signals
+                    pwai = floor(0.5*p*ratio[3]/sum(ratio)), # number of WAI signals
                     c = 20 # the c in the definition of strong and weak 
                     ) {
   
@@ -38,7 +39,8 @@ generate = function(n, # number of observations
   # Generate correlation matrix based on example 2
   corr_matrix = matrix(rep(0, len = p^2), nrow = p)
   corr_num = pwbc %/% ps
-  # Correlations between strong & wbc signals
+  
+  # Correlations between strong & wbc signals (necessary)
   for (i in 1:(ps - 1)) {
     for (j in (ps + 1 + (i - 1)*corr_num):(ps + i*corr_num)) {
       corr_matrix[i, j] = corr
@@ -49,21 +51,25 @@ generate = function(n, # number of observations
       }
     }
   }
-  for (j in (ps + 1 + (ps - 1)*corr_num):(ps + pwbc)) {
-    corr_matrix[i, j] = corr
-    corr_matrix[j, i] = corr
-    for (k in j:(ps + pwbc)) {
-      corr_matrix[j, k] = corr
-      corr_matrix[k, j] = corr
-    }
-  }
-  # Correlations within wai signals
-  for (j in (ps + pwbc + 1):(ps + pwbc + pwai)) {
-    for (k in j:(ps + pwbc + pwai)) {
-      corr_matrix[j, k] = corr
-      corr_matrix[k, j] = corr
-    }
-  }
+  
+  # # Correlations between some wbc signals (unnecessary)
+  # for (j in (ps + 1 + (ps - 1)*corr_num):(ps + pwbc)) {
+  #   corr_matrix[i, j] = corr
+  #   corr_matrix[j, i] = corr
+  #   for (k in j:(ps + pwbc)) {
+  #     corr_matrix[j, k] = corr
+  #     corr_matrix[k, j] = corr
+  #   }
+  # }
+  
+  # # Correlations within wai signals (unnecessary)
+  # for (j in (ps + pwbc + 1):(ps + pwbc + pwai)) {
+  #   for (k in j:(ps + pwbc + pwai)) {
+  #     corr_matrix[j, k] = corr
+  #     corr_matrix[k, j] = corr
+  #   }
+  # }
+  
   diag(corr_matrix) = 1
   
   # Generate simulation data
@@ -94,13 +100,12 @@ generate = function(n, # number of observations
 # Simulation
 ```{r, warning=FALSE}
 # Simulate 100 times for n and p
-# Simulation process
-simulation = function(n, p, param_table) {
+simulation = function(n, p, ratio, corr, param_table) {
   param_estimate = param_table
   set.seed(1)
   for (i in 1:100) {
     # Data manipulation
-    df = generate(n, p)
+    df = generate(n, p, ratio, corr)
     X = as.matrix(df[1:p + 1])
     Y = as.matrix(df[1])
     
@@ -139,8 +144,10 @@ simulation = function(n, p, param_table) {
 }
 
 param_estimate = data.frame(matrix(ncol = 0, nrow = 0))
-param_estimate = simulation(n = 100, p = 100, param_table = param_estimate)
-param_estimate = simulation(n = 500, p = 100, param_table = param_estimate)
+param_estimate = simulation(n = 100, p = 100, ratio = c(1:4:5), corr = 0.6, param_table = param_estimate)
+param_estimate = simulation(n = 500, p = 100, ratio = c(1:4:5), corr = 0.6, param_table = param_estimate)
+param_estimate = simulation(n = 2000, p = 100, ratio = c(1:4:5), corr = 0.6, param_table = param_estimate)
+
 param_estimate = select(param_estimate, sim_time, n, p, method, everything())
 write_csv(param_estimate, "parameter_estimate.csv")
 ```
