@@ -6,6 +6,8 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(patchwork)
+
 ```
 
 # Fitting Analysis
@@ -49,18 +51,17 @@ ps = floor(0.4*p*ratio[1]/sum(ratio))
 pwbc = floor(0.4*p*ratio[2]/sum(ratio))
 pwai = floor(0.4*p*ratio[3]/sum(ratio))
 beta = c(rep(20, ps), rep(0.5, pwbc + pwai), rep(0, p - ps - pwbc - pwai))
+# output the beta estimation table
+estimate = 
+  param_estimate %>% 
+  filter(sim_time == num) %>% 
+  mutate(type = factor(type, levels = c('strong', 'wbc', 'wai', 'null'))) %>% 
+  arrange(type) %>% 
+  pull(estimate)
+MSE = sum((estimate - beta)^2) / 100
+MSE
 # Output beta estimation table
-fit_beta_result_ratio1 = 
-  param_1 %>% 
-    mutate(
-      n = factor(n),
-      ratio = factor(ratio),
-      se = (estimate - beta[num])^2
-    ) %>% 
-    group_by(sim_time, n, p, ratio, method) %>% 
-    summarize(
-      MSE = mean(se)
-    )
+
 
 # set beta for second kind of ratio
 p = 100
@@ -70,17 +71,14 @@ pwbc = floor(0.4*p*ratio[2]/sum(ratio))
 pwai = floor(0.4*p*ratio[3]/sum(ratio))
 beta = c(rep(20, ps), rep(0.5, pwbc + pwai), rep(0, p - ps - pwbc - pwai))
 # Output beta estimation table
-fit_beta_result_ratio2 = 
-  param_2 %>% 
-    mutate(
-      n = factor(n),
-      ratio = factor(ratio),
-      se = (estimate - beta[num])^2
-    ) %>% 
-    group_by(sim_time, n, p, ratio, method, type) %>% 
-    summarize(
-      MSE = mean(se)
-    )
+estimate = 
+  param_estimate %>% 
+  filter(sim_time == sim_number) %>% 
+  mutate(type = factor(type, levels = c('strong', 'wbc', 'wai', 'null'))) %>% 
+  arrange(type) %>% 
+  pull(estimate)
+MSE = sum((estimate - beta)^2) / 100
+MSE
 ```
 
 # Visualization
@@ -229,6 +227,12 @@ ggplot(fit_identify_result %>% filter(n == 2000, ratio == 334), aes(x = method, 
   geom_boxplot() +
   theme(legend.position = "right") +
   labs(title = "Plot of length  per dose",x = "method", y = "accuracy")
+
+ggplot(fit_identify_result %>% filter(ratio == 334), aes(x = method, y = accuracy, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "accuracy") +
+  facet_grid(. ~ n)
 ```
 ```{r}
 # Beta estimation
