@@ -15,8 +15,9 @@ param_1 = read_csv("parameter_estimate.csv")
 param_2 = read_csv("parameter_estimate2.csv")
 param_estimate = rbind(param_1, param_2)
 
-# Output table
-fit_result = 
+
+# Output identification table
+fit_identify_result = 
   param_estimate %>% 
     mutate(
       n = factor(n),
@@ -36,9 +37,49 @@ fit_result =
       sensitivity = sum(identify == "TP")/(sum(identify == "TP") + sum(identify == "FN")),
       specificity = sum(identify == "TN")/(sum(identify == "TN") + sum(identify == "FP")),
       precision = sum(identify == "TP")/(sum(identify == "TP") + sum(identify == "FP")),
-      accuracy = (sum(identify == "TP") + sum(identify == "TN"))/
+      accuracy = (sum(identify == "TP") + sum(identify == "TN")) /
         (sum(identify == "TP") + sum(identify == "FP") + sum(identify == "TN") + sum(identify == "FN")),
       F1_score = 2 * precision * sensitivity / (precision + sensitivity)
+    )
+
+# set beta for first kind of ratio
+p = 100
+ratio = c(1, 4, 5)
+ps = floor(0.4*p*ratio[1]/sum(ratio))
+pwbc = floor(0.4*p*ratio[2]/sum(ratio))
+pwai = floor(0.4*p*ratio[3]/sum(ratio))
+beta = c(rep(20, ps), rep(0.5, pwbc + pwai), rep(0, p - ps - pwbc - pwai))
+# Output beta estimation table
+fit_beta_result_ratio1 = 
+  param_1 %>% 
+    mutate(
+      n = factor(n),
+      ratio = factor(ratio),
+      se = (estimate - beta[num])^2
+    ) %>% 
+    group_by(sim_time, n, p, ratio, method) %>% 
+    summarize(
+      MSE = mean(se)
+    )
+
+# set beta for second kind of ratio
+p = 100
+ratio = c(3, 3, 4)
+ps = floor(0.4*p*ratio[1]/sum(ratio))
+pwbc = floor(0.4*p*ratio[2]/sum(ratio))
+pwai = floor(0.4*p*ratio[3]/sum(ratio))
+beta = c(rep(20, ps), rep(0.5, pwbc + pwai), rep(0, p - ps - pwbc - pwai))
+# Output beta estimation table
+fit_beta_result_ratio2 = 
+  param_2 %>% 
+    mutate(
+      n = factor(n),
+      ratio = factor(ratio),
+      se = (estimate - beta[num])^2
+    ) %>% 
+    group_by(sim_time, n, p, ratio, method, type) %>% 
+    summarize(
+      MSE = mean(se)
     )
 ```
 
@@ -47,67 +88,155 @@ fit_result =
 # compare all signals
 
 # compare sensitivity
-ggplot(fit_result, aes(x = method, y = sensitivity, color = n)) + 
+ggplot(fit_identify_result %>% filter(ratio == 145), aes(x = method, y = sensitivity, color = n)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
+  labs(title = "Sensitivity",x = "method", y = "sensitivity")
 
 # compare specificity
-ggplot(fit_result, aes(x = method, y = specificity, color = n)) + 
+ggplot(fit_identify_result, aes(x = method, y = specificity, color = n)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
+  labs(title = "specificity",x = "method", y = "specificity")
 
 # compare f1 score
-ggplot(fit_result, aes(x = method, y = F1_score, color = n)) + 
+ggplot(fit_identify_result, aes(x = method, y = F1_score, color = n)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
+  labs(title = "F1_score",x = "method", y = "F1_score")
 
 # compare accuracy
-ggplot(fit_result, aes(x = method, y = F1_score, color = n)) + 
+ggplot(fit_identify_result, aes(x = method, y = accuracy, color = n)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "accuracy")
+  labs(title = "accuracy",x = "method", y = "accuracy")
 ```
 
 ```{r}
 # compare different signals
 
-# strong
-ggplot(fit_result %>% filter(type == "strong"), aes(x = method, y = sensitivity, color = n)) + 
+# First ratio
+# different n sensitivity
+ggplot(fit_identify_result %>% filter(n == 100, ratio == 145), aes(x = method, y = sensitivity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity")
+ggplot(fit_identify_result %>% filter(n == 500, ratio == 145), aes(x = method, y = sensitivity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity")
+ggplot(fit_identify_result %>% filter(n == 2000, ratio == 145), aes(x = method, y = sensitivity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity")
+
+# different n specificity
+ggplot(fit_identify_result %>% filter(n == 100, ratio == 145), aes(x = method, y = specificity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "specificity")
+ggplot(fit_identify_result %>% filter(n == 500, ratio == 145), aes(x = method, y = specificity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "specificity")
+ggplot(fit_identify_result %>% filter(n == 2000, ratio == 145), aes(x = method, y = specificity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "specificity")
+
+# different n F1-score
+ggplot(fit_identify_result %>% filter(n == 100, ratio == 145), aes(x = method, y = F1_score, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
+ggplot(fit_identify_result %>% filter(n == 500, ratio == 145), aes(x = method, y = F1_score, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
+ggplot(fit_identify_result %>% filter(n == 2000, ratio == 145), aes(x = method, y = F1_score, color = type)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
   labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
 
-# wbc
-ggplot(fit_result %>% filter(type == "wbc"), aes(x = method, y = sensitivity, color = n)) + 
+# different n accuracy
+ggplot(fit_identify_result %>% filter(n == 100, ratio == 145), aes(x = method, y = accuracy, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "accuracy")
+ggplot(fit_identify_result %>% filter(n == 500, ratio == 145), aes(x = method, y = accuracy, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "accuracy")
+ggplot(fit_identify_result %>% filter(n == 2000, ratio == 145), aes(x = method, y = accuracy, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "accuracy")
+
+
+# Second ratio
+# different n sensitivity
+ggplot(fit_identify_result %>% filter(n == 100, ratio == 334), aes(x = method, y = sensitivity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity")
+ggplot(fit_identify_result %>% filter(n == 500, ratio == 334), aes(x = method, y = sensitivity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity")
+ggplot(fit_identify_result %>% filter(n == 2000, ratio == 334), aes(x = method, y = sensitivity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity")
+
+# different n specificity
+ggplot(fit_identify_result %>% filter(n == 100, ratio == 334), aes(x = method, y = specificity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "specificity")
+ggplot(fit_identify_result %>% filter(n == 500, ratio == 334), aes(x = method, y = specificity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "specificity")
+ggplot(fit_identify_result %>% filter(n == 2000, ratio == 334), aes(x = method, y = specificity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "specificity")
+
+# different n F1-score
+ggplot(fit_identify_result %>% filter(n == 100, ratio == 334), aes(x = method, y = F1_score, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
+ggplot(fit_identify_result %>% filter(n == 500, ratio == 334), aes(x = method, y = F1_score, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
+ggplot(fit_identify_result %>% filter(n == 2000, ratio == 334), aes(x = method, y = F1_score, color = type)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
   labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
 
-# wai
-ggplot(fit_result %>% filter(type == "wai"), aes(x = method, y = sensitivity, color = n)) + 
+# different n accuracy
+ggplot(fit_identify_result %>% filter(n == 100, ratio == 334), aes(x = method, y = accuracy, color = type)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "wai sensitivity",x = "method", y = "F1_score")
+  labs(title = "Plot of length  per dose",x = "method", y = "accuracy")
+ggplot(fit_identify_result %>% filter(n == 500, ratio == 334), aes(x = method, y = accuracy, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "accuracy")
+ggplot(fit_identify_result %>% filter(n == 2000, ratio == 334), aes(x = method, y = accuracy, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "accuracy")
+```
+```{r}
+# Beta estimation
 
-# strong
-ggplot(fit_result %>% filter(type == "strong"), aes(x = method, y = accuracy, color = n)) + 
+# MSE of beta for n=100 and ratio 2 
+ggplot(fit_beta_result_ratio2 %>% filter(MSE < 1000, n = 100), aes(x = method, y = MSE, color = n)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
-
-# wbc
-ggplot(fit_result %>% filter(type == "wbc"), aes(x = method, y = accuracy, color = n)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
-
-# wai
-ggplot(fit_result %>% filter(type == "wai"), aes(x = method, y = accuracy, color = n)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
+  labs(title = "Plot of length  per dose",x = "method", y = "MSE")
 ```
 
