@@ -10,7 +10,10 @@ library(tidyverse)
 
 # Fitting Analysis
 ```{r}
-param_estimate = read_csv("parameter_estimate.csv")
+# Load parameter data
+param_1 = read_csv("parameter_estimate.csv")
+param_2 = read_csv("parameter_estimate2.csv")
+param_estimate = rbind(param_1, param_2)
 
 # Output table
 fit_result = 
