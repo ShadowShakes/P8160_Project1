@@ -12,7 +12,7 @@ library(tidyverse)
 ```{r}
 param_estimate = read_csv("parameter_estimate.csv")
 
-# sensitivity & specificity
+# Output table
 fit_result = 
   param_estimate %>% 
     mutate(
@@ -30,9 +30,33 @@ fit_result =
     summarize(
       sensitivity = sum(identify == "TP")/(sum(identify == "TP") + sum(identify == "FN")),
       specificity = sum(identify == "TN")/(sum(identify == "TN") + sum(identify == "FP")),
-      accuracy = sum(identify == "TP" | identify == "TN")/100
+      precision = sum(identify == "TP")/(sum(identify == "TP") + sum(identify == "FP")),
+      accuracy = (sum(identify == "TP") + sum(identify == "TN"))/(sum(identify == "TP") + sum(identify == "FP") + sum(identify == "TN") + sum(identify == "FN")),
+      number = sum(identify == "TP") + sum(identify == "FP") + sum(identify == "TN") + sum(identify == "FN"),
+      F1_score = 2 * precision * sensitivity / (precision + sensitivity)
     )
-# the results are very strange. why forward selection has no zero coefficient estimates?
 ```
 
+# Visualization
+```{r}
+# compare sensitivity
+ggplot(fit_result[1:100,], aes(x = method, y = sensitivity, color = method)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
+
+# compare specificity
+ggplot(fit_result[1:100,], aes(x = method, y = specificity, color = method)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
+
+# compare f1 score
+ggplot(fit_result[1:100,], aes(x = method, y = F1_score, color = method)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
+
+
+```
 

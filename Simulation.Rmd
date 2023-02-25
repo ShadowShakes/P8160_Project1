@@ -18,9 +18,9 @@ generate = function(n, # number of observations
                     p, # number of predictors
                     ratio, # ratio of ps, pwbc, pwai and null
                     corr, # correlation coefficient (see example 2)
-                    ps = floor(0.5*p*ratio[1]/sum(ratio)), # number of strong signals
-                    pwbc = floor(0.5*p*ratio[2]/sum(ratio)), # number of WBC signals
-                    pwai = floor(0.5*p*ratio[3]/sum(ratio)), # number of WAI signals
+                    ps = floor(0.4*p*ratio[1]/sum(ratio)), # number of strong signals
+                    pwbc = floor(0.4*p*ratio[2]/sum(ratio)), # number of WBC signals
+                    pwai = floor(0.4*p*ratio[3]/sum(ratio)), # number of WAI signals
                     c = 20 # the c in the definition of strong and weak 
                     ) {
   
@@ -129,10 +129,11 @@ simulation = function(n, p, ratio, corr, param_table) {
         sim_time = i,
         n = n,
         p = p,
+        ratio = str_c(ratio,collapse = ''),
         method = c("forward", "lasso")
       ) %>% 
       pivot_longer(
-        cols = -c("sim_time", "n", "p", "method"),
+        cols = -c("sim_time", "n", "p", "ratio", "method"),
         names_to = c("type", "num"),
           names_sep = "_",
         values_to = "estimate"
@@ -143,19 +144,20 @@ simulation = function(n, p, ratio, corr, param_table) {
   return(param_estimate)
 }
 
+# Simulation for first kind of ratio and different n
 param_estimate = data.frame(matrix(ncol = 0, nrow = 0))
-param_estimate = simulation(n = 100, p = 100, ratio = c(1,4,5), corr = 0.6, param_table = param_estimate)
-param_estimate = simulation(n = 500, p = 100, ratio = c(1,4,5), corr = 0.6, param_table = param_estimate)
-param_estimate = simulation(n = 2000, p = 100, ratio = c(1,4,5), corr = 0.6, param_table = param_estimate)
+param_estimate = simulation(n = 100, p = 100, ratio = c(1,4,5), corr = 0.4, param_table = param_estimate)
+param_estimate = simulation(n = 500, p = 100, ratio = c(1,4,5), corr = 0.4, param_table = param_estimate)
+param_estimate = simulation(n = 2000, p = 100, ratio = c(1,4,5), corr = 0.4, param_table = param_estimate)
 
 # param_estimate = select(param_estimate, sim_time, n, p, method, everything())
 write_csv(param_estimate, "parameter_estimate.csv")
 
-
+# Simulation for second kind of ratio and different n
 param_estimate = data.frame(matrix(ncol = 0, nrow = 0))
-param_estimate = simulation(n = 100, p = 100, ratio = c(3,3,4), corr = 0.6, param_table = param_estimate)
-param_estimate = simulation(n = 500, p = 100, ratio = c(3,3,4), corr = 0.6, param_table = param_estimate)
-param_estimate = simulation(n = 2000, p = 100, ratio = c(3,3,4), corr = 0.6, param_table = param_estimate)
+param_estimate = simulation(n = 100, p = 100, ratio = c(3,3,4), corr = 0.4, param_table = param_estimate)
+param_estimate = simulation(n = 500, p = 100, ratio = c(3,3,4), corr = 0.4, param_table = param_estimate)
+param_estimate = simulation(n = 2000, p = 100, ratio = c(3,3,4), corr = 0.4, param_table = param_estimate)
 
 # param_estimate = select(param_estimate, sim_time, n, p, method, everything())
 write_csv(param_estimate, "parameter_estimate2.csv")
