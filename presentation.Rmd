@@ -370,22 +370,13 @@ Middle: in between
 - In Lasso, RMSE seems to increase if the missing amount increases, but in forward selection, RMSE decreases when missing amount increases.
 
 
-## Summary of Results
-
-- For binary outcomes, the simple bootstrap tended to underestimate the standard error
-
-- Larger standard error estimates from complex bootstrap in binary and continuous settings
-
-- Differences between simple and complex bootstrap were smaller for larger sample sizes
-
-- Complex bootstrap not as reliable in small sample sizes
-
-
 ## Limitations
 
-- Sample size / treatment (or exposure) prevalence
+- Correlation matrix Pattern
 
-- Small number of initial samples, limited in detecting significant differences in coverage rate
+- Number of observations $n$ and number of parameters $p$
+
+- Ratio of Strong, Wbc, and Wai predictors
 
 
 ## Future Work

@@ -92,11 +92,13 @@ fit_beta_result_ratio1 =
   type == "wbc" ~ num + ps,
   type == "wai" ~ num + ps + pwbc,
   type == "null" ~ num + ps + pwbc + pwai),
-      se = (estimate - beta[num])^2
+      se = (estimate - beta[num])^2,
+      var = (estimate - mean(estimate))^2
     ) %>% 
     group_by(sim_time, n, p, ratio, method) %>% 
     summarize(
-      RMSE = sqrt(mean(se))
+      RMSE = sqrt(mean(se)),
+      Variance = mean(var)
     )
 
 # output the beta estimation table of ratio2
@@ -117,11 +119,13 @@ fit_beta_result_ratio2 =
   type == "wbc" ~ num + ps,
   type == "wai" ~ num + ps + pwbc,
   type == "null" ~ num + ps + pwbc + pwai),
-      se = (estimate - beta[num])^2
+      se = (estimate - beta[num])^2,
+      var = (estimate - mean(estimate))^2
     ) %>% 
     group_by(sim_time, n, p, ratio, method) %>% 
     summarize(
-      RMSE = sqrt(mean(se))
+      RMSE = sqrt(mean(se)),
+      Variance = mean(var)
     )
 
 fit_beta_result_ratio = 
@@ -225,7 +229,7 @@ ggsave(g8,filename = "Images/g8.pdf",width = 12,height = 9)
 
 
 ```{r}
-# Beta estimation
+# Beta estimation of RMSE
 
 # RMSE of beta for n = 100
 g9 = ggplot(fit_beta_result_ratio %>% filter(n == 100), aes(x = method, y = RMSE)) + 
@@ -258,4 +262,38 @@ g11
 ggsave(g11, filename = "Images/g11.pdf",width = 12,height = 9)
 ```
 
+
+```{r}
+# Beta estimation of Variance
+
+# Variance of beta for n = 100
+g12 = ggplot(fit_beta_result_ratio %>% filter(n == 100), aes(x = method, y = Variance)) + 
+  geom_boxplot(color = "red", fill = "orange", alpha = 0.5) +
+  theme(legend.position = "right") +
+  labs(title = "beta Variance when n = 100",x = "method", y = "Variance") +
+  coord_cartesian(ylim = c(0, 150)) +
+  facet_grid(~ ratio)
+g12
+ggsave(g12, filename = "Images/g12.pdf",width = 12,height = 9)
+
+# Variance of beta for n = 500
+g13 = ggplot(fit_beta_result_ratio %>% filter(n == 500), aes(x = method, y = Variance)) + 
+  geom_boxplot(color = "red", fill = "orange", alpha = 0.5) +
+  theme(legend.position = "right") +
+  labs(title = "beta Variance when n = 500",x = "method", y = "Variance") +
+  coord_cartesian(ylim = c(0, 50)) +
+  facet_grid(~ ratio)
+g13
+ggsave(g13, filename = "Images/g13.pdf",width = 12,height = 9)
+
+# Variance of beta for n = 2000
+g12 = ggplot(fit_beta_result_ratio %>% filter(n == 2000), aes(x = method, y = Variance)) + 
+  geom_boxplot(color = "red", fill = "orange", alpha = 0.5) +
+  theme(legend.position = "right") +
+  labs(title = "beta Variance when n = 2000",x = "method", y = "Variance") +
+  coord_cartesian(ylim = c(0, 150)) +
+  facet_grid(~ ratio)
+g12
+ggsave(g12, filename = "Images/g12.pdf",width = 12,height = 9)
+```
 
