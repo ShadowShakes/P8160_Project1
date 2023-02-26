@@ -45,7 +45,7 @@ fit_identify_result =
 
 
 # Output identification table by signal
-fit_identify_result = 
+fit_identify_result_type = 
   param_estimate %>% 
     mutate(
       n = factor(n),
@@ -142,91 +142,52 @@ ggplot(fit_identify_result, aes(x = method, y = accuracy, color = n)) +
 # compare different signals
 
 # First ratio
-# different n sensitivity
-ggplot(fit_identify_result %>% filter(n == 100, ratio == 145), aes(x = method, y = sensitivity, color = type)) + 
+ggplot(fit_identify_result_type %>% filter(ratio == 145), aes(x = method, y = sensitivity, color = type)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity")
-ggplot(fit_identify_result %>% filter(n == 500, ratio == 145), aes(x = method, y = sensitivity, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity")
-ggplot(fit_identify_result %>% filter(n == 2000, ratio == 145), aes(x = method, y = sensitivity, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity")
+  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity") +
+  facet_grid(. ~ n)
 
-# different n specificity
-ggplot(fit_identify_result %>% filter(n == 100, ratio == 145), aes(x = method, y = specificity, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "specificity")
-ggplot(fit_identify_result %>% filter(n == 500, ratio == 145), aes(x = method, y = specificity, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "specificity")
-ggplot(fit_identify_result %>% filter(n == 2000, ratio == 145), aes(x = method, y = specificity, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "specificity")
-
-# different n F1-score
-ggplot(fit_identify_result %>% filter(n == 100, ratio == 145), aes(x = method, y = F1_score, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
-ggplot(fit_identify_result %>% filter(n == 500, ratio == 145), aes(x = method, y = F1_score, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
-ggplot(fit_identify_result %>% filter(n == 2000, ratio == 145), aes(x = method, y = F1_score, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "F1_score")
-
-# different n accuracy
-ggplot(fit_identify_result %>% filter(n == 100, ratio == 145), aes(x = method, y = accuracy, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "accuracy")
-ggplot(fit_identify_result %>% filter(n == 500, ratio == 145), aes(x = method, y = accuracy, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "accuracy")
-ggplot(fit_identify_result %>% filter(n == 2000, ratio == 145), aes(x = method, y = accuracy, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "accuracy")
-
-
-# Second ratio
-# different n sensitivity
-ggplot(fit_identify_result %>% filter(n == 100, ratio == 334), aes(x = method, y = sensitivity, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity")
-ggplot(fit_identify_result %>% filter(n == 500, ratio == 334), aes(x = method, y = sensitivity, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity")
-ggplot(fit_identify_result %>% filter(n == 2000, ratio == 334), aes(x = method, y = sensitivity, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity")
-
-ggplot(fit_identify_result %>% filter(ratio == 334), aes(x = method, y = specificity, color = type)) + 
+ggplot(fit_identify_result_type %>% filter(ratio == 145), aes(x = method, y = specificity, color = type)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
   labs(title = "Plot of length  per dose",x = "method", y = "specificity") +
   facet_grid(. ~ n)
 
-ggplot(fit_identify_result %>% filter(ratio == 334), aes(x = method, y = F1_score, color = type)) + 
+ggplot(fit_identify_result_type %>% filter(ratio == 145), aes(x = method, y = F1_score, color = type)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
   labs(title = "Plot of length  per dose",x = "method", y = "F1_score") +
   facet_grid(. ~ n)
 
-ggplot(fit_identify_result %>% filter(ratio == 334), aes(x = method, y = accuracy, color = type)) + 
+ggplot(fit_identify_result_type %>% filter(ratio == 145), aes(x = method, y = accuracy, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "accuracy") +
+  facet_grid(. ~ n)
+
+
+
+# Second ratio
+ggplot(fit_identify_result_type %>% filter(ratio == 334), aes(x = method, y = sensitivity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity") +
+  facet_grid(. ~ n)
+
+ggplot(fit_identify_result_type %>% filter(ratio == 334), aes(x = method, y = specificity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "specificity") +
+  facet_grid(. ~ n)
+
+ggplot(fit_identify_result_type %>% filter(ratio == 334), aes(x = method, y = F1_score, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Plot of length  per dose",x = "method", y = "F1_score") +
+  facet_grid(. ~ n)
+
+ggplot(fit_identify_result_type %>% filter(ratio == 334), aes(x = method, y = accuracy, color = type)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
   labs(title = "Plot of length  per dose",x = "method", y = "accuracy") +
