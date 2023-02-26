@@ -237,6 +237,6 @@ g11 = ggplot(fit_beta_result_ratio %>% filter(n == 2000), aes(x = method, y = RM
   coord_cartesian(ylim = c(0, 0.4)) +
   facet_grid(~ ratio)
 g11
-ggsave(g11, filename = "Images/g10.pdf",width = 12,height = 9)
+ggsave(g11, filename = "Images/g11.pdf",width = 12,height = 9)
 ```
 
