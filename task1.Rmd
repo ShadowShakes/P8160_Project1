@@ -36,6 +36,7 @@ fit_identify_result =
     ) %>% 
     group_by(sim_time, n, p, ratio, method) %>% 
     summarize(
+      number_of_parameters = sum(identify == "TP") + sum(identify == "FP"),
       sensitivity = sum(identify == "TP")/(sum(identify == "TP") + sum(identify == "FN")),
       specificity = sum(identify == "TN")/(sum(identify == "TN") + sum(identify == "FP")),
       precision = sum(identify == "TP")/(sum(identify == "TP") + sum(identify == "FP")),
@@ -63,6 +64,7 @@ fit_identify_result_type =
     ) %>% 
     group_by(sim_time, n, p, ratio, method, type) %>% 
     summarize(
+      number_of_parameters = sum(identify == "TP") + sum(identify == "FP"),
       sensitivity = sum(identify == "TP")/(sum(identify == "TP") + sum(identify == "FN")),
       specificity = sum(identify == "TN")/(sum(identify == "TN") + sum(identify == "FP")),
       precision = sum(identify == "TP")/(sum(identify == "TP") + sum(identify == "FP")),
@@ -126,9 +128,24 @@ fit_beta_result_ratio =
   rbind(fit_beta_result_ratio1, fit_beta_result_ratio2)
 ```
 
-# Visualization
+# Visualization Analysis
+
 ```{r}
-# compare all signals
+# compare model complexity
+
+# compare sensitivity
+g_1 = ggplot(fit_identify_result, aes(x = method, y = number_of_parameters, color = n)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Complexity",x = "method", y = "Number of Selected Parameters") +
+  facet_grid(. ~ ratio)
+g_1
+ggsave(g_1,filename = "Images/g_1.pdf",width = 12,height = 9)
+```
+
+
+```{r}
+# compare all signals on four metrics
 
 # compare sensitivity
 g1 = ggplot(fit_identify_result, aes(x = method, y = sensitivity, color = n)) + 
@@ -166,6 +183,7 @@ g4 = ggplot(fit_identify_result, aes(x = method, y = accuracy, color = n)) +
 g4
 ggsave(g4,filename = "Images/g4.pdf",width = 12,height = 9)
 ```
+
 
 ```{r}
 # compare different signals
@@ -239,4 +257,5 @@ g11 = ggplot(fit_beta_result_ratio %>% filter(n == 2000), aes(x = method, y = RM
 g11
 ggsave(g11, filename = "Images/g11.pdf",width = 12,height = 9)
 ```
+
 

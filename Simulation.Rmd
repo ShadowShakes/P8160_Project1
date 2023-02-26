@@ -146,9 +146,9 @@ simulation = function(n, p, ratio, corr, param_table) {
 
 # Simulation for first kind of ratio and different n
 param_estimate = data.frame(matrix(ncol = 0, nrow = 0))
-param_estimate = simulation(n = 100, p = 100, ratio = c(3,6,1), corr = 0.4, param_table = param_estimate)
-param_estimate = simulation(n = 500, p = 100, ratio = c(3,6,1), corr = 0.4, param_table = param_estimate)
-param_estimate = simulation(n = 2000, p = 100, ratio = c(3,6,1), corr = 0.4, param_table = param_estimate)
+param_estimate = simulation(n = 100, p = 100, ratio = c(1,4,5), corr = 0.4, param_table = param_estimate)
+param_estimate = simulation(n = 500, p = 100, ratio = c(1,4,5), corr = 0.4, param_table = param_estimate)
+param_estimate = simulation(n = 2000, p = 100, ratio = c(1,4,5), corr = 0.4, param_table = param_estimate)
 
 # param_estimate = select(param_estimate, sim_time, n, p, method, everything())
 write_csv(param_estimate, "parameter_estimate.csv")

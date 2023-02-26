@@ -124,6 +124,7 @@ _Other Parameters_
 Define true predictors as positive and null predictors as negative.\par
 
 _Signal Identification_
+- \textbf{Complexity:} $\text{Number of Selected Parameters}$
 
 - \textbf{Sensitivity:} $\frac{TP}{TP+FN}$
 
