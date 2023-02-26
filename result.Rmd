@@ -7,6 +7,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(patchwork)
+library(dplyr)
 ```
 
 # Fitting Analysis
@@ -22,7 +23,7 @@ fit_identify_result =
   param_estimate %>% 
     mutate(
       n = factor(n),
-      ratio = factor(ratio),
+      ratio = ifelse(ratio == 145, "1:4:5", "3:3:4"),
       notnull = ifelse(type == "null", 0, 1),
       notnull_est = ifelse(abs(estimate) > 0, 1, 0),
       identify =
@@ -49,7 +50,7 @@ fit_identify_result_type =
   param_estimate %>% 
     mutate(
       n = factor(n),
-      ratio = factor(ratio),
+      ratio = ifelse(ratio == 145, "1:4:5", "3:3:4"),
       notnull = ifelse(type == "null", 0, 1),
       notnull_est = ifelse(abs(estimate) > 0, 1, 0),
       identify =
@@ -72,41 +73,55 @@ fit_identify_result_type =
 
 
 
-# set beta for first kind of ratio
 p = 100
 ratio = c(1, 4, 5)
 ps = floor(0.4*p*ratio[1]/sum(ratio))
 pwbc = floor(0.4*p*ratio[2]/sum(ratio))
 pwai = floor(0.4*p*ratio[3]/sum(ratio))
 beta = c(rep(20, ps), rep(0.5, pwbc + pwai), rep(0, p - ps - pwbc - pwai))
-# output the beta estimation table
-estimate = 
-  param_estimate %>% 
-  filter(sim_time == num) %>% 
-  mutate(type = factor(type, levels = c('strong', 'wbc', 'wai', 'null'))) %>% 
-  arrange(type) %>% 
-  pull(estimate)
-MSE = sum((estimate - beta)^2) / 100
-MSE
-# Output beta estimation table
+# output the beta estimation table of ratio 1
+fit_beta_result_ratio1 = 
+  param_1 %>% 
+    mutate(
+      n = factor(n),
+      ratio = factor(ratio),
+      num = case_when(
+  type == "strong" ~ num,
+  type == "wbc" ~ num + ps,
+  type == "wai" ~ num + ps + pwbc,
+  type == "null" ~ num + ps + pwbc + pwai),
+      se = (estimate - beta[num])^2
+    ) %>% 
+    group_by(sim_time, n, p, ratio, method) %>% 
+    summarize(
+      RMSE = sqrt(mean(se))
+    )
 
-
-# set beta for second kind of ratio
+# output the beta estimation table of ratio2
 p = 100
 ratio = c(3, 3, 4)
 ps = floor(0.4*p*ratio[1]/sum(ratio))
 pwbc = floor(0.4*p*ratio[2]/sum(ratio))
 pwai = floor(0.4*p*ratio[3]/sum(ratio))
 beta = c(rep(20, ps), rep(0.5, pwbc + pwai), rep(0, p - ps - pwbc - pwai))
-# Output beta estimation table
-estimate = 
-  param_estimate %>% 
-  filter(sim_time == sim_number) %>% 
-  mutate(type = factor(type, levels = c('strong', 'wbc', 'wai', 'null'))) %>% 
-  arrange(type) %>% 
-  pull(estimate)
-MSE = sum((estimate - beta)^2) / 100
-MSE
+
+fit_beta_result_ratio2 = 
+  param_2 %>% 
+    mutate(
+      n = factor(n),
+      ratio = factor(ratio),
+      num = case_when(
+  type == "strong" ~ num,
+  type == "wbc" ~ num + ps,
+  type == "wai" ~ num + ps + pwbc,
+  type == "null" ~ num + ps + pwbc + pwai),
+      se = (estimate - beta[num])^2
+    ) %>% 
+    group_by(sim_time, n, p, ratio, method) %>% 
+    summarize(
+      RMSE = sqrt(mean(se))
+    )
+
 ```
 
 # Visualization
@@ -114,101 +129,91 @@ MSE
 # compare all signals
 
 # compare sensitivity
-ggplot(fit_identify_result %>% filter(ratio == 145), aes(x = method, y = sensitivity, color = n)) + 
+g1 = ggplot(fit_identify_result, aes(x = method, y = sensitivity, color = n)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Sensitivity",x = "method", y = "sensitivity")
+  labs(title = "Sensitivity",x = "method", y = "sensitivity") +
+  facet_grid(. ~ ratio)
+g1
+ggsave(g1,filename = "Images/g1.pdf",width = 12,height = 9)
 
 # compare specificity
-ggplot(fit_identify_result %>% filter(ratio == 145), aes(x = method, y = specificity, color = n)) + 
+g2 = ggplot(fit_identify_result, aes(x = method, y = specificity, color = n)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Sensitivity",x = "method", y = "specificity")
+  labs(title = "Specificity",x = "method", y = "specificity") +
+  facet_grid(. ~ ratio)
+g2
+ggsave(g2,filename = "Images/g2.pdf",width = 12,height = 9)
 
 # compare F1-score
-ggplot(fit_identify_result %>% filter(ratio == 145), aes(x = method, y = F1_score, color = n)) + 
+g3 = ggplot(fit_identify_result, aes(x = method, y = F1_score, color = n)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Sensitivity",x = "method", y = "F1_score")
+  labs(title = "F1_score",x = "method", y = "F1_score") +
+  facet_grid(. ~ ratio)
+g3
+ggsave(g3,filename = "Images/g3.pdf",width = 12,height = 9)
 
 # compare accuracy
-ggplot(fit_identify_result %>% filter(ratio == 145), aes(x = method, y = accuracy, color = n)) + 
+g4 = ggplot(fit_identify_result, aes(x = method, y = accuracy, color = n)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Sensitivity",x = "method", y = "accuracy")
+  labs(title = "Accuracy",x = "method", y = "accuracy") +
+  facet_grid(. ~ ratio)
+g4
+ggsave(g4,filename = "Images/g4.pdf",width = 12,height = 9)
 ```
 
 ```{r}
 # compare different signals
 
 # First ratio
-ggplot(fit_identify_result_type %>% filter(ratio == 145), aes(x = method, y = sensitivity, color = type)) + 
+g5 = ggplot(fit_identify_result_type, aes(x = method, y = sensitivity, color = type)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity") +
-  facet_grid(. ~ n)
+  labs(title = "Sensitivity",x = "method", y = "sensitivity") +
+  facet_grid(ratio ~ n)
+g5
+ggsave(g5,filename = "Images/g5.pdf",width = 12,height = 9)
 
-ggplot(fit_identify_result_type %>% filter(ratio == 145), aes(x = method, y = specificity, color = type)) + 
+g6 = ggplot(fit_identify_result_type, aes(x = method, y = specificity, color = type)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "specificity") +
-  facet_grid(. ~ n)
+  labs(title = "Specificity",x = "method", y = "specificity") +
+  facet_grid(ratio ~ n)
+g6
+ggsave(g6,filename = "Images/g6.pdf",width = 12,height = 9)
 
-ggplot(fit_identify_result_type %>% filter(ratio == 145), aes(x = method, y = F1_score, color = type)) + 
+g7 = ggplot(fit_identify_result_type, aes(x = method, y = F1_score, color = type)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "F1_score") +
-  facet_grid(. ~ n)
+  labs(title = "F1_score",x = "method", y = "specificity") +
+  facet_grid(ratio ~ n)
+g7
+ggsave(g7,filename = "Images/g7.pdf",width = 12,height = 9)
 
-ggplot(fit_identify_result_type %>% filter(ratio == 145), aes(x = method, y = accuracy, color = type)) + 
+g8 = ggplot(fit_identify_result_type, aes(x = method, y = accuracy, color = type)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "accuracy") +
-  facet_grid(. ~ n)
-
-
-
-# Second ratio
-ggplot(fit_identify_result_type %>% filter(ratio == 334), aes(x = method, y = sensitivity, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "sensitivity") +
-  facet_grid(. ~ n)
-
-ggplot(fit_identify_result_type %>% filter(ratio == 334), aes(x = method, y = specificity, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "specificity") +
-  facet_grid(. ~ n)
-
-ggplot(fit_identify_result_type %>% filter(ratio == 334), aes(x = method, y = F1_score, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "F1_score") +
-  facet_grid(. ~ n)
-
-ggplot(fit_identify_result_type %>% filter(ratio == 334), aes(x = method, y = accuracy, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "accuracy") +
-  facet_grid(. ~ n)
-
-
-
-
-ggplot(fit_identify_result_type %>% filter(n == 100), aes(x = method, y = accuracy, color = type)) + 
-  geom_boxplot() +
-  theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "accuracy") +
-  facet_grid(. ~ ratio)
+  labs(title = "Accuracy",x = "method", y = "specificity") +
+  facet_grid(ratio ~ n)
+g8
+ggsave(g8,filename = "Images/g8.pdf",width = 12,height = 9)
 ```
+
+
+
 ```{r}
 # Beta estimation
 
 # MSE of beta for n=100 and ratio 2 
-ggplot(fit_beta_result_ratio2 %>% filter(MSE < 1000, n = 100), aes(x = method, y = MSE, color = n)) + 
+g9 = ggplot(fit_beta_result_ratio2 %>% filter(RMSE < 10, n == 100), aes(x = method, y = RMSE, color = n)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "MSE")
+  labs(title = "Plot of length  per dose",x = "method", y = "RMSE") +
+  facet_grid(. ~ n)
+g9
+ggsave(g9, filename = "Images/g9.pdf",width = 12,height = 9)
 ```
 
