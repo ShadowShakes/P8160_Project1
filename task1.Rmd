@@ -84,7 +84,7 @@ fit_beta_result_ratio1 =
   param_1 %>% 
     mutate(
       n = factor(n),
-      ratio = factor(ratio),
+      ratio = ifelse(ratio == 145, "1:4:5", "3:3:4"),
       num = case_when(
   type == "strong" ~ num,
   type == "wbc" ~ num + ps,
@@ -109,7 +109,7 @@ fit_beta_result_ratio2 =
   param_2 %>% 
     mutate(
       n = factor(n),
-      ratio = factor(ratio),
+      ratio = ifelse(ratio == 145, "1:4:5", "3:3:4"),
       num = case_when(
   type == "strong" ~ num,
   type == "wbc" ~ num + ps,
@@ -122,6 +122,8 @@ fit_beta_result_ratio2 =
       RMSE = sqrt(mean(se))
     )
 
+fit_beta_result_ratio = 
+  rbind(fit_beta_result_ratio1, fit_beta_result_ratio2)
 ```
 
 # Visualization
@@ -207,13 +209,34 @@ ggsave(g8,filename = "Images/g8.pdf",width = 12,height = 9)
 ```{r}
 # Beta estimation
 
-# MSE of beta for n=100 and ratio 2 
-g9 = ggplot(fit_beta_result_ratio2 %>% filter(RMSE < 10, n == 100), aes(x = method, y = RMSE, color = n)) + 
-  geom_boxplot() +
+# MSE of beta for n = 100
+g9 = ggplot(fit_beta_result_ratio %>% filter(n == 100), aes(x = method, y = RMSE)) + 
+  geom_boxplot(color = "red", fill = "orange", alpha = 0.5) +
   theme(legend.position = "right") +
-  labs(title = "Plot of length  per dose",x = "method", y = "RMSE") +
-  facet_grid(. ~ n)
+  labs(title = "beta RMSE when n = 100",x = "method", y = "RMSE") +
+  coord_cartesian(ylim = c(0, 15)) +
+  facet_grid(~ ratio)
 g9
 ggsave(g9, filename = "Images/g9.pdf",width = 12,height = 9)
+
+# MSE of beta for n = 500
+g10 = ggplot(fit_beta_result_ratio %>% filter(n == 500), aes(x = method, y = RMSE)) + 
+  geom_boxplot(color = "red", fill = "orange", alpha = 0.5) +
+  theme(legend.position = "right") +
+  labs(title = "beta RMSE when n = 500",x = "method", y = "RMSE") +
+  coord_cartesian(ylim = c(0, 0.6)) +
+  facet_grid(~ ratio)
+g10
+ggsave(g10, filename = "Images/g10.pdf",width = 12,height = 9)
+
+# MSE of beta for n = 2000
+g11 = ggplot(fit_beta_result_ratio %>% filter(n == 2000), aes(x = method, y = RMSE)) + 
+  geom_boxplot(color = "red", fill = "orange", alpha = 0.5) +
+  theme(legend.position = "right") +
+  labs(title = "beta RMSE when n = 2000",x = "method", y = "RMSE") +
+  coord_cartesian(ylim = c(0, 0.4)) +
+  facet_grid(~ ratio)
+g11
+ggsave(g11, filename = "Images/g10.pdf",width = 12,height = 9)
 ```
 
