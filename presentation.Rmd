@@ -291,10 +291,29 @@ _Parameter Estimation_
 
 ## Predictors Identification Conclusions
 
-_High Dimension Scenario_
-- Forward selection tend to be assertive in selecting true predictors while Lasso is conservative, resulting in extremely high sensitivity and more selected predictors for forward selection, and high specificity and less selected predictors for Lasso
-- In high-dimensional scenarios, forward selection has an overall much higher F1-score, and both methods perfectly identify the strong predictors
-- 
+_High Dimensional Scenario(n=100)_
+
+- Forward selection tend to be assertive, with extremely high sensitivity and more selected predictors, better at identifying true signals
+- Lasso tend to be conservative, with extremely high specificity and fewer selected predictors, better at identifying null signals
+- Forward selection has an overall much higher F1-score but lower accuracy than Lasso
+- Lasso performs smaller RMSE on parameter estimation than forward selection
+
+
+## Predictors Identification Conclusions
+
+_Normal Scenario(n=500, 2000)_
+
+- Forward selection tends to overall select more predictors than Lasso, both methods select more predictors and more close to true predictor number(40) as n increases
+- Both methods are sensitive for strong predictors. Forward selection is more sensitive than Lasso in identifying weak predictors than Lasso when there are fewer true strong predictors, else the discrepancy becomes smaller
+- The sensitivity for identifying weak predictors are increasing as n increases for both models
+
+## Predictors Identification Conclusions
+
+_Normal Scenario(n=500, 2000)_
+
+- Lasso overall has higher specificity than forward, but the discrepancy becomes smaller as n increases
+- The F1-score and accuracy increases as n increases for both models, overall Lasso has higher accuracy than forward 
+- Lasso performs smaller RMSE on parameter estimation than forward as n increases
 
 ## Missing Weak Predictors Analysis - Introduction
 
