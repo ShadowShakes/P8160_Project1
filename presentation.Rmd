@@ -119,9 +119,11 @@ _Other Parameters_
 - Strength of covariate effect on outcome $\beta_2 = \log(1.75), \beta_3 = \log(1.25)$
 
 
-## Signal Identification Metrics
+## Evaluation Metrics
 
-Define the true predictors to be positive and the null predictors to be negative.\par
+Define true predictors as positive and null predictors as negative.\par
+
+_Signal Identification_
 
 - \textbf{Sensitivity:} $\frac{TP}{TP+FN}$
 
@@ -131,12 +133,7 @@ Define the true predictors to be positive and the null predictors to be negative
 
 - \textbf{Accuracy:} $\frac{TP+TN}{TP+TN+FP+FN}$
 
-
-## Parameter Identification Metrics
-
-Denote the estimation of $\beta$ as $\hat{\beta} = (\hat{\beta_1}, \hat{\beta_2}, ..., \hat{\beta_n})$.\par
-
-- \textbf{Bias:} $\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\beta_i)$
+_Parameter Estimation_
 
 - \textbf{MSE:} $\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\beta_i)^2$
 
@@ -159,8 +156,6 @@ Denote the estimation of $\beta$ as $\hat{\beta} = (\hat{\beta_1}, \hat{\beta_2}
 
 
 ## Parameter Estimation Performance
-
-- \textbf{Bias}
 
 - \textbf{MSE}
 

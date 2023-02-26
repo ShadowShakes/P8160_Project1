@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  25 FEB 2023 20:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  26 FEB 2023 09:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1029,6 +1029,16 @@ LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
 
 ] [14
 
+] [15
+
+] [16
+
+] [17
+
+] [18
+
+] [19
+
 ]
 \tf@nav=\write6
 \openout6 = `presentation.nav'.
@@ -1041,10 +1051,10 @@ LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
 
 (./presentation.aux) ) 
 Here is how much of TeX's memory you used:
- 24690 strings out of 478268
- 476901 string characters out of 5846347
+ 24715 strings out of 478268
+ 477235 string characters out of 5846347
  760976 words of memory out of 5000000
- 42271 multiletter control sequences out of 15000+600000
+ 42281 multiletter control sequences out of 15000+600000
  510652 words of font info for 87 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,11n,122p,1009b,401s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1065,10 +1075,10 @@ e1/public/lm/lmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/l
 m/lmtk10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt10.p
 fb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtti10.pfb></usr/
 local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on presentation.pdf (14 pages, 235439 bytes).
+Output written on presentation.pdf (19 pages, 238386 bytes).
 PDF statistics:
- 195 PDF objects out of 1000 (max. 8388607)
- 141 compressed objects within 2 object streams
- 42 named destinations out of 1000 (max. 500000)
+ 229 PDF objects out of 1000 (max. 8388607)
+ 170 compressed objects within 2 object streams
+ 57 named destinations out of 1000 (max. 500000)
  24619 words of extra memory for PDF output out of 24883 (max. 10000000)
 
