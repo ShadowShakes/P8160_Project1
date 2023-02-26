@@ -154,7 +154,7 @@ _Signal Identification_
 
 - \textbf{Specificity:} $\frac{TN}{TN+FP}$
 
-- \textbf{F1-Score:} $\frac{2\cdot \text{sensitivity}\cdot \text{precision}}{\text{sensitivity}+\text{precision}}$
+- \textbf{F1-score:} $\frac{2\cdot \text{sensitivity}\cdot \text{precision}}{\text{sensitivity}+\text{precision}}$
 
 - \textbf{Accuracy:} $\frac{TP+TN}{TP+TN+FP+FN}$
 
