@@ -125,7 +125,7 @@ _Other Parameters_
 
 ## Evaluation Metrics
 
-Define true predictors as positive and null predictors as negative.\par
+Define true predictors as positive and null predictors as negative\par
 
 _Signal Identification_
 
@@ -145,7 +145,6 @@ _Parameter Estimation_
 
 
 ## Signal Identification Performance - Complexity
-
 \begin{figure}[H] 
 \includegraphics[width=0.9\textwidth]{Images/g_1.pdf} 
 \caption{Model Complexity} 
@@ -153,8 +152,12 @@ _Parameter Estimation_
 \end{figure}
 
 
-## Signal Identification Performance - Sensitivity
+## Signal Identification Performance - Complexity Exploration
+- When in high dimensional scenario, forward selection tends to select nearly all of the predictors but Lasso does not
+- Lasso tends to select much fewer predictors than forward selection, and the parameters it select will increase as n increases
+- As n increases, the predictors that two models select are more precise(closer to true predictor number 40)
 
+## Signal Identification Performance - Sensitivity
 \begin{figure}[H] 
 \includegraphics[width=0.9\textwidth]{Images/g1.pdf} 
 \caption{Sensitivity Performance} 
@@ -163,7 +166,6 @@ _Parameter Estimation_
 
 
 ## Signal Identification Performance - Sensitivity
-
 \begin{figure}[H] 
 \includegraphics[width=0.9\textwidth]{Images/g5.pdf} 
 \caption{Sensitivity of True Signals} 
@@ -171,23 +173,26 @@ _Parameter Estimation_
 \end{figure}
 
 
-## Signal Identification Performance - Sensitivity
-
-\begin{figure}[H] 
-\includegraphics[width=0.9\textwidth]{Images/g5.pdf} 
-\caption{Sensitivity of True Signals} 
-\label{Fig5}
-\end{figure
+## Signal Identification Performance - Sensitivity Exploration
+- Forward selection are highly sensitive in high dimensional case(n=100) while Lasso does not
+- Overall, the sensitivity of two models increases as n increases
+- Both models are sensitive in selecting strong signals. But when it comes to weak predictors, Lasso is much less sensitive in high dimensional scenario than forward selection. 
+- When n increases, the sensitivity discrepancy of selecting weak predictors between two models becomes smaller. But still, forward selection is overall more sensitive than Lasso.
+- The sensitivity discrepancy between two models are smaller when the ratio of strong predictors becomes larger.
 
 
 ## Signal Identification Performance - Specificity
-
 \begin{figure}[H] 
 \includegraphics[width=0.9\textwidth]{Images/g2.pdf} 
 \caption{Specificity Performance} 
 \label{Fig2}
 \end{figure}
 
+
+## Signal Identification Performance - Specificity Exploration
+- When in high dimensional scenario, the specificity of forward selection is very near to 0, which means it almost does not identify any null predictors.
+- Combined with previous sensitivity performance, we deduce that forward selection is a very radical model and tends to identity all 100 predictors as true, which leads to extremely high sensitivity but low specificity.
+- 
 
 ## Signal Identification Performance - F1-Score
 
@@ -250,6 +255,10 @@ _Parameter Estimation_
 \caption{Beta Rmse when n=100} 
 \label{Fig11}
 \end{figure}
+
+
+## Predictors Identification Conclusions
+- D
 
 
 ## Missing Weak Predictors Analysis
