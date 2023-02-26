@@ -75,7 +75,7 @@ generate = function(n, # number of observations
   # Generate simulation data
   X = mvrnorm(n, mu = rep(0, p), Sigma = corr_matrix, tol = 1)
   beta = c(rep(20, ps), rep(0.5, pwbc + pwai), rep(0, p - ps - pwbc - pwai))
-  Y = X %*% beta + rnorm(n, mean = 0, sd = 10)
+  Y = X %*% beta + rnorm(n, mean = 0, sd = 8)
   df = as.data.frame(cbind(Y, X))
   colnames(df)[1] = "y"
   
@@ -177,7 +177,4 @@ Null Signals & 67 & 67\\
 \hline
 \end{tabular}
 
-```{r}
-param_estimate = read_csv("parameter_estimate.csv")
-```
 

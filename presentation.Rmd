@@ -119,15 +119,56 @@ _Other Parameters_
 - Strength of covariate effect on outcome $\beta_2 = \log(1.75), \beta_3 = \log(1.25)$
 
 
-## Measures of Interest
+## Signal Identification Metrics
 
-- \textbf{Standard Error:} The variability of the average estimate of the treatment effect ($\text{SE}(\hat{\beta}_1)$).
-- \textbf{Coverage Rate:} The fraction of alleged 95\% confidence intervals ($\hat{\beta}_1 \pm 1.96 \times \text{SE}(\hat{\beta}_1)$) that contain the true treatment effect
+Define the true predictors to be positive and the null predictors to be negative.\par
 
-_Other Measures_
+- \textbf{Sensitivity:} $\frac{TP}{TP+FN}$
 
-- \textbf{Bias:} The mean of the average estimate ($\hat{\beta}_1$) less the true treatment effect ($\beta$)
+- \textbf{Specificity:} $\frac{TN}{TN+FP}$
 
+- \textbf{F1-Score:} $\frac{2\cdot \text{sensitivity}\cdot \text{precision}}{\text{sensitivity}+\text{precision}}$
+
+- \textbf{Accuracy:} $\frac{TP+TN}{TP+TN+FP+FN}$
+
+
+## Parameter Identification Metrics
+
+Denote the estimation of $\beta$ as $\hat{\beta} = (\hat{\beta_1}, \hat{\beta_2}, ..., \hat{\beta_n})$.\par
+
+- \textbf{Bias:} $\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\beta_i)$
+
+- \textbf{MSE:} $\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\beta_i)^2$
+
+
+## Signal Identification Performance
+
+- \textbf{Sensitivity}
+
+## Signal Identification Performance
+
+- \textbf{Specificity}
+
+## Signal Identification Performance
+
+- \textbf{F1-Score}
+
+## Signal Identification Performance
+
+- \textbf{Accuracy}
+
+
+## Parameter Estimation Performance
+
+- \textbf{Bias}
+
+- \textbf{MSE}
+
+
+
+## Missing Weak Predictors Analysis
+
+dddd
 
 ## Summary of Results
 
