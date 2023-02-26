@@ -190,12 +190,13 @@ _Parameter Estimation_
 
 
 ## Signal Identification Performance - Specificity Exploration
-- When in high dimensional scenario, the specificity of forward selection is very near to 0, which means it almost does not identify any null predictors.
-- Combined with previous sensitivity performance, we deduce that forward selection is a very radical model and tends to identity all 100 predictors as true, which leads to extremely high sensitivity but low specificity.
-- 
+- In high dimensional scenario, the specificity of forward selection is near 0, which means it almost does not identify any null predictor, but Lasso in turn has high specificity.
+- In high dimensional scenario, forward selection is very radical and tends to identity all 100 predictors as true, leading to extremely high sensitivity but low specificity.
+- In high dimensional scenario, Lasso is very conservative and tends to identity most 100 predictors as null,leading to low sensitivity but high specificity.
+- As n increases, forward selection has higher specificity. And overall, specificity are higher when the ratio of strong predictors are lower.
+
 
 ## Signal Identification Performance - F1-Score
-
 \begin{figure}[H] 
 \includegraphics[width=0.9\textwidth]{Images/g3.pdf} 
 \caption{F1-Score Performance} 
@@ -212,8 +213,13 @@ _Parameter Estimation_
 \end{figure}
 
 
-## Signal Identification Performance - Accuracy
+## Signal Identification Performance - F1-Score Exploration
+- Lasso has lower F1-Score when n is not large. When n=2000, both models have similarly high F1-score.
+- F1-score will increase significantly for both models, when the ratio of strong predictors are larger. And F1-score is also higher when the ratio of strong predictors are larger.
+- Strong predictors have F1-Score=1 for each scenario, and weak predictors have higher F1-score when n increases for Lasso.
 
+
+## Signal Identification Performance - Accuracy
 \begin{figure}[H] 
 \includegraphics[width=0.9\textwidth]{Images/g4.pdf} 
 \caption{Accuracy Performance} 
@@ -222,7 +228,13 @@ _Parameter Estimation_
 
 
 ## Signal Identification Performance - Accuracy
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/g8.pdf} 
+\caption{Accuracy of Different Signals} 
+\label{Fig8}
+\end{figure}
 
+## Signal Identification Performance - Accuracy Exploration
 \begin{figure}[H] 
 \includegraphics[width=0.9\textwidth]{Images/g8.pdf} 
 \caption{Accuracy of Different Signals} 
