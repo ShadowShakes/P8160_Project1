@@ -208,7 +208,7 @@ ggsave(g6,filename = "Images/g6.pdf",width = 12,height = 9)
 g7 = ggplot(fit_identify_result_type, aes(x = method, y = F1_score, color = type)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "F1_score",x = "method", y = "specificity") +
+  labs(title = "F1_score",x = "method", y = "F1_score") +
   facet_grid(ratio ~ n)
 g7
 ggsave(g7,filename = "Images/g7.pdf",width = 12,height = 9)
@@ -216,7 +216,7 @@ ggsave(g7,filename = "Images/g7.pdf",width = 12,height = 9)
 g8 = ggplot(fit_identify_result_type, aes(x = method, y = accuracy, color = type)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
-  labs(title = "Accuracy",x = "method", y = "specificity") +
+  labs(title = "Accuracy",x = "method", y = "accuracy") +
   facet_grid(ratio ~ n)
 g8
 ggsave(g8,filename = "Images/g8.pdf",width = 12,height = 9)

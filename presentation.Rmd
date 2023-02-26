@@ -176,9 +176,9 @@ _Parameter Estimation_
 ## Signal Identification Performance - Sensitivity Exploration
 - Forward selection are highly sensitive in high dimensional case(n=100) while Lasso does not
 - Overall, the sensitivity of two models increases as n increases
-- Both models are sensitive in selecting strong signals. But when it comes to weak predictors, Lasso is much less sensitive in high dimensional scenario than forward selection. 
-- When n increases, the sensitivity discrepancy of selecting weak predictors between two models becomes smaller. But still, forward selection is overall more sensitive than Lasso.
-- The sensitivity discrepancy between two models are smaller when the ratio of strong predictors becomes larger.
+- Both models are sensitive in selecting strong signals. But when it comes to weak predictors, Lasso is much less sensitive in high dimensional scenario than forward selection.
+- When n increases, the sensitivity discrepancy of selecting weak predictors between two models becomes smaller. But still, forward selection is overall more sensitive than Lasso
+- The sensitivity discrepancy between two models are smaller when the ratio of strong predictors becomes larger
 
 
 ## Signal Identification Performance - Specificity
@@ -190,10 +190,10 @@ _Parameter Estimation_
 
 
 ## Signal Identification Performance - Specificity Exploration
-- In high dimensional scenario, the specificity of forward selection is near 0, which means it almost does not identify any null predictor, but Lasso in turn has high specificity.
-- In high dimensional scenario, forward selection is very radical and tends to identity all 100 predictors as true, leading to extremely high sensitivity but low specificity.
-- In high dimensional scenario, Lasso is very conservative and tends to identity most 100 predictors as null,leading to low sensitivity but high specificity.
-- As n increases, forward selection has higher specificity. And overall, specificity are higher when the ratio of strong predictors are lower.
+- In high dimensional scenario, the specificity of forward selection is near 0, which means it almost does not identify any null predictor, but Lasso in turn has high specificity
+- In high dimensional scenario, forward selection is very assertive and tends to identity all 100 predictors as true, leading to extremely high sensitivity but low specificity
+- In high dimensional scenario, Lasso is very conservative and tends to identity most 100 predictors as null,leading to low sensitivity but high specificity
+- As n increases, forward selection has higher specificity. And overall, specificity are higher when the ratio of strong predictors are lower
 
 
 ## Signal Identification Performance - F1-Score
@@ -213,10 +213,10 @@ _Parameter Estimation_
 \end{figure}
 
 
-## Signal Identification Performance - F1-Score Exploration
-- Lasso has lower F1-Score when n is not large. When n=2000, both models have similarly high F1-score.
-- F1-score will increase significantly for both models, when the ratio of strong predictors are larger. And F1-score is also higher when the ratio of strong predictors are larger.
-- Strong predictors have F1-Score=1 for each scenario, and weak predictors have higher F1-score when n increases for Lasso.
+## Signal Identification Performance - F1-score Exploration
+- Lasso has lower F1-Score when n is not large. When n=2000, both models have similarly high F1-score
+- F1-score will increase significantly for both models, when the ratio of strong predictors are larger. And F1-score is also higher when the ratio of strong predictors are larger
+- Strong predictors have F1-Score=1 for each scenario, and weak predictors have higher F1-score when n increases for Lasso
 
 
 ## Signal Identification Performance - Accuracy
@@ -235,15 +235,13 @@ _Parameter Estimation_
 \end{figure}
 
 ## Signal Identification Performance - Accuracy Exploration
-\begin{figure}[H] 
-\includegraphics[width=0.9\textwidth]{Images/g8.pdf} 
-\caption{Accuracy of Different Signals} 
-\label{Fig8}
-\end{figure}
+- Accuracy is low in high dimensional scenario, especially forward selection
+- Accuracy increases for both models when n increase 
+- Accuracy is higher when the ratio of strong predictors is higher, and Lasso has overall higher accuracy than forward
+- In high dimensional, forward has higher accuracy for weak predictors than Lasso
 
 
 ## Parameter Estimation Performance - n=100
-
 \begin{figure}[H] 
 \includegraphics[width=0.9\textwidth]{Images/g9.pdf} 
 \caption{Beta Rmse when n=100} 
@@ -252,28 +250,76 @@ _Parameter Estimation_
 
 
 ## Parameter Estimation Performance - n=500
-
 \begin{figure}[H] 
 \includegraphics[width=0.9\textwidth]{Images/g10.pdf} 
-\caption{Beta Rmse when n=100} 
+\caption{Beta Rmse when n=500} 
 \label{Fig10}
 \end{figure}
 
 
 ## Parameter Estimation Performance - n=2000
-
 \begin{figure}[H] 
 \includegraphics[width=0.9\textwidth]{Images/g11.pdf} 
-\caption{Beta Rmse when n=100} 
+\caption{Beta Rmse when n=2000} 
 \label{Fig11}
 \end{figure}
 
 
+## Parameter Estimation Performance - Exploration
+- In high-dimensional scenario, Lasso performs much better than forward
+- Lasso performs better than forward when n=500, but worse than forward when n=2000
+
+
 ## Predictors Identification Conclusions
-- D
+
+_High Dimension Scenario_
+- Forward selection tend to be assertive in selecting true predictors while Lasso is conservative, resulting in extremely high sensitivity and more selected predictors for forward selection, and high specificity and less selected predictors for Lasso
+- In high-dimensional scenarios, forward selection has an overall much higher F1-score, and both methods perfectly identify the strong predictors
+- 
+
+## Missing Weak Predictors Analysis - Introduction
+
+How missing "weak" predictors impacts the parameter estimations
+
+Definition: missing weak predictors = true weak predictors but estimated as null
+
+How to value parameter estimations: RMSE
+
+## Missing Weak Predictors Analysis - Methods
+
+How to value parameter estimations: RMSE
+
+Most missing: simulations that have the least non-null estimations
+
+Least missing: simulations that have the most non-null estimations
+
+Middle: in between
+
+## Missing Weak Predictors Analysis - Result: n=100
+
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/m_1.pdf} 
+\caption{RMSE when n=100} 
+\label{Fig12}
+\end{figure}
+
+## Missing Weak Predictors Analysis - Result: n=500
+
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/m_2.pdf} 
+\caption{RMSE when n=500} 
+\label{Fig13}
+\end{figure}
+
+## Missing Weak Predictors Analysis - Result: n=2000
+
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/m_3.pdf} 
+\caption{RMSE when n=2000} 
+\label{Fig14}
+\end{figure}
 
 
-## Missing Weak Predictors Analysis
 
 
 

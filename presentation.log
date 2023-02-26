@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  26 FEB 2023 12:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  26 FEB 2023 15:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -781,11 +781,7 @@ Package: xurl 2022/01/09 v 0.10 modify URL breaks
 File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count353
 \l__pdf_internal_box=\box80
-) (./presentation.aux
-
-LaTeX Warning: Label `Fig8' multiply defined.
-
-)
+) (./presentation.aux)
 \openout1 = `presentation.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 137.
@@ -1122,24 +1118,13 @@ Package pdftex.def Info: Images/g8.pdf  used on input line 477.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [22
 
- <./Images/g8.pdf>]
-File: Images/g8.pdf Graphic file (type pdf)
-<use Images/g8.pdf>
-Package pdftex.def Info: Images/g8.pdf  used on input line 486.
-(pdftex.def)             Requested size: 276.559pt x 207.41734pt.
-
-pdfTeX warning (ext4): destination with the same identifier (name{Fig8}) has be
-en already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.486 \end{frame}
-                  [23
+ <./Images/g8.pdf>] [23
 
 ]
 <Images/g9.pdf, id=227, 867.24pt x 650.43pt>
 File: Images/g9.pdf Graphic file (type pdf)
 <use Images/g9.pdf>
-Package pdftex.def Info: Images/g9.pdf  used on input line 495.
+Package pdftex.def Info: Images/g9.pdf  used on input line 504.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [24
 
@@ -1147,7 +1132,7 @@ Package pdftex.def Info: Images/g9.pdf  used on input line 495.
 <Images/g10.pdf, id=244, 867.24pt x 650.43pt>
 File: Images/g10.pdf Graphic file (type pdf)
 <use Images/g10.pdf>
-Package pdftex.def Info: Images/g10.pdf  used on input line 504.
+Package pdftex.def Info: Images/g10.pdf  used on input line 513.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [25
 
@@ -1155,7 +1140,7 @@ Package pdftex.def Info: Images/g10.pdf  used on input line 504.
 <Images/g11.pdf, id=262, 867.24pt x 650.43pt>
 File: Images/g11.pdf Graphic file (type pdf)
 <use Images/g11.pdf>
-Package pdftex.def Info: Images/g11.pdf  used on input line 513.
+Package pdftex.def Info: Images/g11.pdf  used on input line 522.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [26
 
@@ -1167,7 +1152,35 @@ Package pdftex.def Info: Images/g11.pdf  used on input line 513.
 
 ] [30
 
-] [31
+]
+<Images/m_1.pdf, id=303, 867.24pt x 650.43pt>
+File: Images/m_1.pdf Graphic file (type pdf)
+<use Images/m_1.pdf>
+Package pdftex.def Info: Images/m_1.pdf  used on input line 575.
+(pdftex.def)             Requested size: 276.559pt x 207.41734pt.
+[31
+
+ <./Images/m_1.pdf>]
+<Images/m_2.pdf, id=317, 867.24pt x 650.43pt>
+File: Images/m_2.pdf Graphic file (type pdf)
+<use Images/m_2.pdf>
+Package pdftex.def Info: Images/m_2.pdf  used on input line 584.
+(pdftex.def)             Requested size: 276.559pt x 207.41734pt.
+[32
+
+ <./Images/m_2.pdf>]
+<Images/m_3.pdf, id=330, 867.24pt x 650.43pt>
+File: Images/m_3.pdf Graphic file (type pdf)
+<use Images/m_3.pdf>
+Package pdftex.def Info: Images/m_3.pdf  used on input line 593.
+(pdftex.def)             Requested size: 276.559pt x 207.41734pt.
+[33
+
+ <./Images/m_3.pdf>] [34
+
+] [35
+
+] [36
 
 ]
 \tf@nav=\write6
@@ -1179,40 +1192,36 @@ Package pdftex.def Info: Images/g11.pdf  used on input line 513.
 \tf@snm=\write8
 \openout8 = `presentation.snm'.
 
-(./presentation.aux)
-
-LaTeX Warning: There were multiply-defined labels.
-
- ) 
+(./presentation.aux) ) 
 Here is how much of TeX's memory you used:
- 25154 strings out of 478268
- 484541 string characters out of 5846347
- 764572 words of memory out of 5000000
- 42641 multiletter control sequences out of 15000+600000
- 513927 words of font info for 93 fonts, out of 8000000 for 9000
+ 25214 strings out of 478268
+ 485528 string characters out of 5846347
+ 764607 words of memory out of 5000000
+ 42672 multiletter control sequences out of 15000+600000
+ 514366 words of font info for 97 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,11n,122p,1009b,408s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/lo
-cal/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/20
-22/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2022/texmf-dist/
-fonts/enc/dvips/lm/lm-mathex.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/
-dvips/lm/lm-mathit.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/l
-m/lmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi10.p
-fb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmss10.pfb></usr/l
-ocal/texlive/2022/texmf-dist/fonts/type1/public/lm/lmss12.pfb></usr/local/texli
-ve/2022/texmf-dist/fonts/type1/public/lm/lmss8.pfb></usr/local/texlive/2022/tex
-mf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/texlive/2022/texmf-dist/
-fonts/type1/public/lm/lmsso10.pfb></usr/local/texlive/2022/texmf-dist/fonts/typ
-e1/public/lm/lmsso8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/
-lm/lmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy8.p
-fb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/l
-ocal/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texli
-ve/2022/texmf-dist/fonts/type1/public/lm/lmtti10.pfb></usr/local/texlive/2022/t
-exmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on presentation.pdf (31 pages, 320009 bytes).
+{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm
+-mathsy.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/
+usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texl
+ive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/local/texlive/2022/t
+exmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}</usr/local/texlive/2022/texmf-dist/
+fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type
+1/public/lm/lmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/l
+m/lmss10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmss12.p
+fb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmss8.pfb></usr/lo
+cal/texlive/2022/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/texl
+ive/2022/texmf-dist/fonts/type1/public/lm/lmsso10.pfb></usr/local/texlive/2022/
+texmf-dist/fonts/type1/public/lm/lmsso8.pfb></usr/local/texlive/2022/texmf-dist
+/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/typ
+e1/public/lm/lmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/l
+m/lmtk10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt10.p
+fb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtti10.pfb></usr/
+local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on presentation.pdf (36 pages, 339727 bytes).
 PDF statistics:
- 402 PDF objects out of 1000 (max. 8388607)
- 307 compressed objects within 4 object streams
- 104 named destinations out of 1000 (max. 500000)
- 26722 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 457 PDF objects out of 1000 (max. 8388607)
+ 351 compressed objects within 4 object streams
+ 122 named destinations out of 1000 (max. 500000)
+ 26737 words of extra memory for PDF output out of 29859 (max. 10000000)
 
