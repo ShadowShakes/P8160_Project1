@@ -4,6 +4,10 @@ title: |
 author: |
   | Hongjie Liu,  Jiajun Tao,  Shaohan Chen
 date: "2023-02-27"
+header-includes:
+   - \usepackage{graphicx}
+   - \usepackage{float}
+   - \usepackage{subfigure}
 output:
   beamer_presentation:
     colortheme: "default"
@@ -124,6 +128,7 @@ _Other Parameters_
 Define true predictors as positive and null predictors as negative.\par
 
 _Signal Identification_
+
 - \textbf{Complexity:} $\text{Number of Selected Parameters}$
 
 - \textbf{Sensitivity:} $\frac{TP}{TP+FN}$
@@ -139,32 +144,117 @@ _Parameter Estimation_
 - \textbf{MSE:} $\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\beta_i)^2$
 
 
-## Signal Identification Performance
+## Signal Identification Performance - Complexity
 
-- \textbf{Sensitivity}
-
-## Signal Identification Performance
-
-- \textbf{Specificity}
-
-## Signal Identification Performance
-
-- \textbf{F1-Score}
-
-## Signal Identification Performance
-
-- \textbf{Accuracy}
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/g_1.pdf} 
+\caption{Model Complexity} 
+\label{Fig_1}
+\end{figure}
 
 
-## Parameter Estimation Performance
+## Signal Identification Performance - Sensitivity
 
-- \textbf{MSE}
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/g1.pdf} 
+\caption{Sensitivity Performance} 
+\label{Fig1}
+\end{figure}
 
+
+## Signal Identification Performance - Sensitivity
+
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/g5.pdf} 
+\caption{Sensitivity of True Signals} 
+\label{Fig5}
+\end{figure}
+
+
+## Signal Identification Performance - Sensitivity
+
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/g5.pdf} 
+\caption{Sensitivity of True Signals} 
+\label{Fig5}
+\end{figure
+
+
+## Signal Identification Performance - Specificity
+
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/g2.pdf} 
+\caption{Specificity Performance} 
+\label{Fig2}
+\end{figure}
+
+
+## Signal Identification Performance - F1-Score
+
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/g3.pdf} 
+\caption{F1-Score Performance} 
+\label{Fig3}
+\end{figure}
+
+
+## Signal Identification Performance - F1-Score
+
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/g7.pdf} 
+\caption{F1-Score of True Signals} 
+\label{Fig7}
+\end{figure}
+
+
+## Signal Identification Performance - Accuracy
+
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/g4.pdf} 
+\caption{Accuracy Performance} 
+\label{Fig4}
+\end{figure}
+
+
+## Signal Identification Performance - Accuracy
+
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/g8.pdf} 
+\caption{Accuracy of Different Signals} 
+\label{Fig8}
+\end{figure}
+
+
+## Parameter Estimation Performance - n=100
+
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/g9.pdf} 
+\caption{Beta Rmse when n=100} 
+\label{Fig9}
+\end{figure}
+
+
+## Parameter Estimation Performance - n=500
+
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/g10.pdf} 
+\caption{Beta Rmse when n=100} 
+\label{Fig10}
+\end{figure}
+
+
+## Parameter Estimation Performance - n=2000
+
+\begin{figure}[H] 
+\includegraphics[width=0.9\textwidth]{Images/g11.pdf} 
+\caption{Beta Rmse when n=100} 
+\label{Fig11}
+\end{figure}
 
 
 ## Missing Weak Predictors Analysis
 
-dddd
+
 
 ## Summary of Results
 
