@@ -209,7 +209,7 @@ ggsave(g8,filename = "Images/g8.pdf",width = 12,height = 9)
 ```{r}
 # Beta estimation
 
-# MSE of beta for n = 100
+# RMSE of beta for n = 100
 g9 = ggplot(fit_beta_result_ratio %>% filter(n == 100), aes(x = method, y = RMSE)) + 
   geom_boxplot(color = "red", fill = "orange", alpha = 0.5) +
   theme(legend.position = "right") +
@@ -219,7 +219,7 @@ g9 = ggplot(fit_beta_result_ratio %>% filter(n == 100), aes(x = method, y = RMSE
 g9
 ggsave(g9, filename = "Images/g9.pdf",width = 12,height = 9)
 
-# MSE of beta for n = 500
+# RMSE of beta for n = 500
 g10 = ggplot(fit_beta_result_ratio %>% filter(n == 500), aes(x = method, y = RMSE)) + 
   geom_boxplot(color = "red", fill = "orange", alpha = 0.5) +
   theme(legend.position = "right") +
@@ -229,7 +229,7 @@ g10 = ggplot(fit_beta_result_ratio %>% filter(n == 500), aes(x = method, y = RMS
 g10
 ggsave(g10, filename = "Images/g10.pdf",width = 12,height = 9)
 
-# MSE of beta for n = 2000
+# RMSE of beta for n = 2000
 g11 = ggplot(fit_beta_result_ratio %>% filter(n == 2000), aes(x = method, y = RMSE)) + 
   geom_boxplot(color = "red", fill = "orange", alpha = 0.5) +
   theme(legend.position = "right") +
