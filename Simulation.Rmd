@@ -32,7 +32,7 @@ generate = function(n, # number of observations
     stop("correlation coefficient must be between -1 and 1")
   }
   # We hope that beta_strong = 20 and beta_weak = 0.5
-  if ((c*sqrt(log(p)/n)) <= 0.5 | (c*sqrt(log(p)/n)) >= 20) {
+  if ((c*sqrt(log(p)/n)) < 0.5 | (c*sqrt(log(p)/n)) >= 20) {
     stop("please select other n and p")
   }
   
@@ -52,15 +52,15 @@ generate = function(n, # number of observations
     }
   }
   
-  # # Correlations between some wbc signals (unnecessary)
-  # for (j in (ps + 1 + (ps - 1)*corr_num):(ps + pwbc)) {
-  #   corr_matrix[i, j] = corr
-  #   corr_matrix[j, i] = corr
+  i = ps
+  for (j in (ps + 1 + (ps - 1)*corr_num):(ps + pwbc)) {
+    corr_matrix[i, j] = corr
+    corr_matrix[j, i] = corr
   #   for (k in j:(ps + pwbc)) {
   #     corr_matrix[j, k] = corr
   #     corr_matrix[k, j] = corr
   #   }
-  # }
+  }
   
   # # Correlations within wai signals (unnecessary)
   # for (j in (ps + pwbc + 1):(ps + pwbc + pwai)) {

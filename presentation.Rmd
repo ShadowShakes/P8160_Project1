@@ -17,74 +17,93 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Background
 
-## Motivation
+```{r include=FALSE}
+# In high-dimensional data analysis, that is, the number of predictors p is no less than the number of observations n, variable selection is a common practice to find an optimal model that balances between model fitness and model complexity.
 
-- Identifying the effect of a treatment, exposure, or intervention is one of the most fundamental tasks we encounter as biostatisticians...
+# However, In modern applications with high-dimensional covariates, traditional variable selection methods often struggle with the presence of “weak” predictors, that is, the coefficient is small but non-zero.
+```
+
+- Variable selection methods help to optimize models in high-dimensional settings where we need to select predictors that balance fitness and complexity.
  
-- ... but outside of a randomized control trial (RCT), confounding variables can bias our estimates of treatment effects.
- 
-- Propensity score matching (PSM) is a tool that can help us mitigate the effects of confounders...
-
-- ... but there is no consensus on the best way to estimate standard errors when using the PSM algorithm.
-
-- How can we assess which procedures reliably estimate standard errors?
+- The presence of weak predictors is a problem that plagues traditional variable selection methods.
 
 
-## Motivation
+## Statistical Methods to be Studied
 
-\begin{center}
-  A simulation study!
-\end{center}
+```{r include=FALSE}
+# Specifically, we are interested in these two variable selection methods, that is, the step-wise forward method based on AIC, and automated LASSO regression. I assume you all are quite familiar with these two methods, so let's move on to the next slides.
+```
 
+**Step-wise forward method**
 
-## A (Yet) Quick(er) Foray into Propensity Score Matching
+- Starts with the empty model, and iteratively adds the variables that best improves the model fit. That is often done by sequentially adding predictors with the largest reduction in AIC. For linear models,
+$$AIC = n\log\left(\sum_{i=1}^n (y_i - \widehat{y}_i)^2/n\right) + 2p.$$
 
-(1) We start with an unmatched dataset.
-
-(2) We estimate the propensity score - the probability of treatment given some set of covariates - according to some pre-specified model fitting (e.g., logistic regression).
-
-(3) We pair treated and untreated indiviuals who have similar propensity scores according to some pre-specified matching algorithm (e.g., nearest neighbors).
-
-(4) We end with a matched dataset.
-
-
-## Enter the Bootstrap
-
-- Bootstrapping is one of the most common procedures for estimating standard errors.
-
-- The PSM algorithm intakes an unmatched dataset and outputs a matched one.
-
-- __Primary Research Question:__ When do we execute the bootstrap - before the match or after it?
-
-- Let's try both!
+**Automated LASSO regression**
+  
+- Estimates model parameters by optimizing a penalized loss function:
+$$\min_\beta \frac{1}{2n} \sum_{i=1}^n (y_i - x_i \beta )^2 + \lambda \sum_{k=1}^p|\beta_k|.$$
 
 
-## Data Generation - Continuous Outcome
+## Objectives
 
-For each individual $i \in \{ 1, \ldots, n \}$, we consider covariates $L_{1i}, L_{2i}, L_{3i} \sim N(0, 1)$. Treatments are distributed according to law $A_i \sim B(\pi_i)$, where $\pi_i$ - the true propensity to be treated - is subject to the data-generating process
-  \[
-    \log \left( \frac{\pi_i}{1 - \pi_i} \right)
-    = \alpha_0 + \alpha_1 L_{1i} + \alpha_2 L_{2i}.
-  \]
-Given this, we further define the data-generating process of our continuous outcome via
-  \[ Y_i = \beta_1 A_i + \beta_2 L_{2i} + \beta_3 L_{3i} + \varepsilon_i, \]
-where $\varepsilon_i$ denotes random error. Because $L_{2i}$ effects both $A_i$ and $Y_i$, it acts as a confounder in estimating the treatment effect.
+```{r include=FALSE}
+# We would like to investigate how well each of the two methods in identifying weak and strong predictors, and how missing “weak” predictors impacts the parameter estimations.
+```
+
+(1) Evaluate the effectiveness of both methods in identifying weak and strong predictors.
+
+(2) Examine how the absence of "weak" predictors affects parameter estimations.
+
+## Types of Signals
+
+```{r include=FALSE}
+# First, we give a definition of what strong and weak predictors are. Specifically, we divide all predictors into 4 groups: strong, weak-but-correlated, weak-and-independent, and null predictors. We use this threshold $c\sqrt{\log (p) / n}$ to distinguish strong and weak, where c is a pre-specified parameter. For weak-but-correlated predictors, they are correlated with at least one strong predictors, while weak-and-independent are not. So, we will have the following result:
+```
+
+- Strong signals
+$$S_{strong}=\{j:|\beta_j|>c\sqrt{\log (p) / n}\ \mbox{for some } c>0,\  1\le j \le p\}$$
+- Weak-but-correlated (WBC) signals
+\begin{align*}
+S_{WBC}=&\ \{j: 0<|\beta_j|\le c\sqrt{\log (p) / n} \text{ and } \mbox{corr}(X_j, X_j')\ne 0\\
+&\mbox{for some } j'\in S_1,\  1\le j \le p\}
+\end{align*}
+- Weak-and-independent (WAI) signals
+\begin{align*}
+S_{WAI}=&\ \{j: 0<|\beta_j|\le c\sqrt{\log (p) / n} \text{ and } \mbox{corr}(X_j, X_j')= 0\\
+&\mbox{for all } j'\in S_1, \ 1\le j \le p\}
+\end{align*}
+
+- Null signals: $S_{null}=\{j: \beta_j=0,\  1\le j \le p\}$
+
+## Types of Signals
+
+```{r include=FALSE}
+# These four types of predictors form a partition of all predictors. We use these notations to denote the number of each type. Note that the number of true predictors should be less than n.
+```
+
+Thus, $p$ predictors can be partitioned as $$\{1,\cdots,p\}=S_{strong}\cup S_{WBC}\cup S_{WAI}\cup S_{null}.$$
+
+- We assume that $|S_{strong}|=p_{S}$, $|S_{WBC}|=p_{WBC}$, $|S_{WAI}|=p_{WAI}$.
+
+- The number of true predictors $p_{S}+p_{WBC}+p_{WAI}$ should be less than $n$.
 
 
-## Data Generation - Binary Outcome
+## Data Generation
 
-For each individual $i \in \{ 1, \ldots, n \}$, we consider covariates $L_{1i}, L_{2i}, L_{3i} \sim N(0, 1)$. Treatments are distributed according to law $A_i \sim B(\pi_i)$, where $\pi_i$ - the true propensity to be treated - is subject to the data-generating process
-  \[
-    \log \left( \frac{\pi_i}{1 - \pi_i} \right)
-    = \alpha_0 + \alpha_1 L_{1i} + \alpha_2 L_{2i}.
-  \]
-Given this, we further define the data-generating process of our binary outcome via $Y_i \sim B(\tau_i)$ where
-  \[
-    \log \left( \frac{\tau_i}{1 - \tau_i} \right)
-    = \beta_0 + \beta_1 A_i + \beta_2 L_{2i} + \beta_3 L_{3i}.
-  \]
-Observe that we have omitted a random error term, as realizations of our binary $Y_i$ are innately subject to noise.
+```{r include=FALSE}
+# Now let's move on to the data generation section! We assume that normality assumption is met. And we set the coefficients of strong signals to be 20 and those of weak signals to be 0.5. Since c is pre-specified, we select it to be 20 so that this inequation are met for all scenarios to be investigated further. Also, we set sigma squared to be 8.
+```
+
+- Normality assumption $$\mathbf{y}\sim N(\mathbf{X}\mathbf{\beta},\sigma^2\mathbf{I})$$
+
+- For $j\in S_{strong}$, $\beta_j=20$; For $j\in S_{WBC}\cup S_{WAI}$, $\beta_j=0.5$.
+
+- We choose $c=20$ so that $0.5\leq c\sqrt{\log p/n} < 20$ for all scenarios to be investigated.
+
+- $\sigma^2 = 8.$
 
 
 ## Data Generation - Random Number Generation (Binary Outcome)
