@@ -1,0 +1,324 @@
+---
+title: "Tasks"
+author: "Jiajun Tao"
+date: "2023-02-24"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r}
+param_estimate = read_csv("parameter_estimate.csv") %>% filter(n == 100)
+param_estimate2 = read_csv("parameter_estimate2.csv")
+
+lasso_result = param_estimate %>% filter(method == 'lasso')
+forward_result = param_estimate %>% filter(method == 'forward')
+
+non_null_lasso = lasso_result %>% filter(estimate !=0)
+non_null_lasso %>% group_by(sim_time) %>% summarise(
+  n_param = n()
+) %>% arrange(-n_param) %>% pull(n_param) %>% max()
+
+
+max_n = 
+  non_null_lasso %>% 
+  group_by(sim_time) %>% 
+  summarise(n_param = n()) %>% 
+  arrange(-n_param) %>% 
+  pull(n_param) %>% 
+  max()
+
+min_n = 
+  non_null_lasso %>% 
+  group_by(sim_time) %>% 
+  summarise(n_param = n()) %>% 
+  arrange(-n_param) %>% 
+  pull(n_param) %>% 
+  min()
+
+middle_n = round((max_n + min_n) / 2)
+
+sum_lasso =   
+  non_null_lasso %>% 
+  group_by(sim_time) %>% 
+  summarise(n_param = n())
+
+min_sims = 
+  sum_lasso %>% 
+  filter(n_param == min_n | n_param == min_n + 1) %>%
+  pull(sim_time)
+
+max_sims = 
+  sum_lasso %>% 
+  filter(n_param == max_n | n_param == max_n - 1) %>%
+  pull(sim_time)
+
+middle_sims =
+  sum_lasso %>% 
+  filter(n_param == middle_n) %>% 
+  pull(sim_time)
+```
+
+```{r}
+
+
+max_sims_df =
+  lasso_result %>% 
+  filter(sim_time == 4)
+
+estimate_lasso =
+  max_sims_df %>% 
+  mutate(type = factor(type, levels = c('strong', 'wbc', 'wai', 'null'))) %>% 
+  arrange(type) %>% 
+  pull(estimate)
+
+beta = c(rep(20, 3), rep(0.5, 60), rep(0, 37))
+
+MSE = sum((estimate_lasso - beta) ^2) / 100
+MSE
+```
+
+```{r}
+beta = c(rep(20, 3), rep(0.5, 60), rep(0, 37))
+
+get_MSE <- function(sim_number){
+  estimate = 
+    lasso_result %>% 
+    filter(sim_time == sim_number) %>% 
+    mutate(type = factor(type, levels = c('strong', 'wbc', 'wai', 'null'))) %>% 
+    arrange(type) %>% 
+    pull(estimate)
+  
+  MSE = sum((estimate - beta) ^2) / 100
+  MSE
+}
+
+get_MSE(43)
+most_beta_mse = map(max_sims, get_MSE) %>% unlist()
+least_beta_mse = map(min_sims, get_MSE) %>% unlist()
+middle_beta_mse = map(middle_sims, get_MSE) %>% unlist()
+```
+
+```{r}
+# for forward
+forward_result = param_estimate %>% filter(method == 'forward')
+
+non_null_forward = forward_result %>% filter(estimate !=0)
+non_null_forward %>% group_by(sim_time) %>% summarise(
+  n_param = n()
+) %>% arrange(-n_param) %>% pull(n_param) %>% max()
+
+
+max_n = 
+  non_null_forward %>% 
+  group_by(sim_time) %>% 
+  summarise(n_param = n()) %>% 
+  arrange(-n_param) %>% 
+  pull(n_param) %>% 
+  max()
+
+min_n = 
+  non_null_forward %>% 
+  group_by(sim_time) %>% 
+  summarise(n_param = n()) %>% 
+  arrange(-n_param) %>% 
+  pull(n_param) %>% 
+  min()
+
+middle_n = round((max_n + min_n) / 2)
+
+sum_forward =   
+  non_null_forward %>% 
+  group_by(sim_time) %>% 
+  summarise(n_param = n())
+
+min_sims = 
+  sum_forward %>% 
+  filter(n_param == min_n | n_param == min_n + 1) %>%
+  pull(sim_time)
+
+max_sims = 
+  sum_forward %>% 
+  filter(n_param == max_n | n_param == max_n - 1) %>%
+  pull(sim_time)
+
+middle_sims =
+  sum_forward %>% 
+  filter(n_param == middle_n) %>% 
+  pull(sim_time)
+
+get_MSE_forward <- function(sim_number){
+  estimate = 
+    forward_result %>% 
+    filter(sim_time == sim_number) %>% 
+    mutate(type = factor(type, levels = c('strong', 'wbc', 'wai', 'null'))) %>% 
+    arrange(type) %>% 
+    pull(estimate)
+  
+  MSE = sum((estimate - beta) ^2) / 100
+  MSE
+}
+
+most_beta_mse = map(max_sims, get_MSE_forward) %>% unlist()
+least_beta_mse = map(min_sims, get_MSE_forward) %>% unlist()
+middle_beta_mse = map(middle_sims, get_MSE_forward) %>% unlist()
+```
+
+```{r}
+## 10% for lasso
+param_estimate = read_csv("parameter_estimate.csv") %>% filter(n == 100 & method == 'lasso')
+
+non_null_lasso = param_estimate %>% filter(estimate != 0)
+
+non_null_lasso %>% group_by(sim_time) %>% summarise(
+  n_param = n()
+) %>% arrange(-n_param) %>% pull(n_param)
+
+lasso_sum = non_null_lasso %>% group_by(sim_time) %>% summarise(
+  n_param = n()
+) %>% arrange(-n_param)
+
+max_sims = head(lasso_sum, 10) %>% pull(sim_time)
+min_sims = tail(lasso_sum, 10) %>% pull(sim_time)
+middle_sims = head(lasso_sum, 55) %>% tail(10) %>% pull(sim_time)
+
+
+beta = c(rep(20, 4), rep(0.5, 36), rep(0, 60))
+
+get_MSE <- function(sim_number){
+  estimate = 
+    param_estimate %>% 
+    filter(sim_time == sim_number) %>% 
+    mutate(type = factor(type, levels = c('strong', 'wbc', 'wai', 'null'))) %>% 
+    arrange(type) %>% 
+    pull(estimate)
+  
+  MSE = sum((estimate - beta) ^2) / 100
+  MSE
+}
+
+most_beta_mse = map(max_sims, get_MSE) %>% unlist()
+least_beta_mse = map(min_sims, get_MSE) %>% unlist()
+middle_beta_mse = map(middle_sims, get_MSE) %>% unlist()
+```
+
+```{r}
+## 10% for step
+param_estimate = read_csv("parameter_estimate.csv") %>% filter(n == 100 & method == 'forward')
+
+non_null_forward = param_estimate %>% filter(estimate != 0)
+
+non_null_forward %>% group_by(sim_time) %>% summarise(
+  n_param = n()
+) %>% arrange(-n_param) %>% pull(n_param)
+
+lasso_sum = non_null_lasso %>% group_by(sim_time) %>% summarise(
+  n_param = n()
+) %>% arrange(-n_param)
+
+max_sims = head(lasso_sum, 10) %>% pull(sim_time)
+min_sims = tail(lasso_sum, 10) %>% pull(sim_time)
+middle_sims = head(lasso_sum, 55) %>% tail(10) %>% pull(sim_time)
+
+
+beta = c(rep(20, 4), rep(0.5, 36), rep(0, 60))
+
+get_MSE <- function(sim_number){
+  estimate = 
+    param_estimate %>% 
+    filter(sim_time == sim_number) %>% 
+    mutate(type = factor(type, levels = c('strong', 'wbc', 'wai', 'null'))) %>% 
+    arrange(type) %>% 
+    pull(estimate)
+  
+  MSE = sum((estimate - beta) ^2) / 100
+  MSE
+}
+
+most_beta_mse = map(max_sims, get_MSE) %>% unlist()
+least_beta_mse = map(min_sims, get_MSE) %>% unlist()
+middle_beta_mse = map(middle_sims, get_MSE) %>% unlist()
+
+result = tibble(most_beta_mse, least_beta_mse, middle_beta_mse)
+result =
+  result %>% 
+  pivot_longer(most_beta_mse:middle_beta_mse, names_to = "missing", values_to = "mse")
+ggplot(result, aes(x = missing, y = mse)) + geom_boxplot()
+
+
+result %>% add_column(n = c(rep(100,30)), method = c(rep("lasso",30))) 
+```
+
+```{r}
+beta = c(rep(20, 4), rep(0.5, 36), rep(0, 60))
+
+get_MSE <- function(sim_number,what_number,what_method){
+  estimate = 
+    read_csv("parameter_estimate.csv",show_col_types = FALSE) %>%
+    filter(n == what_number & method == what_method &sim_time == sim_number) %>% 
+    mutate(type = factor(type, levels = c('strong', 'wbc', 'wai', 'null'))) %>% 
+    arrange(type) %>% 
+    pull(estimate)
+  
+  MSE = sum((estimate - beta) ^2) / 100
+  MSE
+}
+
+getresulttable_145 <- function(what_number,what_method){
+  param_estimate = 
+    read_csv("parameter_estimate.csv",show_col_types = FALSE) %>%
+    filter(n == what_number & method == what_method)
+
+non_null = 
+  param_estimate %>% 
+  filter(estimate != 0)
+
+non_null %>% 
+  group_by(sim_time) %>% 
+  summarise(
+  n_param = n()
+) %>% 
+  arrange(-n_param) %>%
+  pull(n_param)
+
+sum = 
+  non_null %>%
+  group_by(sim_time) %>%
+  summarise(n_param = n()) %>% 
+  arrange(-n_param)
+
+max_sims = head(sum, 10) %>% pull(sim_time)
+min_sims = tail(sum, 10) %>% pull(sim_time)
+middle_sims = head(sum, 55) %>% tail(10) %>% pull(sim_time)
+
+most = pmap(list(min_sims,what_number,what_method), get_MSE) %>% unlist()
+least = pmap(list(max_sims,what_number,what_method), get_MSE) %>% unlist()
+middle = pmap(list(middle_sims,what_number,what_method), get_MSE) %>% unlist()
+
+result = 
+  tibble(most, middle,least) %>% 
+  pivot_longer(
+    most:least,
+    names_to = "missing",
+    values_to = "MSE"
+    ) 
+
+result = result %>% 
+  add_column(n = c(rep(what_number, 30)), method = c(rep(what_method, 30)), ratio = c(rep(145, 30)))
+result
+}
+
+getresulttable_145(what_number = 100, what_method = "forward")
+
+result =
+  result %>% 
+  pivot_longer(most_beta_mse:middle_beta_mse, names_to = "missing", values_to = "mse")
+ggplot(result, aes(x = missing, y = mse)) + geom_boxplot()
+
+
+result %>% add_column(n = c(rep(100,30)), method = c(rep("lasso",30))) 
+```
+
