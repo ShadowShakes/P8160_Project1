@@ -319,8 +319,17 @@ Middle: in between
 \label{Fig14}
 \end{figure}
 
+## Missing Weak Predictors Analysis - Discussion
 
+- No apparent patterns between different ratios
 
+- In high-dimensional scenarios, Lasso performs much better than forward selection according to RMSE, no matter how much missing.
+
+- When n is large enough, RMSE of both methods become small.
+
+- When n = 500, Lasso is slightly better than forward selection, however, when n = 2000, just the reverse.
+
+- In Lasso, RMSE seems to increase if the missing amount increases, but in forward selection, RMSE decreases when missing amount increases.
 
 
 ## Summary of Results
