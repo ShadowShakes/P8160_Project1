@@ -279,6 +279,7 @@ _Parameter Estimation_
 \label{Fig8}
 \end{figure}
 
+
 ## Signal Identification Performance - Accuracy Exploration
 - Accuracy is low in high dimensional scenario, especially forward selection
 - Accuracy increases for both models when n increase 
@@ -286,7 +287,7 @@ _Parameter Estimation_
 - In high dimensional, forward has higher accuracy for weak predictors than Lasso
 
 
-## Parameter Estimation Performance - n=100
+## Parameter Estimation Performance: n=100
 \begin{figure} 
   \centering 
   \subfigure[Beta RMSE when n=100]{ 
@@ -302,7 +303,7 @@ _Parameter Estimation_
 \end{figure}
 
 
-## Parameter Estimation Performance - n=500
+## Parameter Estimation Performance: n=500
 \begin{figure} 
   \centering 
   \subfigure[Beta RMSE when n=500]{ 
@@ -317,7 +318,8 @@ _Parameter Estimation_
   \label{para2} 
 \end{figure}
 
-## Parameter Estimation Performance - n=2000
+
+## Parameter Estimation Performance: n=2000
 \begin{figure} 
   \centering 
   \subfigure[Beta RMSE when n=2000]{ 

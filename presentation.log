@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  26 FEB 2023 22:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  26 FEB 2023 22:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1253,7 +1253,7 @@ Package pdftex.def Info: Images/m_3.pdf  used on input line 678.
 (./presentation.aux) ) 
 Here is how much of TeX's memory you used:
  25345 strings out of 478268
- 487467 string characters out of 5846347
+ 487461 string characters out of 5846347
  767111 words of memory out of 5000000
  42747 multiletter control sequences out of 15000+600000
  545276 words of font info for 127 fonts, out of 8000000 for 9000
@@ -1279,7 +1279,7 @@ lm/lmsso10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsso8
 ive/2022/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2022/t
 exmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2022/texmf-dist/
 fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on presentation.pdf (39 pages, 377642 bytes).
+Output written on presentation.pdf (39 pages, 377643 bytes).
 PDF statistics:
  535 PDF objects out of 1000 (max. 8388607)
  412 compressed objects within 5 object streams
