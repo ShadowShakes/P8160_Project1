@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  27 FEB 2023 01:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  27 FEB 2023 08:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -801,6 +801,12 @@ LaTeX Warning: Label `sub1' multiply defined.
 LaTeX Warning: Label `sub@sub1' multiply defined.
 
 
+LaTeX Warning: Label `sub1' multiply defined.
+
+
+LaTeX Warning: Label `sub@sub1' multiply defined.
+
+
 LaTeX Warning: Label `sub2' multiply defined.
 
 
@@ -1189,99 +1195,111 @@ pdfTeX warning (ext4): destination with the same identifier (name{sub1}) has be
 en already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.425 \end{frame}
+l.429 \end{frame}
                  
 <Images/g5.pdf, id=152, 867.24pt x 650.43pt>
 File: Images/g5.pdf Graphic file (type pdf)
 <use Images/g5.pdf>
-Package pdftex.def Info: Images/g5.pdf  used on input line 425.
+Package pdftex.def Info: Images/g5.pdf  used on input line 429.
 (pdftex.def)             Requested size: 144.53082pt x 101.1729pt.
 
-pdfTeX warning (ext4): destination with the same identifier (name{sub2}) has be
-en already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.425 \end{frame}
-                 
-<Images/g7.pdf, id=153, 867.24pt x 650.43pt>
-File: Images/g7.pdf Graphic file (type pdf)
-<use Images/g7.pdf>
-Package pdftex.def Info: Images/g7.pdf  used on input line 425.
-(pdftex.def)             Requested size: 144.53082pt x 101.1729pt.
-
-pdfTeX warning (ext4): destination with the same identifier (name{sub2}) has be
-en already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.425 \end{frame}
-                 
-<Images/g8.pdf, id=154, 867.24pt x 650.43pt>
-File: Images/g8.pdf Graphic file (type pdf)
-<use Images/g8.pdf>
-Package pdftex.def Info: Images/g8.pdf  used on input line 425.
-(pdftex.def)             Requested size: 144.53082pt x 101.1729pt.
-
-pdfTeX warning (ext4): destination with the same identifier (name{para1}) has b
-een already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.425 \end{frame}
-                 
-Overfull \vbox (28.6616pt too high) detected at line 425
- []
-
-[15
-
- <./Images/g5.pdf> <./Images/g7.pdf> <./Images/g8.pdf>]
 pdfTeX warning (ext4): destination with the same identifier (name{sub1}) has be
 en already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.457 \end{frame}
+l.429 \end{frame}
                  
-<Images/g9.pdf, id=177, 867.24pt x 650.43pt>
+<Images/g6.pdf, id=153, 867.24pt x 650.43pt>
+File: Images/g6.pdf Graphic file (type pdf)
+<use Images/g6.pdf>
+Package pdftex.def Info: Images/g6.pdf  used on input line 429.
+(pdftex.def)             Requested size: 144.53082pt x 101.1729pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{sub2}) has be
+en already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.429 \end{frame}
+                 
+<Images/g7.pdf, id=154, 867.24pt x 650.43pt>
+File: Images/g7.pdf Graphic file (type pdf)
+<use Images/g7.pdf>
+Package pdftex.def Info: Images/g7.pdf  used on input line 429.
+(pdftex.def)             Requested size: 144.53082pt x 101.1729pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{sub2}) has be
+en already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.429 \end{frame}
+                 
+<Images/g8.pdf, id=155, 867.24pt x 650.43pt>
+File: Images/g8.pdf Graphic file (type pdf)
+<use Images/g8.pdf>
+Package pdftex.def Info: Images/g8.pdf  used on input line 429.
+(pdftex.def)             Requested size: 144.53082pt x 101.1729pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{para1}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.429 \end{frame}
+                 
+Overfull \vbox (28.6616pt too high) detected at line 429
+ []
+
+[15
+
+ <./Images/g5.pdf> <./Images/g6.pdf> <./Images/g7.pdf> <./Images/g8.pdf>]
+pdfTeX warning (ext4): destination with the same identifier (name{sub1}) has be
+en already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.461 \end{frame}
+                 
+<Images/g9.pdf, id=183, 867.24pt x 650.43pt>
 File: Images/g9.pdf Graphic file (type pdf)
 <use Images/g9.pdf>
-Package pdftex.def Info: Images/g9.pdf  used on input line 457.
+Package pdftex.def Info: Images/g9.pdf  used on input line 461.
 (pdftex.def)             Requested size: 130.08038pt x 57.81166pt.
 
 pdfTeX warning (ext4): destination with the same identifier (name{sub2}) has be
 en already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.457 \end{frame}
+l.461 \end{frame}
                  
-<Images/g12.pdf, id=178, 867.24pt x 650.43pt>
+<Images/g12.pdf, id=184, 867.24pt x 650.43pt>
 File: Images/g12.pdf Graphic file (type pdf)
 <use Images/g12.pdf>
-Package pdftex.def Info: Images/g12.pdf  used on input line 457.
+Package pdftex.def Info: Images/g12.pdf  used on input line 461.
 (pdftex.def)             Requested size: 130.08038pt x 57.81166pt.
-<Images/g10.pdf, id=179, 867.24pt x 650.43pt>
+<Images/g10.pdf, id=185, 867.24pt x 650.43pt>
 File: Images/g10.pdf Graphic file (type pdf)
 <use Images/g10.pdf>
-Package pdftex.def Info: Images/g10.pdf  used on input line 457.
+Package pdftex.def Info: Images/g10.pdf  used on input line 461.
 (pdftex.def)             Requested size: 130.08038pt x 57.81166pt.
-<Images/g13.pdf, id=180, 867.24pt x 650.43pt>
+<Images/g13.pdf, id=186, 867.24pt x 650.43pt>
 File: Images/g13.pdf Graphic file (type pdf)
 <use Images/g13.pdf>
-Package pdftex.def Info: Images/g13.pdf  used on input line 457.
+Package pdftex.def Info: Images/g13.pdf  used on input line 461.
 (pdftex.def)             Requested size: 130.08038pt x 57.81166pt.
-<Images/g11.pdf, id=181, 867.24pt x 650.43pt>
+<Images/g11.pdf, id=187, 867.24pt x 650.43pt>
 File: Images/g11.pdf Graphic file (type pdf)
 <use Images/g11.pdf>
-Package pdftex.def Info: Images/g11.pdf  used on input line 457.
+Package pdftex.def Info: Images/g11.pdf  used on input line 461.
 (pdftex.def)             Requested size: 130.08038pt x 57.81166pt.
-<Images/g14.pdf, id=182, 867.24pt x 650.43pt>
+<Images/g14.pdf, id=188, 867.24pt x 650.43pt>
 File: Images/g14.pdf Graphic file (type pdf)
 <use Images/g14.pdf>
-Package pdftex.def Info: Images/g14.pdf  used on input line 457.
+Package pdftex.def Info: Images/g14.pdf  used on input line 461.
 (pdftex.def)             Requested size: 130.08038pt x 57.81166pt.
 
 pdfTeX warning (ext4): destination with the same identifier (name{para1}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.457 \end{frame}
+l.461 \end{frame}
                   [16
 
  <./Images/g9.pdf> <./Images/g12.pdf> <./Images/g10.pdf> <./Images/g13.pdf> <./
@@ -1298,26 +1316,26 @@ Images/g11.pdf> <./Images/g14.pdf>] [17
 ] [22
 
 ]
-<Images/m_1.pdf, id=283, 867.24pt x 650.43pt>
+<Images/m_1.pdf, id=290, 867.24pt x 650.43pt>
 File: Images/m_1.pdf Graphic file (type pdf)
 <use Images/m_1.pdf>
-Package pdftex.def Info: Images/m_1.pdf  used on input line 558.
+Package pdftex.def Info: Images/m_1.pdf  used on input line 562.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [23
 
  <./Images/m_1.pdf>]
-<Images/m_2.pdf, id=297, 867.24pt x 650.43pt>
+<Images/m_2.pdf, id=303, 867.24pt x 650.43pt>
 File: Images/m_2.pdf Graphic file (type pdf)
 <use Images/m_2.pdf>
-Package pdftex.def Info: Images/m_2.pdf  used on input line 567.
+Package pdftex.def Info: Images/m_2.pdf  used on input line 571.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [24
 
  <./Images/m_2.pdf>]
-<Images/m_3.pdf, id=310, 867.24pt x 650.43pt>
+<Images/m_3.pdf, id=316, 867.24pt x 650.43pt>
 File: Images/m_3.pdf Graphic file (type pdf)
 <use Images/m_3.pdf>
-Package pdftex.def Info: Images/m_3.pdf  used on input line 576.
+Package pdftex.def Info: Images/m_3.pdf  used on input line 580.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [25
 
@@ -1347,10 +1365,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 25274 strings out of 478268
- 486351 string characters out of 5846347
- 766893 words of memory out of 5000000
- 42719 multiletter control sequences out of 15000+600000
+ 25281 strings out of 478268
+ 486490 string characters out of 5846347
+ 766894 words of memory out of 5000000
+ 42725 multiletter control sequences out of 15000+600000
  544973 words of font info for 124 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,12n,122p,1009b,504s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1374,10 +1392,10 @@ texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2022/texmf-dist/
 fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type
 1/public/lm/lmtt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/a
 msfonts/symbols/msam10.pfb>
-Output written on presentation.pdf (30 pages, 375126 bytes).
+Output written on presentation.pdf (30 pages, 381345 bytes).
 PDF statistics:
- 460 PDF objects out of 1000 (max. 8388607)
- 347 compressed objects within 4 object streams
+ 466 PDF objects out of 1000 (max. 8388607)
+ 351 compressed objects within 4 object streams
  100 named destinations out of 1000 (max. 500000)
- 47232 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 47237 words of extra memory for PDF output out of 51595 (max. 10000000)
 
