@@ -17,6 +17,17 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Outline
+
+- Background
+
+- Statistical methods to be studied
+
+- Objective
+
+- Simulation
+
+- Experiment Settings and Scenario
 
 ## Background
 
@@ -358,13 +369,15 @@ _Normal Scenario(n=500, 2000)_
 - Both methods are sensitive for strong predictors. Forward selection is more sensitive than Lasso in identifying weak predictors than Lasso when there are fewer true strong predictors, else the discrepancy becomes smaller
 - The sensitivity for identifying weak predictors are increasing as n increases for both models
 
+
 ## Predictors Identification Conclusions
 
 _Normal Scenario(n=500, 2000)_
 
 - Lasso overall has higher specificity than forward, but the discrepancy becomes smaller as n increases
 - The F1-score and accuracy increases as n increases for both models, overall Lasso has higher accuracy than forward 
-- Lasso performs smaller RMSE on parameter estimation than forward as n increases
+- Lasso performs better on parameter estimation than forward when n is small
+
 
 ## Missing Weak Predictors Analysis - Introduction
 
