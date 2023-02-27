@@ -253,6 +253,7 @@ result %>% add_column(n = c(rep(100,30)), method = c(rep("lasso",30)))
 ```
 
 ```{r}
+## auto for 145
 beta = c(rep(20, 4), rep(0.5, 36), rep(0, 60))
 
 get_MSE <- function(sim_number,what_number,what_method){
@@ -263,8 +264,8 @@ get_MSE <- function(sim_number,what_number,what_method){
     arrange(type) %>% 
     pull(estimate)
   
-  MSE = sum((estimate - beta) ^2) / 100
-  MSE
+  RMSE = sqrt(sum((estimate - beta) ^2) / 100)
+  RMSE
 }
 
 getresulttable_145 <- function(what_number,what_method){
@@ -303,15 +304,27 @@ result =
   pivot_longer(
     most:least,
     names_to = "missing",
-    values_to = "MSE"
+    values_to = "RMSE"
     ) 
 
 result = result %>% 
-  add_column(n = c(rep(what_number, 30)), method = c(rep(what_method, 30)), ratio = c(rep(145, 30)))
+  add_column(n = c(rep(what_number, 30)), method = c(rep(what_method, 30)), ratio = c(rep("1:4:5", 30)))
 result
 }
 
-getresulttable_145(what_number = 100, what_method = "forward")
+forward_100_145 = getresulttable_145(what_number = 100, what_method = "forward")
+forward_500_145 = getresulttable_145(what_number = 500, what_method = "forward")
+forward_2000_145 = getresulttable_145(what_number = 2000, what_method = "forward")
+lasso_100_145 = getresulttable_145(what_number = 100, what_method = "lasso")
+lasso_500_145 = getresulttable_145(what_number = 500, what_method = "lasso")
+lasso_2000_145 = getresulttable_145(what_number = 2000, what_method = "lasso")
+
+
+
+
+
+
+
 
 result =
   result %>% 
@@ -320,5 +333,106 @@ ggplot(result, aes(x = missing, y = mse)) + geom_boxplot()
 
 
 result %>% add_column(n = c(rep(100,30)), method = c(rep("lasso",30))) 
+```
+
+```{r}
+## auto for 334
+beta = c(rep(20, 12), rep(0.5, 28), rep(0, 60))
+
+get_MSE <- function(sim_number,what_number,what_method){
+  estimate = 
+    read_csv("parameter_estimate2.csv",show_col_types = FALSE) %>%
+    filter(n == what_number & method == what_method &sim_time == sim_number) %>% 
+    mutate(type = factor(type, levels = c('strong', 'wbc', 'wai', 'null'))) %>% 
+    arrange(type) %>% 
+    pull(estimate)
+  
+  RMSE = sqrt(sum((estimate - beta) ^2) / 100)
+  RMSE
+}
+
+getresulttable_334 <- function(what_number,what_method){
+  param_estimate = 
+    read_csv("parameter_estimate2.csv",show_col_types = FALSE) %>%
+    filter(n == what_number & method == what_method)
+
+non_null = 
+  param_estimate %>% 
+  filter(estimate != 0)
+
+non_null %>% 
+  group_by(sim_time) %>% 
+  summarise(
+  n_param = n()
+) %>% 
+  arrange(-n_param) %>%
+  pull(n_param)
+
+sum = 
+  non_null %>%
+  group_by(sim_time) %>%
+  summarise(n_param = n()) %>% 
+  arrange(-n_param)
+
+max_sims = head(sum, 10) %>% pull(sim_time)
+min_sims = tail(sum, 10) %>% pull(sim_time)
+middle_sims = head(sum, 55) %>% tail(10) %>% pull(sim_time)
+
+most = pmap(list(min_sims,what_number,what_method), get_MSE) %>% unlist()
+least = pmap(list(max_sims,what_number,what_method), get_MSE) %>% unlist()
+middle = pmap(list(middle_sims,what_number,what_method), get_MSE) %>% unlist()
+
+result = 
+  tibble(most, middle,least) %>% 
+  pivot_longer(
+    most:least,
+    names_to = "missing",
+    values_to = "RMSE"
+    ) 
+
+result = result %>% 
+  add_column(n = c(rep(what_number, 30)), method = c(rep(what_method, 30)), ratio = c(rep("3:3:4", 30)))
+result
+}
+
+forward_100_334 = getresulttable_334(what_number = 100, what_method = "forward")
+forward_500_334 = getresulttable_334(what_number = 500, what_method = "forward")
+forward_2000_334 = getresulttable_334(what_number = 2000, what_method = "forward")
+lasso_100_334 = getresulttable_334(what_number = 100, what_method = "lasso")
+lasso_500_334 = getresulttable_334(what_number = 500, what_method = "lasso")
+lasso_2000_334 = getresulttable_334(what_number = 2000, what_method = "lasso")
+```
+
+```{r}
+result = forward_100_145
+
+result = 
+  forward_100_145 %>% 
+  add_row(forward_500_145) %>% 
+  add_row(forward_2000_145) %>% 
+  add_row(lasso_100_145) %>% 
+  add_row(lasso_500_145) %>% 
+  add_row(lasso_2000_145) %>% 
+  add_row(forward_100_334) %>% 
+  add_row(forward_500_334) %>% 
+  add_row(forward_2000_334) %>% 
+  add_row(lasso_100_334) %>% 
+  add_row(lasso_500_334) %>% 
+  add_row(lasso_2000_334)
+
+result %>% 
+  filter(n == 500 & ratio == 145) %>% 
+  ggplot(aes(x = missing, y = MSE, color = method)) + geom_boxplot() 
+
+ggplot(result, aes(x = missing, y = mse, color = n())) + geom_boxplot()
+
+# compare specificity
+g3 = ggplot(filter(result, n ==2000), aes(x = missing, y = RMSE, color = method)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "RMSE",x = "missing", y = "RMSE") +
+  facet_grid(. ~ ratio)
+g3
+ggsave(g3,filename = "Images/m_3.pdf",width = 12,height = 9)
 ```
 

@@ -34,7 +34,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 - Missing Weak Predictor Analysis
 
-- Discussions and conclusions
+- Discussions
 
 - Limitations and Future Work
 
@@ -344,23 +344,21 @@ _Normal Scenario(n=500, 2000)_
 - Lasso performs better on parameter estimation than forward when n is not large, and conversely as n increases
 
 
-## Missing Weak Predictors Analysis - Introduction
+## Missing Weak Predictors Analysis 
 
-How missing "weak" predictors impacts the parameter estimations
+- How missing "weak" predictors impacts the parameter estimations
 
-Definition: missing weak predictors = true weak predictors but estimated as null
+- Definition: missing weak predictors = true weak predictors but estimated as null
 
-How to value parameter estimations: RMSE
+## Missing Weak Predictors Analysis 
 
-## Missing Weak Predictors Analysis - Methods
+- How to evaluate parameter estimations: RMSE
 
-How to value parameter estimations: RMSE
+- Most missing: simulations that have the least non-null estimations
 
-Most missing: simulations that have the least non-null estimations
+- Least missing: simulations that have the most non-null estimations
 
-Least missing: simulations that have the most non-null estimations
-
-Middle: in between
+- Middle: in between
 
 ## Missing Weak Predictors Analysis - Result: n=100
 
@@ -386,7 +384,7 @@ Middle: in between
 \label{Fig14}
 \end{figure}
 
-## Missing Weak Predictors Analysis - Discussion
+## Missing Weak Predictors Analysis
 
 - No apparent patterns between different ratios
 
@@ -399,21 +397,26 @@ Middle: in between
 - In Lasso, RMSE seems to increase if the missing amount increases, but in forward selection, RMSE decreases when missing amount increases.
 
 
-## Limitations
+## Discussions
 
-- Correlation matrix Pattern
+- There is much freedom when designing the simulations.
 
-- Number of observations $n$ and number of parameters $p$
+- In our algorithm, we have 5 parameters. n, p, ratio, c, corr
 
-- Ratio of Strong, Wbc, and Wai predictors
+- More parameters can be adjusted.
 
+## Limitations and Future Work
 
-## Future Work
+- Limitation: We reproduced high-dimensional scenarios, but we still don't know the solution.
 
-- Larger number of initial samples, narrower coverage window
+- Future Work: We may adjust other parameters to investigate further.
 
-- Increased sample size, changes in bootstrap performance?
+## Reference
 
-- Changes in treatment propensity model
+1. Li Y, Hong HG, Ahmed SE, Li Y. Weak signals in high‐dimensional regression: Detection, estimation and prediction. Appl Stochastic Models Bus Ind. 2018;1–16. https://doi.org/10.1002/asmb.2340
 
-- Non-normal distributions of covariates
+## Q&A
+
+- Thanks for listening!
+
+- Any questions?
