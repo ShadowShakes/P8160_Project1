@@ -17,6 +17,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 ## Outline
 
 - Background
@@ -32,6 +33,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - Model Evaluation
 
 - Missing Weak Predictor Analysis
+
 
 ## Background
 
@@ -171,17 +173,21 @@ Y = X %*% beta + rnorm(n, mean = 0, sd = 8)
 ```
 
 
-## Experiment Settings and Scenarios
+## Investigation Settings and Scenarios
+
+_Fixed_
 
 - Number of parameters: $p = 100$
 
-- Number of observations: $n = 100\text{ (high dimensional)}, 500, 2000$
-
 - Ratio of true and null signals: $2:3$
 
-- Ratio of strong, WBC, and WAI signals: $p_{strong }:p_{WBC}:p_{WAI}=1:4:5 \ \text{and} \ 3:3:4$
-
 - Correlation between strong and WBC: $corr = 0.4$
+
+_Unfixed_
+
+- Number of observations: $n = 100\text{ (high dimensional)}, 500, 2000$
+
+- Ratio of strong, WBC, and WAI signals: $p_{strong }:p_{WBC}:p_{WAI}=1:4:5 \ \text{and} \ 3:3:4$
 
 
 ## Evaluation Metrics
@@ -359,28 +365,42 @@ _Parameter Estimation_
 
 _High Dimensional Scenario(n=100)_
 
-- Forward selection tend to be assertive, with extremely high sensitivity and more selected predictors, better at identifying true signals
-- Lasso tend to be conservative, with extremely high specificity and fewer selected predictors, better at identifying null signals
-- Forward selection has an overall much higher F1-score but lower accuracy than Lasso
-- Lasso performs smaller RMSE on parameter estimation than forward selection
+- Forward selection tend to be assertive and better at identifying weak signals, with extremely high sensitivity, low specificity and lots of selected predictors
+
+- Lasso tend to be conservative and better at identifying null signals, with extremely high specificity, low sensitivity and few selected predictors
+
+- Both identify strong predictors perfectly
+
+
+## Predictors Identification Conclusions
+
+_High Dimensional Scenario(n=100)_
+
+- Forward selection performs better than Lasso on F1-score but worse on overall accuracy
+
+- Lasso performs better on parameter estimation than forward selection
+
+- Both models seem to be too radical in predictor identification
 
 
 ## Predictors Identification Conclusions
 
 _Normal Scenario(n=500, 2000)_
 
-- Forward selection tends to overall select more predictors than Lasso, both methods select more predictors and more close to true predictor number(40) as n increases
-- Both methods are sensitive for strong predictors. Forward selection is more sensitive than Lasso in identifying weak predictors than Lasso when there are fewer true strong predictors, else the discrepancy becomes smaller
-- The sensitivity for identifying weak predictors are increasing as n increases for both models
+- Forward selection tends to select more predictors than Lasso, but both get closer to actual number as n increases
+
+- Lasso is better at identifying null predictors than forward selection, but poorer at identifying other weak predictors (under-screening). Both models nicely identify strong predictors. 
+
+- Lasso performs better on parameter estimation than forward when n is not large, and conversely as n increases
 
 
 ## Predictors Identification Conclusions
 
 _Normal Scenario(n=500, 2000)_
 
-- Lasso overall has higher specificity than forward, but the discrepancy becomes smaller as n increases
-- The F1-score and accuracy increases as n increases for both models, overall Lasso has higher accuracy than forward 
-- Lasso performs better on parameter estimation than forward when n is small
+- When there are more strong predictors, weak-but-correlated predictors become easier to be identified, especially for Lasso. However, parameter estimation also becomes more unstable
+
+- Identification differences of all metrics are narrowed down with n increasing
 
 
 ## Missing Weak Predictors Analysis - Introduction
