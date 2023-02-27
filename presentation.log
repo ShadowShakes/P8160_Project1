@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  26 FEB 2023 22:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  26 FEB 2023 22:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -968,7 +968,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 
 {/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 
-154.
+158.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/ot1lmss.fd
 File: ot1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -977,34 +977,34 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-54.
+58.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-154.
+158.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-154.
+158.
 (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 154.
+(Font)              <10.95> on input line 158.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 154.
+(Font)              <8> on input line 158.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 154.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 154
+(Font)              <6> on input line 158.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 158
 .
 (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/local/texlive/2022/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 154
+LaTeX Font Info:    Trying to load font information for U+msb on input line 158
 .
 (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1012,48 +1012,48 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 154.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 158.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <8> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 154.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 158.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <6> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 154.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 158.
 [2
 
 ] [3
 
 ]
 LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <10.95> not available
-(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 190.
+(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 194.
 
 LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <8> not available
-(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 190.
+(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 194.
 
 LaTeX Font Info:    Font shape `OT1/lmss/b/n' in size <6> not available
-(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 190.
+(Font)              Font shape `OT1/lmss/bx/n' tried instead on input line 194.
 
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <10.95> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 190.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 194.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <8> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 190.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 194.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <6> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 190.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 194.
 LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 190.
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 194.
 
 LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 190.
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 194.
 
 LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <8> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 190.
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 194.
 
 LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <8> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 190.
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 194.
 
 LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <6> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 190.
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 194.
 
 LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <6> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 190.
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 194.
 
 [4
 
@@ -1091,7 +1091,7 @@ LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
 <Images/g_1.pdf, id=105, 867.24pt x 650.43pt>
 File: Images/g_1.pdf Graphic file (type pdf)
 <use Images/g_1.pdf>
-Package pdftex.def Info: Images/g_1.pdf  used on input line 360.
+Package pdftex.def Info: Images/g_1.pdf  used on input line 364.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [13
 
@@ -1101,7 +1101,7 @@ Package pdftex.def Info: Images/g_1.pdf  used on input line 360.
 <Images/g1.pdf, id=125, 867.24pt x 650.43pt>
 File: Images/g1.pdf Graphic file (type pdf)
 <use Images/g1.pdf>
-Package pdftex.def Info: Images/g1.pdf  used on input line 386.
+Package pdftex.def Info: Images/g1.pdf  used on input line 390.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [15
 
@@ -1109,7 +1109,7 @@ Package pdftex.def Info: Images/g1.pdf  used on input line 386.
 <Images/g5.pdf, id=138, 867.24pt x 650.43pt>
 File: Images/g5.pdf Graphic file (type pdf)
 <use Images/g5.pdf>
-Package pdftex.def Info: Images/g5.pdf  used on input line 395.
+Package pdftex.def Info: Images/g5.pdf  used on input line 399.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [16
 
@@ -1119,7 +1119,7 @@ Package pdftex.def Info: Images/g5.pdf  used on input line 395.
 <Images/g2.pdf, id=158, 867.24pt x 650.43pt>
 File: Images/g2.pdf Graphic file (type pdf)
 <use Images/g2.pdf>
-Package pdftex.def Info: Images/g2.pdf  used on input line 428.
+Package pdftex.def Info: Images/g2.pdf  used on input line 432.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [18
 
@@ -1129,7 +1129,7 @@ Package pdftex.def Info: Images/g2.pdf  used on input line 428.
 <Images/g3.pdf, id=178, 867.24pt x 650.43pt>
 File: Images/g3.pdf Graphic file (type pdf)
 <use Images/g3.pdf>
-Package pdftex.def Info: Images/g3.pdf  used on input line 460.
+Package pdftex.def Info: Images/g3.pdf  used on input line 464.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [20
 
@@ -1137,7 +1137,7 @@ Package pdftex.def Info: Images/g3.pdf  used on input line 460.
 <Images/g7.pdf, id=191, 867.24pt x 650.43pt>
 File: Images/g7.pdf Graphic file (type pdf)
 <use Images/g7.pdf>
-Package pdftex.def Info: Images/g7.pdf  used on input line 469.
+Package pdftex.def Info: Images/g7.pdf  used on input line 473.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [21
 
@@ -1147,7 +1147,7 @@ Package pdftex.def Info: Images/g7.pdf  used on input line 469.
 <Images/g4.pdf, id=210, 867.24pt x 650.43pt>
 File: Images/g4.pdf Graphic file (type pdf)
 <use Images/g4.pdf>
-Package pdftex.def Info: Images/g4.pdf  used on input line 495.
+Package pdftex.def Info: Images/g4.pdf  used on input line 499.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [23
 
@@ -1155,7 +1155,7 @@ Package pdftex.def Info: Images/g4.pdf  used on input line 495.
 <Images/g8.pdf, id=223, 867.24pt x 650.43pt>
 File: Images/g8.pdf Graphic file (type pdf)
 <use Images/g8.pdf>
-Package pdftex.def Info: Images/g8.pdf  used on input line 504.
+Package pdftex.def Info: Images/g8.pdf  used on input line 508.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [24
 
@@ -1165,12 +1165,12 @@ Package pdftex.def Info: Images/g8.pdf  used on input line 504.
 <Images/g9.pdf, id=243, 867.24pt x 650.43pt>
 File: Images/g9.pdf Graphic file (type pdf)
 <use Images/g9.pdf>
-Package pdftex.def Info: Images/g9.pdf  used on input line 539.
+Package pdftex.def Info: Images/g9.pdf  used on input line 543.
 (pdftex.def)             Requested size: 144.54pt x 108.39812pt.
 <Images/g12.pdf, id=244, 867.24pt x 650.43pt>
 File: Images/g12.pdf Graphic file (type pdf)
 <use Images/g12.pdf>
-Package pdftex.def Info: Images/g12.pdf  used on input line 539.
+Package pdftex.def Info: Images/g12.pdf  used on input line 543.
 (pdftex.def)             Requested size: 144.54pt x 108.39812pt.
 [26
 
@@ -1178,12 +1178,12 @@ Package pdftex.def Info: Images/g12.pdf  used on input line 539.
 <Images/g10.pdf, id=273, 867.24pt x 650.43pt>
 File: Images/g10.pdf Graphic file (type pdf)
 <use Images/g10.pdf>
-Package pdftex.def Info: Images/g10.pdf  used on input line 556.
+Package pdftex.def Info: Images/g10.pdf  used on input line 560.
 (pdftex.def)             Requested size: 144.54pt x 108.39812pt.
 <Images/g13.pdf, id=274, 867.24pt x 650.43pt>
 File: Images/g13.pdf Graphic file (type pdf)
 <use Images/g13.pdf>
-Package pdftex.def Info: Images/g13.pdf  used on input line 556.
+Package pdftex.def Info: Images/g13.pdf  used on input line 560.
 (pdftex.def)             Requested size: 144.54pt x 108.39812pt.
 [27
 
@@ -1191,12 +1191,12 @@ Package pdftex.def Info: Images/g13.pdf  used on input line 556.
 <Images/g11.pdf, id=303, 867.24pt x 650.43pt>
 File: Images/g11.pdf Graphic file (type pdf)
 <use Images/g11.pdf>
-Package pdftex.def Info: Images/g11.pdf  used on input line 573.
+Package pdftex.def Info: Images/g11.pdf  used on input line 577.
 (pdftex.def)             Requested size: 144.54pt x 108.39812pt.
 <Images/g14.pdf, id=304, 867.24pt x 650.43pt>
 File: Images/g14.pdf Graphic file (type pdf)
 <use Images/g14.pdf>
-Package pdftex.def Info: Images/g14.pdf  used on input line 573.
+Package pdftex.def Info: Images/g14.pdf  used on input line 577.
 (pdftex.def)             Requested size: 144.54pt x 108.39812pt.
 [28
 
@@ -1216,7 +1216,7 @@ Package pdftex.def Info: Images/g14.pdf  used on input line 573.
 <Images/m_1.pdf, id=368, 867.24pt x 650.43pt>
 File: Images/m_1.pdf Graphic file (type pdf)
 <use Images/m_1.pdf>
-Package pdftex.def Info: Images/m_1.pdf  used on input line 676.
+Package pdftex.def Info: Images/m_1.pdf  used on input line 680.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [35
 
@@ -1224,7 +1224,7 @@ Package pdftex.def Info: Images/m_1.pdf  used on input line 676.
 <Images/m_2.pdf, id=381, 867.24pt x 650.43pt>
 File: Images/m_2.pdf Graphic file (type pdf)
 <use Images/m_2.pdf>
-Package pdftex.def Info: Images/m_2.pdf  used on input line 685.
+Package pdftex.def Info: Images/m_2.pdf  used on input line 689.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [36
 
@@ -1232,7 +1232,7 @@ Package pdftex.def Info: Images/m_2.pdf  used on input line 685.
 <Images/m_3.pdf, id=394, 867.24pt x 650.43pt>
 File: Images/m_3.pdf Graphic file (type pdf)
 <use Images/m_3.pdf>
-Package pdftex.def Info: Images/m_3.pdf  used on input line 694.
+Package pdftex.def Info: Images/m_3.pdf  used on input line 698.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [37
 
@@ -1281,7 +1281,7 @@ lm/lmsso10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsso8
 ive/2022/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2022/t
 exmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2022/texmf-dist/
 fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on presentation.pdf (40 pages, 378174 bytes).
+Output written on presentation.pdf (40 pages, 378232 bytes).
 PDF statistics:
  542 PDF objects out of 1000 (max. 8388607)
  418 compressed objects within 5 object streams
