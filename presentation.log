@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  26 FEB 2023 22:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.15)  26 FEB 2023 22:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1091,7 +1091,7 @@ LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
 <Images/g_1.pdf, id=105, 867.24pt x 650.43pt>
 File: Images/g_1.pdf Graphic file (type pdf)
 <use Images/g_1.pdf>
-Package pdftex.def Info: Images/g_1.pdf  used on input line 371.
+Package pdftex.def Info: Images/g_1.pdf  used on input line 374.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [13
 
@@ -1101,7 +1101,7 @@ Package pdftex.def Info: Images/g_1.pdf  used on input line 371.
 <Images/g1.pdf, id=125, 867.24pt x 650.43pt>
 File: Images/g1.pdf Graphic file (type pdf)
 <use Images/g1.pdf>
-Package pdftex.def Info: Images/g1.pdf  used on input line 397.
+Package pdftex.def Info: Images/g1.pdf  used on input line 400.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [15
 
@@ -1109,7 +1109,7 @@ Package pdftex.def Info: Images/g1.pdf  used on input line 397.
 <Images/g5.pdf, id=138, 867.24pt x 650.43pt>
 File: Images/g5.pdf Graphic file (type pdf)
 <use Images/g5.pdf>
-Package pdftex.def Info: Images/g5.pdf  used on input line 406.
+Package pdftex.def Info: Images/g5.pdf  used on input line 409.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [16
 
@@ -1119,7 +1119,7 @@ Package pdftex.def Info: Images/g5.pdf  used on input line 406.
 <Images/g2.pdf, id=158, 867.24pt x 650.43pt>
 File: Images/g2.pdf Graphic file (type pdf)
 <use Images/g2.pdf>
-Package pdftex.def Info: Images/g2.pdf  used on input line 439.
+Package pdftex.def Info: Images/g2.pdf  used on input line 442.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [18
 
@@ -1129,7 +1129,7 @@ Package pdftex.def Info: Images/g2.pdf  used on input line 439.
 <Images/g3.pdf, id=178, 867.24pt x 650.43pt>
 File: Images/g3.pdf Graphic file (type pdf)
 <use Images/g3.pdf>
-Package pdftex.def Info: Images/g3.pdf  used on input line 471.
+Package pdftex.def Info: Images/g3.pdf  used on input line 474.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [20
 
@@ -1137,7 +1137,7 @@ Package pdftex.def Info: Images/g3.pdf  used on input line 471.
 <Images/g7.pdf, id=191, 867.24pt x 650.43pt>
 File: Images/g7.pdf Graphic file (type pdf)
 <use Images/g7.pdf>
-Package pdftex.def Info: Images/g7.pdf  used on input line 480.
+Package pdftex.def Info: Images/g7.pdf  used on input line 483.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [21
 
@@ -1147,7 +1147,7 @@ Package pdftex.def Info: Images/g7.pdf  used on input line 480.
 <Images/g4.pdf, id=210, 867.24pt x 650.43pt>
 File: Images/g4.pdf Graphic file (type pdf)
 <use Images/g4.pdf>
-Package pdftex.def Info: Images/g4.pdf  used on input line 506.
+Package pdftex.def Info: Images/g4.pdf  used on input line 509.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [23
 
@@ -1155,7 +1155,7 @@ Package pdftex.def Info: Images/g4.pdf  used on input line 506.
 <Images/g8.pdf, id=223, 867.24pt x 650.43pt>
 File: Images/g8.pdf Graphic file (type pdf)
 <use Images/g8.pdf>
-Package pdftex.def Info: Images/g8.pdf  used on input line 515.
+Package pdftex.def Info: Images/g8.pdf  used on input line 518.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [24
 
@@ -1165,12 +1165,12 @@ Package pdftex.def Info: Images/g8.pdf  used on input line 515.
 <Images/g9.pdf, id=243, 867.24pt x 650.43pt>
 File: Images/g9.pdf Graphic file (type pdf)
 <use Images/g9.pdf>
-Package pdftex.def Info: Images/g9.pdf  used on input line 550.
+Package pdftex.def Info: Images/g9.pdf  used on input line 553.
 (pdftex.def)             Requested size: 144.54pt x 108.39812pt.
 <Images/g12.pdf, id=244, 867.24pt x 650.43pt>
 File: Images/g12.pdf Graphic file (type pdf)
 <use Images/g12.pdf>
-Package pdftex.def Info: Images/g12.pdf  used on input line 550.
+Package pdftex.def Info: Images/g12.pdf  used on input line 553.
 (pdftex.def)             Requested size: 144.54pt x 108.39812pt.
 [26
 
@@ -1178,12 +1178,12 @@ Package pdftex.def Info: Images/g12.pdf  used on input line 550.
 <Images/g10.pdf, id=273, 867.24pt x 650.43pt>
 File: Images/g10.pdf Graphic file (type pdf)
 <use Images/g10.pdf>
-Package pdftex.def Info: Images/g10.pdf  used on input line 567.
+Package pdftex.def Info: Images/g10.pdf  used on input line 570.
 (pdftex.def)             Requested size: 144.54pt x 108.39812pt.
 <Images/g13.pdf, id=274, 867.24pt x 650.43pt>
 File: Images/g13.pdf Graphic file (type pdf)
 <use Images/g13.pdf>
-Package pdftex.def Info: Images/g13.pdf  used on input line 567.
+Package pdftex.def Info: Images/g13.pdf  used on input line 570.
 (pdftex.def)             Requested size: 144.54pt x 108.39812pt.
 [27
 
@@ -1191,12 +1191,12 @@ Package pdftex.def Info: Images/g13.pdf  used on input line 567.
 <Images/g11.pdf, id=303, 867.24pt x 650.43pt>
 File: Images/g11.pdf Graphic file (type pdf)
 <use Images/g11.pdf>
-Package pdftex.def Info: Images/g11.pdf  used on input line 584.
+Package pdftex.def Info: Images/g11.pdf  used on input line 587.
 (pdftex.def)             Requested size: 144.54pt x 108.39812pt.
 <Images/g14.pdf, id=304, 867.24pt x 650.43pt>
 File: Images/g14.pdf Graphic file (type pdf)
 <use Images/g14.pdf>
-Package pdftex.def Info: Images/g14.pdf  used on input line 584.
+Package pdftex.def Info: Images/g14.pdf  used on input line 587.
 (pdftex.def)             Requested size: 144.54pt x 108.39812pt.
 [28
 
@@ -1218,7 +1218,7 @@ Package pdftex.def Info: Images/g14.pdf  used on input line 584.
 <Images/m_1.pdf, id=374, 867.24pt x 650.43pt>
 File: Images/m_1.pdf Graphic file (type pdf)
 <use Images/m_1.pdf>
-Package pdftex.def Info: Images/m_1.pdf  used on input line 692.
+Package pdftex.def Info: Images/m_1.pdf  used on input line 695.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [36
 
@@ -1226,7 +1226,7 @@ Package pdftex.def Info: Images/m_1.pdf  used on input line 692.
 <Images/m_2.pdf, id=387, 867.24pt x 650.43pt>
 File: Images/m_2.pdf Graphic file (type pdf)
 <use Images/m_2.pdf>
-Package pdftex.def Info: Images/m_2.pdf  used on input line 701.
+Package pdftex.def Info: Images/m_2.pdf  used on input line 704.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [37
 
@@ -1234,7 +1234,7 @@ Package pdftex.def Info: Images/m_2.pdf  used on input line 701.
 <Images/m_3.pdf, id=401, 867.24pt x 650.43pt>
 File: Images/m_3.pdf Graphic file (type pdf)
 <use Images/m_3.pdf>
-Package pdftex.def Info: Images/m_3.pdf  used on input line 710.
+Package pdftex.def Info: Images/m_3.pdf  used on input line 713.
 (pdftex.def)             Requested size: 276.559pt x 207.41734pt.
 [38
 
@@ -1283,7 +1283,7 @@ lm/lmsso10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsso8
 ive/2022/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2022/t
 exmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2022/texmf-dist/
 fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on presentation.pdf (41 pages, 379207 bytes).
+Output written on presentation.pdf (41 pages, 379723 bytes).
 PDF statistics:
  548 PDF objects out of 1000 (max. 8388607)
  423 compressed objects within 5 object streams

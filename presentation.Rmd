@@ -208,7 +208,9 @@ _Signal Identification_
 
 _Parameter Estimation_
 
-- \textbf{MSE:} $\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\beta_i)^2$
+- \textbf{RMSE:} $\sqrt{\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\beta_i)^2}$
+
+- \textbf{Variance:} $\sqrt{\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\bar{\beta_i})^2}$
 
 
 ## Signal Identification Performance - Complexity
