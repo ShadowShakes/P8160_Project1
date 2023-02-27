@@ -308,7 +308,7 @@ _High Dimensional Scenario(n=100)_
 
 - Forward selection tends to be assertive and better at identifying weak signals, with extremely high sensitivity, low specificity
 
-- Lasso tend to be conservative and better at identifying null signals, with extremely high specificity, low sensitivity
+- Lasso tends to be conservative and better at identifying null signals, with extremely high specificity, low sensitivity
 
 - Both identify strong predictors perfectly
 
