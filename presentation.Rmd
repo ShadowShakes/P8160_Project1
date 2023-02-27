@@ -17,50 +17,52 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 ## Background
 
 ```{r include=FALSE}
-# In high-dimensional data analysis, that is, the number of predictors p is no less than the number of observations n, variable selection is a common practice to find an optimal model that balances between model fitness and model complexity.
+# In linear models, when the number of predictors p is large, or even the data is high-dimensional, that is, p is no less than the number of observations n, variable selection is a common practice to find an optimal model that balances between model fitness and model complexity.
 
-# However, In modern applications with high-dimensional covariates, traditional variable selection methods often struggle with the presence of “weak” predictors, that is, the coefficient is small but non-zero.
+# However, in modern applications with high-dimensional covariates, traditional variable selection methods often struggle with the presence of “weak” predictors, that is, the coefficient is small but non-zero.
 ```
 
 - Variable selection methods help to optimize models in high-dimensional settings where we need to select predictors that balance fitness and complexity.
- 
+
 - The presence of weak predictors is a problem that plagues traditional variable selection methods.
 
 
 ## Statistical Methods to be Studied
 
 ```{r include=FALSE}
-# Specifically, we are interested in these two variable selection methods, that is, the step-wise forward method based on AIC, and automated LASSO regression. I assume you all are quite familiar with these two methods, so let's move on to the next slides.
+# Specifically, we are interested in these two variable selection methods, the step-wise forward method based on AIC criteria, and the automated LASSO regression. I assume you all are quite familiar with these two methods, so let's move on to the next slides.
 ```
 
 **Step-wise forward method**
 
-- Starts with the empty model, and iteratively adds the variables that best improves the model fit. That is often done by sequentially adding predictors with the largest reduction in AIC. For linear models,
+- Starts with the empty model, and iteratively adds the variables that best improve the model fit. That is often done by sequentially adding predictors with the largest reduction in AIC. For linear models,
 $$AIC = n\log\left(\sum_{i=1}^n (y_i - \widehat{y}_i)^2/n\right) + 2p.$$
 
 **Automated LASSO regression**
   
 - Estimates model parameters by optimizing a penalized loss function:
-$$\min_\beta \frac{1}{2n} \sum_{i=1}^n (y_i - x_i \beta )^2 + \lambda \sum_{k=1}^p|\beta_k|.$$
+$$\min_{\boldsymbol{\beta}} \frac{1}{2n} \sum_{i=1}^n (y_i - \boldsymbol{x}_i \boldsymbol{\beta} )^2 + \lambda \sum_{k=1}^p|\beta_k|.$$
 
 
 ## Objectives
 
 ```{r include=FALSE}
-# We would like to investigate how well each of the two methods in identifying weak and strong predictors, and how missing “weak” predictors impacts the parameter estimations.
+# We would like to investigate how well each of the two methods is in identifying weak and strong predictors, and how missing “weak” predictors impacts the parameter estimations.
 ```
 
 (1) Evaluate the effectiveness of both methods in identifying weak and strong predictors.
 
 (2) Examine how the absence of "weak" predictors affects parameter estimations.
 
+
 ## Types of Signals
 
 ```{r include=FALSE}
-# First, we give a definition of what strong and weak predictors are. Specifically, we divide all predictors into 4 groups: strong, weak-but-correlated, weak-and-independent, and null predictors. We use this threshold $c\sqrt{\log (p) / n}$ to distinguish strong and weak, where c is a pre-specified parameter. For weak-but-correlated predictors, they are correlated with at least one strong predictors, while weak-and-independent are not. So, we will have the following result:
+# First, we give a definition of what strong and weak predictors are. Specifically, we divide all predictors into 4 groups: strong, weak-but-correlated, weak-and-independent, and null predictors. We use this threshold $c\sqrt{\log (p) / n}$ to distinguish strong and weak, where c is a pre-specified parameter. For weak-but-correlated predictors, they are correlated with at least one strong predictor, while weak-and-independent are not. So, we will have the following result:
 ```
 
 - Strong signals
@@ -94,40 +96,73 @@ Thus, $p$ predictors can be partitioned as $$\{1,\cdots,p\}=S_{strong}\cup S_{WB
 ## Data Generation
 
 ```{r include=FALSE}
-# Now let's move on to the data generation section! We assume that normality assumption is met. And we set the coefficients of strong signals to be 20 and those of weak signals to be 0.5. Since c is pre-specified, we select it to be 20 so that this inequation are met for all scenarios to be investigated further. Also, we set sigma squared to be 8.
+# Now let's move on to the data generation section! We assume that normality is met. And we set the coefficients of strong signals to 20 and those of weak signals to 0.5. Since c is pre-specified, we select it to be 20 so that this inequation is met for all scenarios to be investigated further. Also, we set sigma to 8.
 ```
 
-- Normality assumption $$\mathbf{y}\sim N(\mathbf{X}\mathbf{\beta},\sigma^2\mathbf{I})$$
+- Normality assumption $$\mathbf{y}\sim N(\mathbf{X}\boldsymbol{\beta},\sigma^2\mathbf{I})$$
 
 - For $j\in S_{strong}$, $\beta_j=20$; For $j\in S_{WBC}\cup S_{WAI}$, $\beta_j=0.5$.
 
 - We choose $c=20$ so that $0.5\leq c\sqrt{\log p/n} < 20$ for all scenarios to be investigated.
 
-- $\sigma^2 = 8.$
+- For the error term, we set $\sigma = 8.$
 
 
-## Data Generation - Random Number Generation (Binary Outcome)
+## Data Generation - Design Matrix
 
-```{r, eval=FALSE}
-set.seed(20220217)
-seed_vec <- runif(100000, min, max) 
-  for (i in 1:n) {
-    set.seed(seeds[i])
-    long_rnorm <- rnorm(size*3, mean = 0, sd = 1)
-    long_runif <- runif(size*2)
-    beta_error <- rnorm(size, mean = 0, sd = 0.25)
-    L1 <- long_rnorm[1:size]
-    L2 <- long_rnorm[(size + 1):(2*size)]
-    L3 <- long_rnorm[(2*size + 1):(3*size)]
-    
-    comp_pA = long_runif[1:size]
-    A = (prob_A > comp_pA) 
-    # function continues...
-    }
+```{r include=FALSE}
+# How do we generate the design matrix?
+# We assume that X follows a joint normal distribution.
+# We standardize all predictors, then the covariance matrix sigma here is the correlation matrix, thus the mean is zero and all diagonal elements of covariance matrix are 1.
+# Remember weak-but-correlated predictors have correlation with strong predictors? We set they are correlated with one and only one strong predictor.
+# We use the mvrnorm function from the package MASS to generate multivariate normal distribution data.
+```
+
+- We assume $$\mathbf{X}\sim N(\boldsymbol{\mu},\boldsymbol{\Sigma})$$
+
+- All predictors are standardized. Then we have $\boldsymbol{\mu}=\mathbf{0}$ and $\Sigma_{i,i}=1$ for all $i$.
+
+- We set $p_{WBC}\geq p_{strong}$. For each strong predictor (except one of them), we set $[p_{WBC}/p_{strong}]$ WBC predictors to be correlated with it. Each WBC predictor is set to be correlated with one and only one strong predictor.
+
+- All other elements of $\boldsymbol{\Sigma}$ are 0.
+
+We use the `MASS::mvrnorm` function to generate data following a multivariate normal distribution.
+
+
+## Data Generation - Simulation Code
+
+```{r include=FALSE}
+# This is the R code for generating the data.
+```
+
+```{r eval=FALSE}
+corr_matrix = matrix(rep(0, len = p^2), nrow = p)
+corr_num = pwbc %/% ps
+for (i in 1:(ps - 1)) {
+  for (j in (ps + 1 + (i - 1)*corr_num):(ps + i*corr_num)) {
+    corr_matrix[i, j] = corr
+    corr_matrix[j, i] = corr
+  }
+}
+for (j in (ps + 1 + (ps - 1)*corr_num):(ps + pwbc)) {
+    corr_matrix[ps, j] = corr
+    corr_matrix[j, ps] = corr
+}
+diag(corr_matrix) = 1
+X = MASS::mvrnorm(n, mu = rep(0, p), Sigma = corr_matrix)
+beta = c(rep(20, ps), rep(0.5, pwbc + pwai),
+         rep(0, p - ps - pwbc - pwai))
+Y = X %*% beta + rnorm(n, mean = 0, sd = 8)
 ```
 
 
-## Parameters of Interest
+## Scenerios to be Investigated
+
+PLEASE CHANGE THE FOLLOWING PART
+
+PLEASE CHANGE THE FOLLOWING PART
+
+PLEASE CHANGE THE FOLLOWING PART
 
 - The sample size of each dataset $n_{\text{sample}} \in \{ 100, 1000 \}$
 - The population proportion of treated individuals $\pi \in \{ 0.113, 0.216, 0.313 \}$
