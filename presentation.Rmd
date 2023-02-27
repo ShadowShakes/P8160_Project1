@@ -251,7 +251,6 @@ _Parameter Estimation_
 
 
 ## Signal Identification Performance - F1-Score
-
 \begin{figure}[H] 
 \includegraphics[width=0.9\textwidth]{Images/g7.pdf} 
 \caption{F1-Score of True Signals} 
@@ -288,26 +287,49 @@ _Parameter Estimation_
 
 
 ## Parameter Estimation Performance - n=100
-\begin{figure}[H] 
-\includegraphics[width=0.9\textwidth]{Images/g9.pdf} 
-\caption{Beta Rmse when n=100} 
-\label{Fig9}
+\begin{figure} 
+  \centering 
+  \subfigure[Beta RMSE when n=100]{ 
+    \label{sub1}
+    \includegraphics[width=2.0in]{Images/g9.pdf} 
+  } 
+  \subfigure[Beta Variance when n=100]{ 
+    \label{sub2} 
+    \includegraphics[width=2.0in]{Images/g12.pdf} 
+  } 
+  \caption{Distribution of the datasets} 
+  \label{para1} 
 \end{figure}
 
 
 ## Parameter Estimation Performance - n=500
-\begin{figure}[H] 
-\includegraphics[width=0.9\textwidth]{Images/g10.pdf} 
-\caption{Beta Rmse when n=500} 
-\label{Fig10}
+\begin{figure} 
+  \centering 
+  \subfigure[Beta RMSE when n=500]{ 
+    \label{sub3}
+    \includegraphics[width=2.0in]{Images/g10.pdf} 
+  } 
+  \subfigure[Beta Variance when n=500]{ 
+    \label{sub4} 
+    \includegraphics[width=2.0in]{Images/g13.pdf} 
+  } 
+  \caption{Distribution of the datasets} 
+  \label{para2} 
 \end{figure}
 
-
 ## Parameter Estimation Performance - n=2000
-\begin{figure}[H] 
-\includegraphics[width=0.9\textwidth]{Images/g11.pdf} 
-\caption{Beta Rmse when n=2000} 
-\label{Fig11}
+\begin{figure} 
+  \centering 
+  \subfigure[Beta RMSE when n=2000]{ 
+    \label{sub5}
+    \includegraphics[width=2.0in]{Images/g11.pdf} 
+  } 
+  \subfigure[Beta Variance when n=2000]{ 
+    \label{sub6} 
+    \includegraphics[width=2.0in]{Images/g14.pdf} 
+  } 
+  \caption{Distribution of the datasets} 
+  \label{para3} 
 \end{figure}
 
 
