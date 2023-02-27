@@ -142,6 +142,19 @@ _Other Parameters_
 - Strength of covariate effect on outcome $\beta_2 = \log(1.75), \beta_3 = \log(1.25)$
 
 
+## Experiment Settings and Scenarios
+
+- Number of parameters: $p = 100$
+
+- Number of observations: $n = 100\text{(high dimensional)}, 500, 2000$
+
+- Ratio of true and null signals: $1:1$
+
+- Ratio of strong, weak-but-correlated, weak-and-independent signals: $1:4:5 \ \text{and} \ 3:3:4$
+
+- Correlation between strong and wbc: $corr = 0.4$
+
+
 ## Evaluation Metrics
 
 Define true predictors as positive and null predictors as negative\par
