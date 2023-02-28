@@ -120,15 +120,18 @@ simulation = function(n, p, ratio, corr, param_table) {
                           nfolds = 10, 
                           type.measure = "mse") 
     param_lasso = data.frame(t(fit_lasso$glmnet.fit$beta[, fit_lasso$lambda == fit_lasso$lambda.1se]))
+    col_nonzero = names(param_lasso)[colSums(param_lasso) != 0]
+    df_nonzero = df[c("y", col_nonzero)]
+    param_lasso_lmfit = data.frame(t(lm(y ~ ., data = df_nonzero)$coefficients))[-1]
     
     param_estimate_i =
-      bind_rows(param_forward, param_lasso) %>% 
+      bind_rows(param_lasso, param_forward, param_lasso_lmfit) %>% 
       mutate(
         sim_time = i,
         n = n,
         p = p,
         ratio = str_c(ratio,collapse = ''),
-        method = c("forward", "lasso")
+        method = c("lasso", "forward", "lasso_lmfit")
       ) %>% 
       pivot_longer(
         cols = -c("sim_time", "n", "p", "ratio", "method"),
