@@ -2,6 +2,10 @@
 title: "Project 1-Topic 3 Report"
 author: "Hongjie Liu, Jiajun Tao, Shaohan Chen"
 date: "02/27/2023"
+header-includes:
+   - \usepackage{graphicx}
+   - \usepackage{float}
+   - \usepackage{subfigure}
 output: pdf_document
 ---
 
@@ -34,16 +38,39 @@ Several parameters
 
 Data is generated using a 4-step method:
 
-## Performance Measures
 
-### Ability of Model to Identify Weak and Strong Predictors
+## Model Evaluation
 
-One method of
+### Evaluation Metrics
+In this project, we define the true predictors as positive and null predictors as negative.\par
+For signal identification, we use the following five metrics to compare the two models:\par
+- Complexity: The number of selected predictors in the model
+- Sensitivity: $\frac{TP}{TP+FN}$
+- Specificity: $\frac{TN}{TN+FP}$
+- F1-score: $\frac{2\cdot sensitivity\cdot precision}{sensitivity + precision}$
+- Accuracy: $\frac{TP+TN}{TP+TN+FP+FN}$\par
 
+For parameter estimation, we use the following to metrics to compare the two models:\par
+- RMSE: $\sqrt{\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\beta_i)^2}$
+- Variance: $\sqrt{\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\bar{\beta_i})^2}$
+
+### Signal Indentification Performance
+
+\begin{figure}[H] 
+\center
+\includegraphics[width=0.8\textwidth]{Images/g_1.pdf} 
+\caption{Model Complexity} 
+\label{Fig13}
+\end{figure}
+
+The number of selected predictors measures the complexity of the models. Based on the above plot, we can see that in high dimensional scenario(when n=100), Forward selection model tends to select lots of predictors and Lasso tends to select very few. One interesting thing is that, if we increase the ratio of strong predictors(i.e. more strong predictors), Lasso also tends to select more predictors too. When it comes to normal scenario, Forward selection still tends to select more predictors than Lasso, but the discrepancy is smaller than high dimensional case, and will be further narrowed down with n or the ratio of strong predictors increasing. And as n increases, the number of selected parameters of both models are closer to the true number 40.
+
+### Parameter Estimatio Performance
 
 ### Effect of Missing Weak Predictors
 
 On the other hand
+
 ## Results
 
 According to Table 2, forward stepwise always includes more predictors than the number of true predictors in original data while LASSO is more selective.
@@ -92,5 +119,5 @@ As the degree of correlation increases
 ## Figures and Tables
 
 ```{r figs, echo=FALSE, warning=FALSE, message=FALSE}
-n=1
+n = 1
 ```
