@@ -73,21 +73,32 @@ About the classification performance of different signals. Under all n values, b
 
 ### Parameter Estimatio Performance
 
-In high dimensional scenario, Lasso performs much better than forward selection, with obvious much lower and centered RMSE and also lower variance. When it comes to normal scenario. Though when n=500, Lasso outperforms forward selection, but with n increasing, forward selection starts to outperform Lasso model on RMSE and variance. And overall, Lasso tends to perform better when there are more strong signals. If there are more strong predictors, the variance is also larger
+In high dimensional scenario, Lasso performs much better than forward selection, with obvious much lower and centered RMSE and also lower variance. When it comes to normal scenario. Though when n=500, Lasso outperforms forward selection, but with n increasing, forward selection starts to outperform Lasso model on RMSE and variance. And overall, Lasso tends to perform better when there are more strong signals. If there are more strong predictors, the variance is also larger.
 
 
 ### Effect of Missing Weak Predictors
 
-On the other hand
+Here we define missing weak predictors as the true weak predictors but we estimated them as null predictors, and we used RMSE to evaluate. In each scenario, we picked up three kinds of missing situations i.e. most missing, least missing, and middle missing. As the name suggests, the most missing are the ones that have the least non-null estimations. Foe each kind of situation, we picked 10% to draw the plot. For example, we fixed 100 parameters and 100 simulation times. In each simulation, we can get the number of non-null parameters. After arranging them, we can pick the top 10 simulation times that have the most non-null parameters. In the same way, we can pick the last 10 and the middle 10 which ranks 45 to 55. It is worth mentioning that, Lasso only picks which parameters to use and the coefficients of Lasso can not be used directly. In order to compare RMSE, we need to refit the linear regression model using the parameters that Lasso picks.
+
+When in high dimensional scenario(when n=100), Lasso has a very small RMSE however forward selection’s RMSE is big. But when the missing amount increases, the RMSE of forward selection drops dramatically. When the number of missing parameters increases, the RMSEs of both methods decrease. 
+
+When under normal scenario(n = 500 or 2000), the RMSEs of both methods are small. It's hard to tell which method is better since their differences are small. There seems to be no apparent patterns between different ratios as well.
+
+Since we care more about high dimensional scenario, the conclusion should be Lasso performs better than forward selection when in high dimensional scenario according to RMSE, and the more missing parameters, the better the RMSE.
 
 ## Discussions
 
 *Limitation*
 
+There is much freedom when designing the simulations. In our algorithm, we have 5 parameters, number of observations, number of parameters, the ratio of strong and weak signals, the definition of strong and weak signals and the correlation between strong and weak signals. However, even more parameters can be adjusted such as the correlation between WBC and WAI, or between null and strong, etc. We generated many versions of data and found that many things can affect the result. Here we only fixed p and c and the results and conclusions may not be comprehensive.
+
 *Future Work* 
+
+For the future work, we could adjust other parameters to investigate this problem further. What's more, we reproduced the high dimensional scenario and faced the stuggle of choosing covariates. We still could not have a clear solution to deal with this difficulty. It would be hard to tackle the problem, but it can be a direction of effort.
 
 ## Reference
 
+1. Li Y, Hong HG, Ahmed SE, Li Y. Weak signals in high‐dimensional regression: Detection, estimation and prediction. Appl Stochastic Models Bus Ind. 2018;1–16. https://doi.org/10.1002/asmb.2340
 
 \pagebreak
 
@@ -357,18 +368,198 @@ g14 = ggplot(fit_beta_result_ratio %>% filter(n == 2000), aes(x = method, y = Va
   facet_grid(~ ratio)
 ```
 
-```{r, echo = FALSE, fig.cap = "Model Complexity", fig.height = 8,fig.width = 7}
+```{r, include  = FALSE}
+# generate RMSE for ratio 145
+beta = c(rep(20, 4), rep(0.5, 36), rep(0, 60))
+
+get_MSE <- function(sim_number,what_number,what_method){
+  estimate = 
+    read_csv("parameter_estimate.csv",show_col_types = FALSE) %>%
+    filter(n == what_number & method == what_method &sim_time == sim_number) %>% 
+    mutate(type = factor(type, levels = c('strong', 'wbc', 'wai', 'null'))) %>% 
+    arrange(type) %>% 
+    pull(estimate)
+  
+  RMSE = sqrt(sum((estimate - beta) ^2) / 100)
+  RMSE
+}
+
+getresulttable_145 <- function(what_number,what_method){
+  param_estimate = 
+    read_csv("parameter_estimate.csv",show_col_types = FALSE) %>%
+    filter(n == what_number & method == what_method)
+
+non_null = 
+  param_estimate %>% 
+  filter(estimate != 0)
+
+non_null %>% 
+  group_by(sim_time) %>% 
+  summarise(
+  n_param = n()
+) %>% 
+  arrange(-n_param) %>%
+  pull(n_param)
+
+sum = 
+  non_null %>%
+  group_by(sim_time) %>%
+  summarise(n_param = n()) %>% 
+  arrange(-n_param)
+
+max_sims = head(sum, 10) %>% pull(sim_time)
+min_sims = tail(sum, 10) %>% pull(sim_time)
+middle_sims = head(sum, 55) %>% tail(10) %>% pull(sim_time)
+
+most = pmap(list(min_sims,what_number,what_method), get_MSE) %>% unlist()
+least = pmap(list(max_sims,what_number,what_method), get_MSE) %>% unlist()
+middle = pmap(list(middle_sims,what_number,what_method), get_MSE) %>% unlist()
+
+result = 
+  tibble(most, middle,least) %>% 
+  pivot_longer(
+    most:least,
+    names_to = "missing",
+    values_to = "RMSE"
+    ) 
+
+result = result %>% 
+  add_column(n = c(rep(what_number, 30)), method = c(rep(what_method, 30)), ratio = c(rep("1:4:5", 30)))
+result
+}
+
+forward_100_145 = getresulttable_145(what_number = 100, what_method = "forward")
+forward_500_145 = getresulttable_145(what_number = 500, what_method = "forward")
+forward_2000_145 = getresulttable_145(what_number = 2000, what_method = "forward")
+lasso_100_145 = getresulttable_145(what_number = 100, what_method = "lasso_lmfit")
+lasso_500_145 = getresulttable_145(what_number = 500, what_method = "lasso_lmfit")
+lasso_2000_145 = getresulttable_145(what_number = 2000, what_method = "lasso_lmfit")
+
+# generate RMSE for ratio 334
+beta = c(rep(20, 12), rep(0.5, 28), rep(0, 60))
+
+get_MSE <- function(sim_number,what_number,what_method){
+  estimate = 
+    read_csv("parameter_estimate2.csv",show_col_types = FALSE) %>%
+    filter(n == what_number & method == what_method &sim_time == sim_number) %>% 
+    mutate(type = factor(type, levels = c('strong', 'wbc', 'wai', 'null'))) %>% 
+    arrange(type) %>% 
+    pull(estimate)
+  
+  RMSE = sqrt(sum((estimate - beta) ^2) / 100)
+  RMSE
+}
+
+getresulttable_334 <- function(what_number,what_method){
+  param_estimate = 
+    read_csv("parameter_estimate2.csv",show_col_types = FALSE) %>%
+    filter(n == what_number & method == what_method)
+
+non_null = 
+  param_estimate %>% 
+  filter(estimate != 0)
+
+non_null %>% 
+  group_by(sim_time) %>% 
+  summarise(
+  n_param = n()
+) %>% 
+  arrange(-n_param) %>%
+  pull(n_param)
+
+sum = 
+  non_null %>%
+  group_by(sim_time) %>%
+  summarise(n_param = n()) %>% 
+  arrange(-n_param)
+
+max_sims = head(sum, 10) %>% pull(sim_time)
+min_sims = tail(sum, 10) %>% pull(sim_time)
+middle_sims = head(sum, 55) %>% tail(10) %>% pull(sim_time)
+
+most = pmap(list(min_sims,what_number,what_method), get_MSE) %>% unlist()
+least = pmap(list(max_sims,what_number,what_method), get_MSE) %>% unlist()
+middle = pmap(list(middle_sims,what_number,what_method), get_MSE) %>% unlist()
+
+result = 
+  tibble(most, middle,least) %>% 
+  pivot_longer(
+    most:least,
+    names_to = "missing",
+    values_to = "RMSE"
+    ) 
+
+result = result %>% 
+  add_column(n = c(rep(what_number, 30)), method = c(rep(what_method, 30)), ratio = c(rep("3:3:4", 30)))
+result
+}
+
+forward_100_334 = getresulttable_334(what_number = 100, what_method = "forward")
+forward_500_334 = getresulttable_334(what_number = 500, what_method = "forward")
+forward_2000_334 = getresulttable_334(what_number = 2000, what_method = "forward")
+lasso_100_334 = getresulttable_334(what_number = 100, what_method = "lasso_lmfit")
+lasso_500_334 = getresulttable_334(what_number = 500, what_method = "lasso_lmfit")
+lasso_2000_334 = getresulttable_334(what_number = 2000, what_method = "lasso_lmfit")
+
+result = 
+  forward_100_145 %>% 
+  add_row(forward_500_145) %>% 
+  add_row(forward_2000_145) %>% 
+  add_row(lasso_100_145) %>% 
+  add_row(lasso_500_145) %>% 
+  add_row(lasso_2000_145) %>% 
+  add_row(forward_100_334) %>% 
+  add_row(forward_500_334) %>% 
+  add_row(forward_2000_334) %>% 
+  add_row(lasso_100_334) %>% 
+  add_row(lasso_500_334) %>% 
+  add_row(lasso_2000_334)
+
+m1 = ggplot(filter(result, n == 100), aes(x = missing, y = RMSE, color = method)) + 
+  geom_boxplot() +
+  ylim(0,5) +
+  theme(legend.position = "right") +
+  labs(title = "RMSE",x = "missing", y = "RMSE") +
+  facet_grid(. ~ ratio)
+
+m2 = ggplot(filter(result, n == 500), aes(x = missing, y = RMSE, color = method)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "RMSE",x = "missing", y = "RMSE") +
+  facet_grid(. ~ ratio)
+  
+m3 = ggplot(filter(result, n == 2000), aes(x = missing, y = RMSE, color = method)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "RMSE",x = "missing", y = "RMSE") +
+  facet_grid(. ~ ratio)
+
+```
+
+```{r, echo = FALSE, fig.cap = "Model Complexity", fig.height = 8,fig.width = 7,warning=FALSE}
 g_1
 ```
 
-```{r, echo = FALSE, fig.cap = "Overall Classification Performance", fig.height = 8,fig.width = 9}
+```{r, echo = FALSE, fig.cap = "Overall Classification Performance", fig.height = 8,fig.width = 9,warning=FALSE}
 (g1 + g2) / (g3 + g4)
 ```
 
-```{r, echo = FALSE, fig.cap = "Classification Performance by Signals", fig.height = 8,fig.width = 9}
+```{r, echo = FALSE, fig.cap = "Classification Performance by Signals", fig.height = 8,fig.width = 9,warning=FALSE}
 (g5 + g6) / (g7 + g8)
 ```
 
-```{r, echo = FALSE, fig.cap = "Parameter Estimation Performance", fig.height = 8,fig.width = 9}
+```{r, echo = FALSE, fig.cap = "Parameter Estimation Performance", fig.height = 8,fig.width = 9,warning=FALSE}
 (g9 + g12) / (g10 + g13) / (g11 + g14)
+```
+
+```{r, echo = FALSE, fig.cap = "RMSE comparison when n = 100", fig.height = 8,fig.width = 9, warning=FALSE}
+m1
+```
+
+```{r, echo = FALSE, fig.cap = "RMSE comparison when n = 500", fig.height = 8,fig.width = 9}
+m2
+```
+
+```{r, echo = FALSE, fig.cap = "RMSE comparison when n = 2000", fig.height = 8,fig.width = 9}
+m3
 ```

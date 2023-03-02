@@ -315,9 +315,9 @@ result
 forward_100_145 = getresulttable_145(what_number = 100, what_method = "forward")
 forward_500_145 = getresulttable_145(what_number = 500, what_method = "forward")
 forward_2000_145 = getresulttable_145(what_number = 2000, what_method = "forward")
-lasso_100_145 = getresulttable_145(what_number = 100, what_method = "lasso")
-lasso_500_145 = getresulttable_145(what_number = 500, what_method = "lasso")
-lasso_2000_145 = getresulttable_145(what_number = 2000, what_method = "lasso")
+lasso_100_145 = getresulttable_145(what_number = 100, what_method = "lasso_lmfit")
+lasso_500_145 = getresulttable_145(what_number = 500, what_method = "lasso_lmfit")
+lasso_2000_145 = getresulttable_145(what_number = 2000, what_method = "lasso_lmfit")
 
 
 
@@ -398,9 +398,9 @@ result
 forward_100_334 = getresulttable_334(what_number = 100, what_method = "forward")
 forward_500_334 = getresulttable_334(what_number = 500, what_method = "forward")
 forward_2000_334 = getresulttable_334(what_number = 2000, what_method = "forward")
-lasso_100_334 = getresulttable_334(what_number = 100, what_method = "lasso")
-lasso_500_334 = getresulttable_334(what_number = 500, what_method = "lasso")
-lasso_2000_334 = getresulttable_334(what_number = 2000, what_method = "lasso")
+lasso_100_334 = getresulttable_334(what_number = 100, what_method = "lasso_lmfit")
+lasso_500_334 = getresulttable_334(what_number = 500, what_method = "lasso_lmfit")
+lasso_2000_334 = getresulttable_334(what_number = 2000, what_method = "lasso_lmfit")
 ```
 
 ```{r}
@@ -427,7 +427,7 @@ result %>%
 ggplot(result, aes(x = missing, y = mse, color = n())) + geom_boxplot()
 
 # compare specificity
-g3 = ggplot(filter(result, n ==2000), aes(x = missing, y = RMSE, color = method)) + 
+g3 = ggplot(filter(result, n == 2000), aes(x = missing, y = RMSE, color = method)) + 
   geom_boxplot() +
   theme(legend.position = "right") +
   labs(title = "RMSE",x = "missing", y = "RMSE") +
