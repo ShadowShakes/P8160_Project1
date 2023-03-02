@@ -13,13 +13,16 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 library(gridExtra)
 library(tidyverse)
+library(patchwork)
+library(dplyr)
 ```
 
-## Objectives
+
+## Background
 
 When dealing with high-dimensional data
 
-## Statistical Methods Studied
+## Statistical methods to be studied
 
 ### Stepwise Forward Selection
 
@@ -29,14 +32,17 @@ Step-wise forward selection
 
 LASSO regression 
 
-## Scenarios Investigated
+## Objective
 
 Several parameters 
 
 
-## Methods for Generating Data
+## Simulation
 
-Data is generated using a 4-step method:
+Data is generated
+
+## Experiment Settings and Scenario
+
 
 
 ## Model Evaluation
@@ -56,68 +62,313 @@ For parameter estimation, we use the following to metrics to compare the two mod
 
 ### Signal Indentification Performance
 
-\begin{figure}[H] 
-\center
-\includegraphics[width=0.8\textwidth]{Images/g_1.pdf} 
-\caption{Model Complexity} 
-\label{Fig13}
-\end{figure}
 
-The number of selected predictors measures the complexity of the models. Based on the above plot, we can see that in high dimensional scenario(when n=100), Forward selection model tends to select lots of predictors and Lasso tends to select very few. One interesting thing is that, if we increase the ratio of strong predictors(i.e. more strong predictors), Lasso also tends to select more predictors too. When it comes to normal scenario, Forward selection still tends to select more predictors than Lasso, but the discrepancy is smaller than high dimensional case, and will be further narrowed down with n or the ratio of strong predictors increasing. And as n increases, the number of selected parameters of both models are closer to the true number 40.
+
+Complexity of the models is indicated by the number of selected predictors. We can see that in high dimensional scenario(when n=100), Forward selection model tends to select lots of predictors and Lasso tends to select very few. One interesting thing is that, if we increase the ratio of strong predictors(i.e. more strong predictors), Lasso also tends to select more predictors too. When it comes to normal scenario, Forward selection still tends to select more predictors than Lasso, but the discrepancy is smaller than high dimensional case, and will be further narrowed down with n or the ratio of strong predictors increasing. And as n increases, the number of selected parameters of both models are closer to the true number 40.
+
+As for overall classification performance, if in high dimensional scenario, Forward selection tends to be very assertive and much better at identifying weak signals, leading to an extremely high sensitivity but low specificity. Lasso in turn tends to be very conservative and much better at identifying null signals, leading to an extremely high specificity but low sensitivity. Like high dimensional case, Lasso becomes more sensitive and not that assertive when ratio of strong predictors increases. Based on the above plot, we can conclude that both models does not perform too well based on F1-score and accuracy, because they are very radical and tend to identify most of the predictors either as positive or negative, but far away from the truth.\par
+For normal scenario, both models become less radical under normal scenarios, but Forward selection is still more sensitive and assertive than Lasso, while Lasso has higher specificity and more conservative. Both models perform better on those metrics with n increasing. Overall, Lasso and Forward selection has similar F1-score and accuracy performance. But when there are more strong predictors, Lasso performs obviously better than Forward selection.
+
+About the classification performance of different signals. Under all n values, both models perfectly identify the strong signals. In high dimensional scenario, Forward selection performs much better on identifying weak predictors while Lasso performs much better on identifying null predictors, that’ s why we see the high sensitivity of forward selection and high specificity of Lasso in previous section. When there are more strong predictors, Lasso also performs better on selecting weak predictors. When it comes to normal scenario, Forward selection is still better at selecting null and Lasso is better at selecting weak predictors. But the discrepancy is smaller compared with high-dimensional data, and will continue be smaller as n increases. When there are more strong predictors, Lasso performs much better at selecting weak-but-correlated signals.
 
 ### Parameter Estimatio Performance
+
+In high dimensional scenario, Lasso performs much better than forward selection, with obvious much lower and centered RMSE and also lower variance. When it comes to normal scenario. Though when n=500, Lasso outperforms forward selection, but with n increasing, forward selection starts to outperform Lasso model on RMSE and variance. And overall, Lasso tends to perform better when there are more strong signals. If there are more strong predictors, the variance is also larger
+
 
 ### Effect of Missing Weak Predictors
 
 On the other hand
 
-## Results
+## Discussions
 
-According to Table 2, forward stepwise always includes more predictors than the number of true predictors in original data while LASSO is more selective.
+*Limitation*
 
-### Scenarios 1-4: Varying total number of weak predictors 
+*Future Work* 
 
-*Type I error and power*
-
-While both methods do are decent at selecting true predictors for the model, LASSO is much better at excluding null predictors than forward selection (Table 3). 
-
-
-*Coefficient estimation*
-
-Although the median SE of the coefficient estimates for forward stepwise is lower than LASSO, its MSE is higher when there are few true weak predictors in the data.
-### Scenarios 4-8: Varying degree of correlation
-
-*Type I error and power*
-
-As the correlation of the WBC predictors increases, the type I error for forward stepwise and LASSO remain fairly constant around 0.35 and 0.05, respectively. Meanwhile, the power of forward selection increases, while the power of LASSO decreases slightly. (Figure 6)  
-
-*Coefficient estimation*
-
-Although forward stepwise selection includes more non-null predictors on average (Table 3), it has increasing and higher MSE compared with LASSO, showing a growing trend when correlation becomes larger. The MSE of LASSO is controlled under 0.1, whereas forward selection has an inflated MSE (over 0.2) when the correlation gets very high. 
-
-## Conclusion
-
-### General
-
-Forward stepwise selection always includes more predictors than LASSO, and the model size given by each method increases as the number of total true predictors in the original data increases.
-
-### Varying total number of weak predictors
-
-The SE variance for forward stepwise is much larger than LASSO when the number of weak predictors is small
-
-### Varying degree of correlation
-
-With increased correlation
-
-## Discussion
-
-As the degree of correlation increases
+## Reference
 
 
 \pagebreak
 
-## Figures and Tables
+## Appendix
 
-```{r figs, echo=FALSE, warning=FALSE, message=FALSE}
-n = 1
+```{r, include=FALSE, warning = FALSE}
+# Load parameter data
+param_1 = read_csv("parameter_estimate.csv")
+param_2 = read_csv("parameter_estimate2.csv")
+
+param_1 =
+  param_1 %>%
+  filter(method %in% c("forward", "lasso_lmfit")) %>%
+  mutate(method = 
+           case_when(
+             method == "forward" ~ "forward",
+             method == "lasso_lmfit" ~ "lasso"
+           ))
+param_2 =
+  param_2 %>%
+  filter(method %in% c("forward", "lasso_lmfit")) %>%
+  mutate(method = 
+           case_when(
+             method == "forward" ~ "forward",
+             method == "lasso_lmfit" ~ "lasso"
+           ))
+
+param_estimate = rbind(param_1, param_2)
+
+
+# Output identification table
+fit_identify_result = 
+  param_estimate %>% 
+    mutate(
+      n = factor(n),
+      ratio = ifelse(ratio == 145, "1:4:5", "3:3:4"),
+      notnull = ifelse(type == "null", 0, 1),
+      notnull_est = ifelse(abs(estimate) > 0, 1, 0),
+      identify =
+        case_when(
+          notnull == 1 & notnull_est == 1 ~ "TP",
+          notnull == 1 & notnull_est == 0 ~ "FN",
+          notnull == 0 & notnull_est == 1 ~ "FP",
+          notnull == 0 & notnull_est == 0 ~ "TN"
+        )
+    ) %>% 
+    group_by(sim_time, n, p, ratio, method) %>% 
+    summarize(
+      number_of_parameters = sum(identify == "TP") + sum(identify == "FP"),
+      sensitivity = sum(identify == "TP")/(sum(identify == "TP") + sum(identify == "FN")),
+      specificity = sum(identify == "TN")/(sum(identify == "TN") + sum(identify == "FP")),
+      precision = sum(identify == "TP")/(sum(identify == "TP") + sum(identify == "FP")),
+      accuracy = (sum(identify == "TP") + sum(identify == "TN")) /
+        (sum(identify == "TP") + sum(identify == "FP") + sum(identify == "TN") + sum(identify == "FN")),
+      F1_score = 2 * precision * sensitivity / (precision + sensitivity)
+    )
+
+
+# Output identification table by signal
+fit_identify_result_type = 
+  param_estimate %>% 
+    mutate(
+      n = factor(n),
+      ratio = ifelse(ratio == 145, "1:4:5", "3:3:4"),
+      notnull = ifelse(type == "null", 0, 1),
+      notnull_est = ifelse(abs(estimate) > 0, 1, 0),
+      identify =
+        case_when(
+          notnull == 1 & notnull_est == 1 ~ "TP",
+          notnull == 1 & notnull_est == 0 ~ "FN",
+          notnull == 0 & notnull_est == 1 ~ "FP",
+          notnull == 0 & notnull_est == 0 ~ "TN"
+        )
+    ) %>% 
+    group_by(sim_time, n, p, ratio, method, type) %>% 
+    summarize(
+      number_of_parameters = sum(identify == "TP") + sum(identify == "FP"),
+      sensitivity = sum(identify == "TP")/(sum(identify == "TP") + sum(identify == "FN")),
+      specificity = sum(identify == "TN")/(sum(identify == "TN") + sum(identify == "FP")),
+      precision = sum(identify == "TP")/(sum(identify == "TP") + sum(identify == "FP")),
+      accuracy = (sum(identify == "TP") + sum(identify == "TN")) /
+        (sum(identify == "TP") + sum(identify == "FP") + sum(identify == "TN") + sum(identify == "FN")),
+      F1_score = 2 * precision * sensitivity / (precision + sensitivity)
+    )
+
+
+p = 100
+ratio = c(1, 4, 5)
+ps = floor(0.4*p*ratio[1]/sum(ratio))
+pwbc = floor(0.4*p*ratio[2]/sum(ratio))
+pwai = floor(0.4*p*ratio[3]/sum(ratio))
+beta = c(rep(20, ps), rep(0.5, pwbc + pwai), rep(0, p - ps - pwbc - pwai))
+# output the beta estimation table of ratio 1
+fit_beta_result_ratio1 = 
+  param_1 %>% 
+    mutate(
+      n = factor(n),
+      ratio = ifelse(ratio == 145, "1:4:5", "3:3:4"),
+      num = case_when(
+  type == "strong" ~ num,
+  type == "wbc" ~ num + ps,
+  type == "wai" ~ num + ps + pwbc,
+  type == "null" ~ num + ps + pwbc + pwai),
+      se = (estimate - beta[num])^2,
+      var = (estimate - mean(estimate))^2
+    ) %>% 
+    group_by(sim_time, n, p, ratio, method) %>% 
+    summarize(
+      RMSE = sqrt(mean(se)),
+      Variance = mean(var)
+    )
+
+# output the beta estimation table of ratio2
+p = 100
+ratio = c(3, 3, 4)
+ps = floor(0.4*p*ratio[1]/sum(ratio))
+pwbc = floor(0.4*p*ratio[2]/sum(ratio))
+pwai = floor(0.4*p*ratio[3]/sum(ratio))
+beta = c(rep(20, ps), rep(0.5, pwbc + pwai), rep(0, p - ps - pwbc - pwai))
+
+fit_beta_result_ratio2 = 
+  param_2 %>% 
+    mutate(
+      n = factor(n),
+      ratio = ifelse(ratio == 145, "1:4:5", "3:3:4"),
+      num = case_when(
+  type == "strong" ~ num,
+  type == "wbc" ~ num + ps,
+  type == "wai" ~ num + ps + pwbc,
+  type == "null" ~ num + ps + pwbc + pwai),
+      se = (estimate - beta[num])^2,
+      var = (estimate - mean(estimate))^2
+    ) %>% 
+    group_by(sim_time, n, p, ratio, method) %>% 
+    summarize(
+      RMSE = sqrt(mean(se)),
+      Variance = mean(var)
+    )
+
+fit_beta_result_ratio = 
+  rbind(fit_beta_result_ratio1, fit_beta_result_ratio2)
+```
+
+```{r, include  = FALSE}
+# compare model complexity
+
+# compare sensitivity
+g_1 = ggplot(fit_identify_result, aes(x = method, y = number_of_parameters, color = n)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Model Complexity",x = "method", y = "Number of Selected Parameters") +
+  facet_grid(. ~ ratio)
+```
+
+
+```{r, include  = FALSE}
+# compare all signals on four metrics
+
+# compare sensitivity
+g1 = ggplot(fit_identify_result, aes(x = method, y = sensitivity, color = n)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Sensitivity",x = "method", y = "sensitivity") +
+  facet_grid(. ~ ratio)
+
+# compare specificity
+g2 = ggplot(fit_identify_result, aes(x = method, y = specificity, color = n)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Specificity",x = "method", y = "specificity") +
+  facet_grid(. ~ ratio)
+
+# compare F1-score
+g3 = ggplot(fit_identify_result, aes(x = method, y = F1_score, color = n)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "F1_score",x = "method", y = "F1_score") +
+  facet_grid(. ~ ratio)
+
+# compare accuracy
+g4 = ggplot(fit_identify_result, aes(x = method, y = accuracy, color = n)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Accuracy",x = "method", y = "accuracy") +
+  facet_grid(. ~ ratio)
+
+
+# compare different signals
+
+# First ratio
+g5 = ggplot(fit_identify_result_type, aes(x = method, y = sensitivity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Sensitivity",x = "method", y = "sensitivity") +
+  facet_grid(ratio ~ n)
+
+g6 = ggplot(fit_identify_result_type, aes(x = method, y = specificity, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Specificity",x = "method", y = "specificity") +
+  facet_grid(ratio ~ n)
+
+g7 = ggplot(fit_identify_result_type, aes(x = method, y = F1_score, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "F1_score",x = "method", y = "F1_score") +
+  facet_grid(ratio ~ n)
+
+g8 = ggplot(fit_identify_result_type, aes(x = method, y = accuracy, color = type)) + 
+  geom_boxplot() +
+  theme(legend.position = "right") +
+  labs(title = "Accuracy",x = "method", y = "accuracy") +
+  facet_grid(ratio ~ n)
+
+
+# Beta estimation of RMSE
+
+# RMSE of beta for n = 100
+g9 = ggplot(fit_beta_result_ratio %>% filter(n == 100), aes(x = method, y = RMSE)) + 
+  geom_boxplot(color = "red", fill = "orange", alpha = 0.5) +
+  theme(legend.position = "right") +
+  labs(title = "beta RMSE when n = 100",x = "method", y = "RMSE") +
+  coord_cartesian(ylim = c(0, 15)) +
+  facet_grid(~ ratio)
+
+# RMSE of beta for n = 500
+g10 = ggplot(fit_beta_result_ratio %>% filter(n == 500), aes(x = method, y = RMSE)) + 
+  geom_boxplot(color = "red", fill = "orange", alpha = 0.5) +
+  theme(legend.position = "right") +
+  labs(title = "beta RMSE when n = 500",x = "method", y = "RMSE") +
+  coord_cartesian(ylim = c(0, 0.6)) +
+  facet_grid(~ ratio)
+
+# RMSE of beta for n = 2000
+g11 = ggplot(fit_beta_result_ratio %>% filter(n == 2000), aes(x = method, y = RMSE)) + 
+  geom_boxplot(color = "red", fill = "orange", alpha = 0.5) +
+  theme(legend.position = "right") +
+  labs(title = "beta RMSE when n = 2000",x = "method", y = "RMSE") +
+  coord_cartesian(ylim = c(0, 0.4)) +
+  facet_grid(~ ratio)
+
+
+# Beta estimation of Variance
+
+# Variance of beta for n = 100
+g12 = ggplot(fit_beta_result_ratio %>% filter(n == 100), aes(x = method, y = Variance)) + 
+  geom_boxplot(color = "red", fill = "orange", alpha = 0.5) +
+  theme(legend.position = "right") +
+  labs(title = "beta Variance when n = 100",x = "method", y = "Variance") +
+  coord_cartesian(ylim = c(0, 150)) +
+  facet_grid(~ ratio)
+
+# Variance of beta for n = 500
+g13 = ggplot(fit_beta_result_ratio %>% filter(n == 500), aes(x = method, y = Variance)) + 
+  geom_boxplot(color = "red", fill = "orange", alpha = 0.5) +
+  theme(legend.position = "right") +
+  labs(title = "beta Variance when n = 500",x = "method", y = "Variance") +
+  coord_cartesian(ylim = c(0, 50)) +
+  facet_grid(~ ratio)
+
+# Variance of beta for n = 2000
+g14 = ggplot(fit_beta_result_ratio %>% filter(n == 2000), aes(x = method, y = Variance)) + 
+  geom_boxplot(color = "red", fill = "orange", alpha = 0.5) +
+  theme(legend.position = "right") +
+  labs(title = "beta Variance when n = 2000",x = "method", y = "Variance") +
+  coord_cartesian(ylim = c(0, 150)) +
+  facet_grid(~ ratio)
+```
+
+```{r, echo = FALSE, fig.cap = "Model Complexity", fig.height = 8,fig.width = 7}
+g_1
+```
+
+```{r, echo = FALSE, fig.cap = "Overall Classification Performance", fig.height = 8,fig.width = 9}
+(g1 + g2) / (g3 + g4)
+```
+
+```{r, echo = FALSE, fig.cap = "Classification Performance by Signals", fig.height = 8,fig.width = 9}
+(g5 + g6) / (g7 + g8)
+```
+
+```{r, echo = FALSE, fig.cap = "Parameter Estimation Performance", fig.height = 8,fig.width = 9}
+(g9 + g12) / (g10 + g13) / (g11 + g14)
 ```
