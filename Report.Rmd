@@ -572,7 +572,7 @@ m3 = ggplot(filter(result, n == 2000), aes(x = missing, y = RMSE, color = method
 
 ```
 
-```{r, echo = FALSE, fig.cap = "Model Complexity", fig.height = 8,fig.width = 7,warning=FALSE}
+```{r, echo = FALSE, fig.cap = "Model Complexity", fig.height = 7,fig.width = 7,warning=FALSE}
 g_1
 ```
 
