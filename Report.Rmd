@@ -35,53 +35,60 @@ This project aims to compare two popular variable selection methods, the step-wi
 
 The step-wise forward method is an iterative process that starts with an empty model and sequentially adds variables that best improve the model fit, usually by adding predictors with the largest reduction in AIC. For linear models,
 $$AIC = n\log\left(\sum_{i=1}^n (y_i - \widehat{y}_i)^2/n\right) + 2p,$$
-where $\widehat{y}_i$ is the fitted values from a model, and $p$ is the dimension of the model.
+where $\widehat{y}_i$ is the fitted values from a model.
 
 ## Automated LASSO regression
 
 Automated LASSO regression estimates the model parameters by optimizing a penalized loss function:
 $$\min_{\boldsymbol{\beta}} \frac{1}{2n} \sum_{i=1}^n \left(y_i - \beta_0 - \sum_{j=1}^p \beta_i x_{ij} \right)^2 + \lambda \sum_{k=1}^p|\beta_k|,$$
-where $\lambda\geq0$ is a tuning parameter chosen by cross validations.
-
-## Types of Signals
-
-Strong signals
-$$S_{strong}=\{j:|\beta_j|>c\sqrt{\log (p) / n}\ \mbox{for some } c>0,\  1\le j \le p\}$$
-Weak-but-correlated (WBC) signals
-$$S_{WBC}=\ \{j: 0<|\beta_j|\le c\sqrt{\log (p) / n} \text{ and } \mbox{corr}(X_j, X_j')\ne 0\mbox{ for some } j'\in S_1,\  1\le j \le p\}$$
-Weak-and-independent (WAI) signals
-$$S_{WAI}=\ \{j: 0<|\beta_j|\le c\sqrt{\log (p) / n} \text{ and } \mbox{corr}(X_j, X_j')= 0\mbox{ for all } j'\in S_1, \ 1\le j \le p\}$$
-Null signals
-$$S_{null}=\{j: \beta_j=0,\  1\le j \le p\}$$
-
-Thus, $p$ predictors can be partitioned as $$\{1,\cdots,p\}=S_{strong}\cup S_{WBC}\cup S_{WAI}\cup S_{null}.$$ We assume that $|S_{strong}|=p_{S}$, $|S_{WBC}|=p_{WBC}$, $|S_{WAI}|=p_{WAI}$. The number of true predictors $p_{S}+p_{WBC}+p_{WAI}$ should be less than $n$.
-
-
-# Methods for Data Generation
-
-## Response Vector
-
-Normality assumption: $$\mathbf{y}\sim N(\mathbf{X}\boldsymbol{\beta},\sigma^2\mathbf{I})$$
-
-For $j\in S_{strong}$, $\beta_j=20$; For $j\in S_{WBC}\cup S_{WAI}$, $\beta_j=0.5$. We choose $c=20$ so that $0.5\leq c\sqrt{\log p/n} < 20$ for all scenarios to be investigated. For the error term, we set $\sigma = 8.$
-
-
-## Design Matrix
-
-We assume $$\mathbf{x}_i\sim N(\boldsymbol{\mu},\boldsymbol{\Sigma}),\ i=1,\cdots,n$$
-
-All predictors are standardized. Then we have $\boldsymbol{\mu}=\mathbf{0}$ and $\Sigma_{i,i}=1$ for all $i$. We set $p_{WBC}\geq p_{strong}$. For each strong predictor (except one of them), we set $[p_{WBC}/p_{strong}]$ WBC predictors to be correlated with it. Each WBC predictor is set to be correlated with one and only one strong predictor. All other elements of $\boldsymbol{\Sigma}$ are 0. We use the `MASS::mvrnorm` function to generate data following a multivariate normal distribution.
+where $\lambda\geq0$ is a tuning parameter. To select the optimal value of $\lambda$, we apply the 1SE (one-standard-error) rule, which involves computing the prediction error for each value of $\lambda$ and choosing the simplest model (i.e., the one with the fewest nonzero coefficients) whose prediction error is within one standard error of the minimum.
 
 # Investigation Settings and Scenarios
 
+## Definitions of Signal Types
+
+This project aims to simulate data with a combination of strong, weak-but-correlated, weak-and-independent, and null predictors. The definitions of these predictor types are as follows.
+
+Strong signals:
+$$S_{strong}=\{j:|\beta_j|>c\sqrt{\log (p) / n}\ \mbox{for some } c>0,\  1\le j \le p\}$$
+Weak-but-correlated (WBC) signals:
+$$S_{WBC}=\ \{j: 0<|\beta_j|\le c\sqrt{\log (p) / n} \text{ and } \mbox{corr}(X_j, X_j')\ne 0\mbox{ for some } j'\in S_1,\  1\le j \le p\}$$
+Weak-and-independent (WAI) signals:
+$$S_{WAI}=\ \{j: 0<|\beta_j|\le c\sqrt{\log (p) / n} \text{ and } \mbox{corr}(X_j, X_j')= 0\mbox{ for all } j'\in S_1, \ 1\le j \le p\}$$
+Null signals:
+$$S_{null}=\{j: \beta_j=0,\  1\le j \le p\}$$
+
+Thus, all $p$ signals can be partitioned as follows: $$\{1,\cdots,p\}=S_{strong}\cup S_{WBC}\cup S_{WAI}\cup S_{null}.$$
+Let $p_{S}$, $p_{WBC}$, and $p_{WAI}$ denote the number of strong, WBC, and WAI predictors, respectively. The number of true predictors $p_{S}+p_{WBC}+p_{WAI}$ should not exceed the sample size $n$.
+
 ## Fixed Settings
 
-In this project, we fix the number of the total predictors as 100, and set ratio of true and null predictors as 2:3, which means there will be 40 true predictors and 60 null predictors. Meanwhile, we set the correlation between strong and weak-but-correlated signals as 0.4.
+In this project, we fix the number of the total predictors as 100, and set the ratio of true and null predictors as 2:3, which means there will be 40 true predictors and 60 null predictors. Meanwhile, we set the correlation between strong and weak-but-correlated signals as 0.4.
 
 ## Scenarios (Unfixed Settings)
 
-In the following experiments, we modify some unfixed settings to see different model performance. We will change the number of observations from n = 100, to n = 500, n = 2000. When n = 100, the number of observations is the same as the number of predictors, which indicate it to be a high dimensional scenario. In addition, we will also try different ratios of strong, weak-but-correlated and weak-and-independent signals as 1:4:5 and 3:3:4, in order to see if the ratio of different signals, especially the strong signals, will influence the model performance.
+In the following experiments, we modify some unfixed settings to see different model performances. We will change the number of observations from $n = 100$, to $n = 500$, $n = 2000$. When $n = 100$, the number of observations is the same as the number of predictors, which indicate it to be a high dimensional scenario. In addition, we will also try different ratios of strong, weak-but-correlated, and weak-and-independent signals as 1:4:5 and 3:3:4, in order to see if the ratio of different signals, especially the strong signals, will influence the model performances.
 
+# Methods for Data Generation
+
+## Data Generation - Response Vector
+
+To generate the response vector $\mathbf{y}$, it is assumed that residuals are independent, normally distributed and have equal variances, so that $$\mathbf{y}\sim N(\mathbf{X}\boldsymbol{\beta},\sigma^2\mathbf{I}),$$
+where $\mathbf{X}$ is the design matrix and $\boldsymbol{\beta}$ is the vector of coefficients.
+
+For each $j\in S_{strong}$, the value of $\beta_j$ is set to 20, while for each $j\in S_{WBC}\cup S_{WAI}$, the value of $\beta_j$ is set to 0.5. We choose $c=20$ such that $0.5\leq c\sqrt{\log p/n} < 20$ for all scenarios to be investigated. The value of $\sigma$ for the error term is set to 8.
+
+
+## Data Generation - Design Matrix
+
+For each observations $\mathbf{x}_i$ in the design matrix $\mathbf{X}$, it is assumed that $$\mathbf{x}_i\overset{i.i.d.}{\sim} N(\boldsymbol{\mu},\boldsymbol{\Sigma}),\ i=1,\cdots,n,$$
+where $\boldsymbol{\mu}$ is the mean vector and $\boldsymbol{\Sigma}$ is the covariance matrix.
+
+To ensure fairness in the penalty of LASSO, it is assumed that all predictors are standardized, resulting in $\boldsymbol{\mu}=\mathbf{0}$ and $\Sigma_{ii}=1$ for all $i\in{1,\cdots,n}$, where $\Sigma_{ii}$ represents the diagonal elements of the covariance matrix.
+
+When all predictors are standardized, the covariance matrix $\boldsymbol{\Sigma}$ becomes a correlation matrix, allowing for the creation of correlations between WBC predictors and strong predictors. We set $p_{WBC}\geq p_{S}$. For each strong predictor (excluding one), $\displaystyle\left[\frac{p_{WBC}}{p_{S}}\right]$ WBC predictors are set to be correlated with it. Each WBC predictor is set to be correlated with only one strong predictor, with all other elements of $\boldsymbol{\Sigma}$ set to 0.
+
+To generate data following a multivariate normal distribution, the **R**-function `mvrnorm` from the `MASS` package is used, with $\boldsymbol{\mu}$ and $\boldsymbol{\Sigma}$ passed as arguments.
 
 # Model Evaluation
 
@@ -115,7 +122,7 @@ For normal scenario, both models become less radical under normal scenarios, but
 
 About the classification performance of different signals. Under all $n$ values, both models perfectly identify the strong signals. In high dimensional scenario, forward selection performs much better on identifying weak predictors while Lasso performs much better on identifying null predictors, that’s why we see the high sensitivity of forward selection and high specificity of Lasso in the previous section. When there are more strong predictors, Lasso also performs better on selecting weak predictors. When it comes to normal scenario, forward selection is still better at selecting null and Lasso is better at selecting weak predictors. But the discrepancy is smaller compared with high-dimensional data, and will continue to be smaller as $n$ increases. When there are more strong predictors, Lasso performs much better at selecting weak-but-correlated signals.
 
-## Parameter Estimations Performance
+## Parameter Estimation Performance
 
 In high dimensional scenario, Lasso performs much better than forward selection, with obviously much lower and centered RMSE and also lower variance. When it comes to normal scenario, when $n=500$, Lasso outperforms forward selection, but with $n$ increasing, forward selection starts to outperform Lasso model on RMSE and variance. And overall, Lasso tends to perform better when there are more strong signals. If there are more strong predictors, the variance is also larger.
 
