@@ -43,8 +43,6 @@ Automated LASSO regression estimates the model parameters by optimizing a penali
 $$\min_{\boldsymbol{\beta}} \frac{1}{2n} \sum_{i=1}^n \left(y_i - \beta_0 - \sum_{j=1}^p \beta_i x_{ij} \right)^2 + \lambda \sum_{k=1}^p|\beta_k|,$$
 where $\lambda\geq0$ is a tuning parameter chosen by cross validations.
 
-# Scenarios to be Investigated
-
 ## Types of Signals
 
 Strong signals
@@ -57,8 +55,6 @@ Null signals
 $$S_{null}=\{j: \beta_j=0,\  1\le j \le p\}$$
 
 Thus, $p$ predictors can be partitioned as $$\{1,\cdots,p\}=S_{strong}\cup S_{WBC}\cup S_{WAI}\cup S_{null}.$$ We assume that $|S_{strong}|=p_{S}$, $|S_{WBC}|=p_{WBC}$, $|S_{WAI}|=p_{WAI}$. The number of true predictors $p_{S}+p_{WBC}+p_{WAI}$ should be less than $n$.
-
-## PLSASE INSERT SENARIOS HERE
 
 
 # Methods for Data Generation
@@ -75,6 +71,16 @@ For $j\in S_{strong}$, $\beta_j=20$; For $j\in S_{WBC}\cup S_{WAI}$, $\beta_j=0.
 We assume $$\mathbf{x}_i\sim N(\boldsymbol{\mu},\boldsymbol{\Sigma}),\ i=1,\cdots,n$$
 
 All predictors are standardized. Then we have $\boldsymbol{\mu}=\mathbf{0}$ and $\Sigma_{i,i}=1$ for all $i$. We set $p_{WBC}\geq p_{strong}$. For each strong predictor (except one of them), we set $[p_{WBC}/p_{strong}]$ WBC predictors to be correlated with it. Each WBC predictor is set to be correlated with one and only one strong predictor. All other elements of $\boldsymbol{\Sigma}$ are 0. We use the `MASS::mvrnorm` function to generate data following a multivariate normal distribution.
+
+# Investigation Settings and Scenarios
+
+## Fixed Settings
+
+In this project, we fix the number of the total predictors as 100, and set ratio of true and null predictors as 2:3, which means there will be 40 true predictors and 60 null predictors. Meanwhile, we set the correlation between strong and weak-but-correlated signals as 0.4.
+
+## Scenarios (Unfixed Settings)
+
+In the following experiments, we modify some unfixed settings to see different model performance. We will change the number of observations from n = 100, to n = 500, n = 2000. When n = 100, the number of observations is the same as the number of predictors, which indicate it to be a high dimensional scenario. In addition, we will also try different ratios of strong, weak-but-correlated and weak-and-independent signals as 1:4:5 and 3:3:4, in order to see if the ratio of different signals, especially the strong signals, will influence the model performance.
 
 
 # Model Evaluation
