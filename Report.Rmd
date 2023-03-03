@@ -58,7 +58,7 @@ $$S_{null}=\{j: \beta_j=0,\  1\le j \le p\}$$
 
 Thus, $p$ predictors can be partitioned as $$\{1,\cdots,p\}=S_{strong}\cup S_{WBC}\cup S_{WAI}\cup S_{null}.$$ We assume that $|S_{strong}|=p_{S}$, $|S_{WBC}|=p_{WBC}$, $|S_{WAI}|=p_{WAI}$. The number of true predictors $p_{S}+p_{WBC}+p_{WAI}$ should be less than $n$.
 
-# PLSASE INSERT SENARIOS HERE
+## PLSASE INSERT SENARIOS HERE
 
 
 # Methods for Data Generation
