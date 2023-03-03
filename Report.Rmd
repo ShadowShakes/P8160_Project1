@@ -84,9 +84,9 @@ For each $j\in S_{strong}$, the value of $\beta_j$ is set to 20, while for each 
 For each observations $\mathbf{x}_i$ in the design matrix $\mathbf{X}$, it is assumed that $$\mathbf{x}_i\overset{i.i.d.}{\sim} N(\boldsymbol{\mu},\boldsymbol{\Sigma}),\ i=1,\cdots,n,$$
 where $\boldsymbol{\mu}$ is the mean vector and $\boldsymbol{\Sigma}$ is the covariance matrix.
 
-To ensure fairness in the penalty of LASSO, it is assumed that all predictors are standardized, resulting in $\boldsymbol{\mu}=\mathbf{0}$ and $\Sigma_{ii}=1$ for all $i\in{1,\cdots,n}$, where $\Sigma_{ii}$ represents the diagonal elements of the covariance matrix.
+To ensure fairness in the penalty of LASSO, it is assumed that all predictors are standardized, resulting in $\boldsymbol{\mu}=\mathbf{0}$ and $\Sigma_{ii}=1$ for all $i\in\{1,\cdots,n\}$, where $\Sigma_{ii}$ represents the $i$th diagonal element of the covariance matrix.
 
-When all predictors are standardized, the covariance matrix $\boldsymbol{\Sigma}$ becomes a correlation matrix, allowing for the creation of correlations between WBC predictors and strong predictors. We set $p_{WBC}\geq p_{S}$. For each strong predictor (excluding one), $\displaystyle\left[\frac{p_{WBC}}{p_{S}}\right]$ WBC predictors are set to be correlated with it. Each WBC predictor is set to be correlated with only one strong predictor, with all other elements of $\boldsymbol{\Sigma}$ set to 0.
+When all predictors are standardized, the covariance matrix $\boldsymbol{\Sigma}$ becomes a correlation matrix, allowing for the creation of correlations between WBC predictors and strong predictors. We set $p_{WBC}\geq p_{S}$. For each strong predictor (excluding one), $\left[\frac{p_{WBC}}{p_{S}}\right]$ WBC predictors are set to be correlated with it. Each WBC predictor is set to be correlated with only one strong predictor, with all other elements of $\boldsymbol{\Sigma}$ set to 0.
 
 To generate data following a multivariate normal distribution, the **R**-function `mvrnorm` from the `MASS` package is used, with $\boldsymbol{\mu}$ and $\boldsymbol{\Sigma}$ passed as arguments.
 
