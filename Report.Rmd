@@ -38,7 +38,7 @@ $$AIC = n\log\left(\sum_{i=1}^n (y_i - \widehat{y}_i)^2/n\right) + 2p,$$
 where $\widehat{y}_i$ is the fitted values from a model, and $p$ is the dimension of the model.
 
 ## Automated LASSO regression
-  
+
 Automated LASSO regression estimates the model parameters by optimizing a penalized loss function:
 $$\min_{\boldsymbol{\beta}} \frac{1}{2n} \sum_{i=1}^n \left(y_i - \beta_0 - \sum_{j=1}^p \beta_i x_{ij} \right)^2 + \lambda \sum_{k=1}^p|\beta_k|,$$
 where $\lambda\geq0$ is a tuning parameter chosen by cross validations.
@@ -80,53 +80,58 @@ All predictors are standardized. Then we have $\boldsymbol{\mu}=\mathbf{0}$ and 
 # Model Evaluation
 
 ## Evaluation Metrics
+
 In this project, we define the true predictors as positive and null predictors as negative.\par
 For signal identification, we use the following five metrics to compare the two models:\par
-- Complexity: The number of selected predictors in the model
-- Sensitivity: $\frac{TP}{TP+FN}$
-- Specificity: $\frac{TN}{TN+FP}$
-- F1-score: $\frac{2\cdot sensitivity\cdot precision}{sensitivity + precision}$
-- Accuracy: $\frac{TP+TN}{TP+TN+FP+FN}$\par
+
+- Complexity: number of selected predictors in the model
+
+- Sensitivity: $\displaystyle\frac{TP}{TP+FN}$
+
+- Specificity: $\displaystyle\frac{TN}{TN+FP}$
+
+- F1-score: $\displaystyle\frac{2\cdot sensitivity\cdot precision}{sensitivity + precision}$
+
+- Accuracy: $\displaystyle\frac{TP+TN}{TP+TN+FP+FN}$\par
 
 For parameter estimation, we use the following to metrics to compare the two models:\par
-- RMSE: $\sqrt{\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\beta_i)^2}$
-- Variance: $\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\bar{\beta_i})^2$
 
-## Signal Indentification Performance
+- RMSE: $\displaystyle\sqrt{\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\beta_i)^2}$
 
+- Variance: $\displaystyle\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\bar{\beta_i})^2$
 
+## Signal Identification Performance
 
-Complexity of the models is indicated by the number of selected predictors. We can see that in high dimensional scenario(when n=100), Forward selection model tends to select lots of predictors and Lasso tends to select very few. One interesting thing is that, if we increase the ratio of strong predictors(i.e. more strong predictors), Lasso also tends to select more predictors too. When it comes to normal scenario, Forward selection still tends to select more predictors than Lasso, but the discrepancy is smaller than high dimensional case, and will be further narrowed down with n or the ratio of strong predictors increasing. And as n increases, the number of selected parameters of both models are closer to the true number 40.
+Complexity of the models is indicated by the number of selected predictors. We can see that in high dimensional scenario ($n=100$), forward selection model tends to select lots of predictors and Lasso tends to select very few. One interesting thing is that, if we increase the ratio of strong predictors (i.e., more strong predictors), Lasso also tends to select more predictors too. When it comes to normal scenario, forward selection still tends to select more predictors than Lasso, but the discrepancy is smaller than high dimensional case, and will be further narrowed down with $n$ or the ratio of strong predictors increasing. And as $n$ increases, the number of selected parameters of both models are closer to the true number 40.
 
-As for overall classification performance, if in high dimensional scenario, Forward selection tends to be very assertive and much better at identifying weak signals, leading to an extremely high sensitivity but low specificity. Lasso in turn tends to be very conservative and much better at identifying null signals, leading to an extremely high specificity but low sensitivity. Like high dimensional case, Lasso becomes more sensitive and not that assertive when ratio of strong predictors increases. Based on the above plot, we can conclude that both models does not perform too well based on F1-score and accuracy, because they are very radical and tend to identify most of the predictors either as positive or negative, but far away from the truth.\par
-For normal scenario, both models become less radical under normal scenarios, but Forward selection is still more sensitive and assertive than Lasso, while Lasso has higher specificity and more conservative. Both models perform better on those metrics with n increasing. Overall, Lasso and Forward selection has similar F1-score and accuracy performance. But when there are more strong predictors, Lasso performs obviously better than Forward selection.
+As for overall classification performance, if in high dimensional scenario, forward selection tends to be very assertive and much better at identifying weak signals, leading to an extremely high sensitivity but low specificity. Lasso in turn tends to be very conservative and much better at identifying null signals, leading to an extremely high specificity but low sensitivity. Like high dimensional case, Lasso becomes more sensitive and not that assertive when the ratio of strong predictors increases. Based on the above plot, we can conclude that both models do not perform too well based on F1-score and accuracy, because they are very radical and tend to identify most of the predictors either as positive or negative, but far away from the truth.\par
+For normal scenario, both models become less radical under normal scenarios, but forward selection is still more sensitive and assertive than Lasso, while Lasso has higher specificity and is more conservative. Both models perform better on those metrics with $n$ increasing. Overall, Lasso and forward selection has similar F1-score and accuracy performance. But when there are more strong predictors, Lasso performs obviously better than forward selection.
 
-About the classification performance of different signals. Under all n values, both models perfectly identify the strong signals. In high dimensional scenario, Forward selection performs much better on identifying weak predictors while Lasso performs much better on identifying null predictors, that’ s why we see the high sensitivity of forward selection and high specificity of Lasso in previous section. When there are more strong predictors, Lasso also performs better on selecting weak predictors. When it comes to normal scenario, Forward selection is still better at selecting null and Lasso is better at selecting weak predictors. But the discrepancy is smaller compared with high-dimensional data, and will continue be smaller as n increases. When there are more strong predictors, Lasso performs much better at selecting weak-but-correlated signals.
+About the classification performance of different signals. Under all $n$ values, both models perfectly identify the strong signals. In high dimensional scenario, forward selection performs much better on identifying weak predictors while Lasso performs much better on identifying null predictors, that’s why we see the high sensitivity of forward selection and high specificity of Lasso in the previous section. When there are more strong predictors, Lasso also performs better on selecting weak predictors. When it comes to normal scenario, forward selection is still better at selecting null and Lasso is better at selecting weak predictors. But the discrepancy is smaller compared with high-dimensional data, and will continue to be smaller as $n$ increases. When there are more strong predictors, Lasso performs much better at selecting weak-but-correlated signals.
 
-## Parameter Estimatio Performance
+## Parameter Estimations Performance
 
-In high dimensional scenario, Lasso performs much better than forward selection, with obvious much lower and centered RMSE and also lower variance. When it comes to normal scenario. Though when n=500, Lasso outperforms forward selection, but with n increasing, forward selection starts to outperform Lasso model on RMSE and variance. And overall, Lasso tends to perform better when there are more strong signals. If there are more strong predictors, the variance is also larger.
-
+In high dimensional scenario, Lasso performs much better than forward selection, with obviously much lower and centered RMSE and also lower variance. When it comes to normal scenario, when $n=500$, Lasso outperforms forward selection, but with $n$ increasing, forward selection starts to outperform Lasso model on RMSE and variance. And overall, Lasso tends to perform better when there are more strong signals. If there are more strong predictors, the variance is also larger.
 
 ## Effect of Missing Weak Predictors
 
-Here we define missing weak predictors as the true weak predictors but we estimated them as null predictors, and we used RMSE to evaluate. In each scenario, we picked up three kinds of missing situations i.e. most missing, least missing, and middle missing. As the name suggests, the most missing are the ones that have the least non-null estimations. Foe each kind of situation, we picked 10% to draw the plot. For example, we fixed 100 parameters and 100 simulation times. In each simulation, we can get the number of non-null parameters. After arranging them, we can pick the top 10 simulation times that have the most non-null parameters. In the same way, we can pick the last 10 and the middle 10 which ranks 45 to 55. It is worth mentioning that, Lasso only picks which parameters to use and the coefficients of Lasso can not be used directly. In order to compare RMSE, we need to refit the linear regression model using the parameters that Lasso picks.
+Here we define missing weak predictors as the true weak predictors but we estimated them as null predictors, and we used RMSE to evaluate. In each scenario, we picked up three kinds of missing situations: most missing, least missing, and middle missing. As the name suggests, the most missing are the ones that have the least non-null estimations. Foe each kind of situation, we picked 10% to draw the plot. For example, we fixed 100 parameters and 100 simulation times. In each simulation, we can get the number of non-null parameters. After arranging them, we can pick the top 10 simulation times that have the most non-null parameters. In the same way, we can pick the last 10 and the middle 10 which ranks 46 to 55. It is worth mentioning that, Lasso only picks which parameters to use and the coefficients of Lasso can not be used directly. In order to compare RMSE, we need to refit the linear regression model using the parameters that Lasso picks.
 
-When in high dimensional scenario(when n=100), Lasso has a very small RMSE however forward selection’s RMSE is big. But when the missing amount increases, the RMSE of forward selection drops dramatically. When the number of missing parameters increases, the RMSEs of both methods decrease. 
+When in high dimensional scenario ($n=100$), Lasso has a very small RMSE however forward selection’s RMSE is big. But when the missing amount increases, the RMSE of forward selection drops dramatically. When the number of missing parameters increases, the RMSEs of both methods decrease. 
 
-When under normal scenario(n = 500 or 2000), the RMSEs of both methods are small. It's hard to tell which method is better since their differences are small. There seems to be no apparent patterns between different ratios as well.
+When under normal scenario ($n = 500$ or 2000), the RMSEs of both methods are small. It's hard to tell which method is better since their differences are small. There seems to be no apparent patterns between different ratios as well.
 
 Since we care more about high dimensional scenario, the conclusion should be Lasso performs better than forward selection when in high dimensional scenario according to RMSE, and the more missing parameters, the better the RMSE.
 
 # Discussions
 
-## Limitation
+## Limitations
 
-There is much freedom when designing the simulations. In our algorithm, we have 5 parameters, number of observations, number of parameters, the ratio of strong and weak signals, the definition of strong and weak signals and the correlation between strong and weak signals. However, even more parameters can be adjusted such as the correlation between WBC and WAI, or between null and strong, etc. We generated many versions of data and found that many things can affect the result. Here we only fixed p and c and the results and conclusions may not be comprehensive.
+There is much freedom when designing the simulations. In our algorithm, we have 5 parameters: number of observations, number of parameters, the ratio of strong and weak signals, the definition of strong and weak signals and the correlation between strong and weak signals. However, even more parameters can be adjusted such as the correlation within WAI signals, or between null and strong signals, etc. We generated many versions of data and found that many things can affect the result. Here we only fixed $p$ and $c$ and the results and conclusions may not be comprehensive.
 
 ## Future Work
 
-For the future work, we could adjust other parameters to investigate this problem further. What's more, we reproduced the high dimensional scenario and faced the stuggle of choosing covariates. We still could not have a clear solution to deal with this difficulty. It would be hard to tackle the problem, but it can be a direction of effort.
+For the future work, we could adjust other parameters to investigate this problem further. What's more, we reproduced the high-dimensional scenario and faced the struggle of choosing covariates. We still could not have a clear solution to deal with this difficulty. It would be hard to tackle the problem, but it can be a direction of effort.
 
 # Contributions  {-}
 
