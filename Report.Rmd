@@ -1,12 +1,13 @@
 ---
-title: "Project 1-Topic 3 Report"
+title: "Variable Selection Methods Comparison"
 author: "Hongjie Liu, Jiajun Tao, Shaohan Chen"
-date: "02/27/2023"
 header-includes:
    - \usepackage{graphicx}
    - \usepackage{float}
    - \usepackage{subfigure}
-output: pdf_document
+output:
+  pdf_document:
+    number_sections: true
 ---
 
 ```{r setup, include=FALSE}
@@ -18,36 +19,67 @@ library(dplyr)
 ```
 
 
+# Background and Objectives
+
 ## Background
 
-When dealing with high-dimensional data
+In linear models, when facing high-dimensional data, variable selection method is a common practice to achieve a balance between model fitness and complexity. However, in modern high-dimensional data applications, traditional variable selection methods often struggle with the presence of "weak" predictors, i.e., predictors with small but non-zero coefficients.
 
-## Statistical methods to be studied
+## Objectives
 
-### Stepwise Forward Selection
+This project aims to compare two popular variable selection methods, the step-wise forward method using the Akaike information criterion (AIC) and the automated LASSO regression. We conducted simulations under scenarios with high-dimensional data and larger numbers of observations to investigate how well each method performs in identifying weak and strong predictors and how missing weak predictors affects parameter estimations.
 
-Step-wise forward selection 
+# Statistical Methods to be Studied
 
-### LASSO
+## Step-wise forward method
 
-LASSO regression 
+The step-wise forward method is an iterative process that starts with an empty model and sequentially adds variables that best improve the model fit, usually by adding predictors with the largest reduction in AIC. For linear models,
+$$AIC = n\log\left(\sum_{i=1}^n (y_i - \widehat{y}_i)^2/n\right) + 2p,$$
+where $\widehat{y}_i$ is the fitted values from a model, and $p$ is the dimension of the model.
 
-## Objective
+## Automated LASSO regression
+  
+Automated LASSO regression estimates the model parameters by optimizing a penalized loss function:
+$$\min_{\boldsymbol{\beta}} \frac{1}{2n} \sum_{i=1}^n \left(y_i - \beta_0 - \sum_{j=1}^p \beta_i x_{ij} \right)^2 + \lambda \sum_{k=1}^p|\beta_k|,$$
+where $\lambda\geq0$ is a tuning parameter chosen by cross validations.
 
-Several parameters 
+# Scenarios to be Investigated
+
+## Types of Signals
+
+Strong signals
+$$S_{strong}=\{j:|\beta_j|>c\sqrt{\log (p) / n}\ \mbox{for some } c>0,\  1\le j \le p\}$$
+Weak-but-correlated (WBC) signals
+$$S_{WBC}=\ \{j: 0<|\beta_j|\le c\sqrt{\log (p) / n} \text{ and } \mbox{corr}(X_j, X_j')\ne 0\mbox{ for some } j'\in S_1,\  1\le j \le p\}$$
+Weak-and-independent (WAI) signals
+$$S_{WAI}=\ \{j: 0<|\beta_j|\le c\sqrt{\log (p) / n} \text{ and } \mbox{corr}(X_j, X_j')= 0\mbox{ for all } j'\in S_1, \ 1\le j \le p\}$$
+Null signals
+$$S_{null}=\{j: \beta_j=0,\  1\le j \le p\}$$
+
+Thus, $p$ predictors can be partitioned as $$\{1,\cdots,p\}=S_{strong}\cup S_{WBC}\cup S_{WAI}\cup S_{null}.$$ We assume that $|S_{strong}|=p_{S}$, $|S_{WBC}|=p_{WBC}$, $|S_{WAI}|=p_{WAI}$. The number of true predictors $p_{S}+p_{WBC}+p_{WAI}$ should be less than $n$.
+
+# PLSASE INSERT SENARIOS HERE
 
 
-## Simulation
+# Methods for Data Generation
 
-Data is generated
+## Response Vector
 
-## Experiment Settings and Scenario
+Normality assumption: $$\mathbf{y}\sim N(\mathbf{X}\boldsymbol{\beta},\sigma^2\mathbf{I})$$
+
+For $j\in S_{strong}$, $\beta_j=20$; For $j\in S_{WBC}\cup S_{WAI}$, $\beta_j=0.5$. We choose $c=20$ so that $0.5\leq c\sqrt{\log p/n} < 20$ for all scenarios to be investigated. For the error term, we set $\sigma = 8.$
 
 
+## Design Matrix
 
-## Model Evaluation
+We assume $$\mathbf{x}_i\sim N(\boldsymbol{\mu},\boldsymbol{\Sigma}),\ i=1,\cdots,n$$
 
-### Evaluation Metrics
+All predictors are standardized. Then we have $\boldsymbol{\mu}=\mathbf{0}$ and $\Sigma_{i,i}=1$ for all $i$. We set $p_{WBC}\geq p_{strong}$. For each strong predictor (except one of them), we set $[p_{WBC}/p_{strong}]$ WBC predictors to be correlated with it. Each WBC predictor is set to be correlated with one and only one strong predictor. All other elements of $\boldsymbol{\Sigma}$ are 0. We use the `MASS::mvrnorm` function to generate data following a multivariate normal distribution.
+
+
+# Model Evaluation
+
+## Evaluation Metrics
 In this project, we define the true predictors as positive and null predictors as negative.\par
 For signal identification, we use the following five metrics to compare the two models:\par
 - Complexity: The number of selected predictors in the model
@@ -58,9 +90,9 @@ For signal identification, we use the following five metrics to compare the two 
 
 For parameter estimation, we use the following to metrics to compare the two models:\par
 - RMSE: $\sqrt{\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\beta_i)^2}$
-- Variance: $\sqrt{\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\bar{\beta_i})^2}$
+- Variance: $\frac{1}{p}\sum_{i=1}^p (\hat{\beta_i}-\bar{\beta_i})^2$
 
-### Signal Indentification Performance
+## Signal Indentification Performance
 
 
 
@@ -71,12 +103,12 @@ For normal scenario, both models become less radical under normal scenarios, but
 
 About the classification performance of different signals. Under all n values, both models perfectly identify the strong signals. In high dimensional scenario, Forward selection performs much better on identifying weak predictors while Lasso performs much better on identifying null predictors, that’ s why we see the high sensitivity of forward selection and high specificity of Lasso in previous section. When there are more strong predictors, Lasso also performs better on selecting weak predictors. When it comes to normal scenario, Forward selection is still better at selecting null and Lasso is better at selecting weak predictors. But the discrepancy is smaller compared with high-dimensional data, and will continue be smaller as n increases. When there are more strong predictors, Lasso performs much better at selecting weak-but-correlated signals.
 
-### Parameter Estimatio Performance
+## Parameter Estimatio Performance
 
 In high dimensional scenario, Lasso performs much better than forward selection, with obvious much lower and centered RMSE and also lower variance. When it comes to normal scenario. Though when n=500, Lasso outperforms forward selection, but with n increasing, forward selection starts to outperform Lasso model on RMSE and variance. And overall, Lasso tends to perform better when there are more strong signals. If there are more strong predictors, the variance is also larger.
 
 
-### Effect of Missing Weak Predictors
+## Effect of Missing Weak Predictors
 
 Here we define missing weak predictors as the true weak predictors but we estimated them as null predictors, and we used RMSE to evaluate. In each scenario, we picked up three kinds of missing situations i.e. most missing, least missing, and middle missing. As the name suggests, the most missing are the ones that have the least non-null estimations. Foe each kind of situation, we picked 10% to draw the plot. For example, we fixed 100 parameters and 100 simulation times. In each simulation, we can get the number of non-null parameters. After arranging them, we can pick the top 10 simulation times that have the most non-null parameters. In the same way, we can pick the last 10 and the middle 10 which ranks 45 to 55. It is worth mentioning that, Lasso only picks which parameters to use and the coefficients of Lasso can not be used directly. In order to compare RMSE, we need to refit the linear regression model using the parameters that Lasso picks.
 
@@ -86,23 +118,27 @@ When under normal scenario(n = 500 or 2000), the RMSEs of both methods are small
 
 Since we care more about high dimensional scenario, the conclusion should be Lasso performs better than forward selection when in high dimensional scenario according to RMSE, and the more missing parameters, the better the RMSE.
 
-## Discussions
+# Discussions
 
-*Limitation*
+## Limitation
 
 There is much freedom when designing the simulations. In our algorithm, we have 5 parameters, number of observations, number of parameters, the ratio of strong and weak signals, the definition of strong and weak signals and the correlation between strong and weak signals. However, even more parameters can be adjusted such as the correlation between WBC and WAI, or between null and strong, etc. We generated many versions of data and found that many things can affect the result. Here we only fixed p and c and the results and conclusions may not be comprehensive.
 
-*Future Work* 
+## Future Work
 
 For the future work, we could adjust other parameters to investigate this problem further. What's more, we reproduced the high dimensional scenario and faced the stuggle of choosing covariates. We still could not have a clear solution to deal with this difficulty. It would be hard to tackle the problem, but it can be a direction of effort.
 
-## Reference
+# Contributions  {-}
+
+PLEASE INSERT CONTRIBUTIONS HERE.
+
+# Reference  {-}
 
 1. Li Y, Hong HG, Ahmed SE, Li Y. Weak signals in high‐dimensional regression: Detection, estimation and prediction. Appl Stochastic Models Bus Ind. 2018;1–16. https://doi.org/10.1002/asmb.2340
 
 \pagebreak
 
-## Appendix
+# Appendix {-}
 
 ```{r, include=FALSE, warning = FALSE}
 # Load parameter data
